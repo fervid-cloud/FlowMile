@@ -1,6 +1,30 @@
-.container {
-    background-color: #28527a;
+
+
+.test {
+    height: 100%;
+    width: 100%;
 }
-.container-fluid {
-    background-color: #28527a;
+
+
+:host {
+    display: block;
+    height: 100%;
+    width: 100%;
+}
+
+.logo-wrapper {
+    height: 7rem;
+    width: 10rem;
+}
+
+.team-img {
+    height: 15vmax;
+    width: 15vmax;
+}
+
+img {
+    height: 100%;
+    width: 100%;
+    max-width: 100%;
+    max-height: 100%;
 }

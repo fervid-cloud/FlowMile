@@ -1,8 +1,30 @@
 /* You can add global styles to this file, and also import other style files */
 
  /* @import "~../node_modules/bootstrap/dist/css/bootstrap.min.css"; */
+
+ /* below comes as a default from bootstrap(with some other default of its own like font etc.)
+ , so we dont' need to put them explicitly */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+}
+html {
+    overflow: auto;
+}
+
+body {
+    position: relative;
+    height: 100vh;
+    width: 100vw;
+    overflow: auto;
+}
+
+
+body {
+    background: linear-gradient(90deg, #d53369 0%, #daae51 100%);
+}
+
+p {
+    margin-bottom: .2rem;
 }
