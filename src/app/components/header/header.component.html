@@ -6,12 +6,13 @@
 <a class="navbar-brand" [routerLink]="['/dashboard']">
     <!----><img src="assets/images/logo1.jpg" width="89" height="25" alt="CoreUI Logo" class="navbar-brand-full">
 </a>
-<button type="button" class="d-lg-block d-none navbar-toggler">
+<button type="button" class="d-none d-lg-block navbar-toggler">
     <span class="navbar-toggler-icon"></span>
 </button>
 
-<!-- means at large screen have display block other wise display none -->
-<ul class="navbar-nav d-lg-flex d-none">
+<!-- hide on screens smaller than md(note that it means it will be there for lg, xl also, for removing lg, mentioned it specifically)-->
+<!-- <ul class="navbar-nav d-none d-md-block d-lg-none"> -->
+<ul class="navbar-nav d-none d-lg-flex">
     <li class="nav-item px-3"><a href="#" class="nav-link">Dashboard</a></li>
     <li class="nav-item px-3"><a href="#" class="nav-link">Users</a></li>
     <li class="nav-item px-3"><a href="#" class="nav-link">Settings</a></li>
@@ -20,32 +21,99 @@
 <!-- margin left auto -->
 <ul class="navbar-nav ms-auto">
 
-    <li dropdown="" placement="bottom right" class="nav-item dropdown d-md-down-none">
-        <a data-toggle="dropdown" href="#" role="button" aria-haspopup="true" dropdowntoggle="" class="nav-link"
-            aria-expanded="false">
-            <i class="icon-bell"></i>
-            <span class="badge badge-pill badge-danger">5</span>
+    <!-- hide on screens smaller than large -->
+    <li dropdown="" placement="bottom right" class="nav-item dropdown d-none d-lg-block">
+        <!-- Regardless of whether you call your dropdown via JavaScript or instead use the data-api, data-bs-toggle="dropdown" is
+        always required to be present on the dropdown’s trigger element. -->
+
+        <!-- aria-haspopup="true" notify screen reader users that a 'Popup' is attached by adding the attribute aria-haspopup="true" to the triggering
+        element, but this is not a good idea. ... In short, don't use aria-haspopup unless you are triggering a menu. same is for role attribute -->
+
+        <!-- The aria-labelledby attribute establishes relationships between objects and their label(s), and its value should be one
+        or more element IDs, which refer to elements that have the text needed for labeling. List multiple element IDs in a
+        space delimited fashion.
+
+        This idea is similar to how the "for" attribute is used to link a LABEL to an INPUT.
+
+        Assistive technology, such as screen readers, use this attribute to catalog the objects in a document so that users can
+        navigate between them. Without an element ID, the assistive technology cannot catalog the object. -->
+
+        <!-- basically whatever starts with aria is related to specification provided by WAI-ARIA and some other attributes like role and other are for touch screen reader related devices-->
+
+        <!-- note that data-bs-target is optional, as bootstrap will take the div having class of dropdown-menu as dropdown, but if we have
+        suppose multiple drowdowns depending upon some condition, we can show our particular drop down by pointing to
+        the particular type of element having drop-down-menu as class by using it's id attribute -->
+        <a data-bs-toggle="dropdown" id="simple-dropdown" href="#" role="button" aria-haspopup="true" class="nav-link"
+            aria-expanded="false" data-bs-target="#pointingToTheSpecificDropDownMenuForMultipleDropDowns">
+            <i class="far fa-bell icon-bell"></i>
+            <!-- Badges can be used as part of links or buttons to provide a counter. -->
+            <span class="badge badge-custom-pos badge-danger">5</span>
         </a>
-        <div aria-labelledby="simple-dropdown" class="dropdown-menu dropdown-menu-right dropdown-menu-lg"
-            style="left: auto; right: 0px;">
-            <div class="dropdown-header text-center"><strong>You have 5 notifications</strong></div><a href="#"
-                class="dropdown-item"><i class="icon-user-follow text-success"></i> New user registered </a><a href="#"
-                class="dropdown-item"><i class="icon-user-unfollow text-danger"></i> User deleted </a><a href="#"
-                class="dropdown-item"><i class="icon-chart text-info"></i> Sales report is ready </a><a href="#"
-                class="dropdown-item"><i class="icon-basket-loaded text-primary"></i> New client </a><a href="#"
-                class="dropdown-item"><i class="icon-speedometer text-warning"></i> Server overloaded </a>
-            <div class="dropdown-header text-center"><strong>Server</strong></div><a href="#" class="dropdown-item">
-                <div class="text-uppercase mb-1"><small><b>CPU Usage</b></small></div><span
-                    class="progress progress-xs">
+        <!-- <div id="pointingToTheSpecificDropDownMenuForMultipleDropDowns" class="dropdown-menu dropdown-menu-right dropdown-menu-lg" style="left: auto; right: 0px;">
+            <a href="#" class="dropdown-item">
+                <i class="fas fa-user text-success"></i>
+                <i class="icon-user-follow text-success"></i>
+                New user registered
+            </a>
+        </div> -->
+        <!-- position absolute relative to li element  -->
+        <div id="pointingToTheSpecificDropDownMenuForMultipleDropDowns" aria-labelledby="simple-dropdown"
+            class="dropdown-menu dropdown-menu-right dropdown-menu-lg" style="left: auto; right: 0px;">
+            <div class="dropdown-header text-center">
+                <strong>You have 5 notifications</strong>
+            </div>
+
+            <a href="#" class="dropdown-item">
+                <i class="fas fa-user text-success"></i>
+                <i class="icon-user-follow text-success"></i>
+                New user registered
+            </a>
+
+            <a href="#" class="dropdown-item">
+                <i class="icon-user-unfollow text-danger">
+                </i>
+                User deleted
+            </a>
+
+            <a href="#" class="dropdown-item">
+                <i class="icon-chart text-info"></i>
+                Sales report is ready
+            </a>
+
+            <a href="#" class="dropdown-item">
+                <i class="icon-basket-loaded text-primary"></i>
+                New client
+            </a>
+
+            <a href="#" class="dropdown-item">
+                <i class="icon-speedometer text-warning"></i>
+                Server overloaded
+            </a>
+
+            <div class="dropdown-header text-center">
+                <strong>Server</strong>
+            </div>
+            <a href="#" class="dropdown-item">
+                <div class="text-uppercase mb-1">
+                    <small><b>CPU Usage</b></small>
+                </div>
+                <span class="progress progress-xs">
                     <div role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"
                         class="progress-bar bg-info" style="width: 25%;"></div>
-                </span><small class="text-muted">348 Processes. 1/4 Cores.</small>
-            </a><a href="#" class="dropdown-item">
-                <div class="text-uppercase mb-1"><small><b>Memory Usage</b></small></div><span
-                    class="progress progress-xs">
+                </span>
+                <small class="text-muted">348 Processes. 1/4 Cores.</small>
+            </a>
+
+            <a href="#" class="dropdown-item">
+                <div class="text-uppercase mb-1">
+                    <small><b>Memory Usage</b></small>
+                </div>
+                <span class="progress progress-xs">
                     <div role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"
-                        class="progress-bar bg-warning" style="width: 70%;"></div>
-                </span><small class="text-muted">11444GB/16384MB</small>
+                        class="progress-bar bg-warning" style="width: 70%;">
+                    </div>
+                </span>
+                <small class="text-muted">11444GB/16384MB</small>
             </a><a href="#" class="dropdown-item">
                 <div class="text-uppercase mb-1"><small><b>SSD 1 Usage</b></small></div><span
                     class="progress progress-xs">
@@ -58,9 +126,13 @@
     </li>
 
     <!---->
-    <li dropdown="" placement="bottom right" class="nav-item dropdown d-md-down-none"><a data-toggle="dropdown" href="#"
-            role="button" aria-haspopup="true" dropdowntoggle="" class="nav-link" aria-expanded="false"><i
-                class="icon-list"></i><span class="badge badge-pill badge-warning">15</span></a>
+    <!-- hide on screens smaller than large -->
+    <li dropdown="" placement="bottom right" class="nav-item dropdown d-none d-lg-block">
+        <a data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" dropdowntoggle="" class="nav-link"
+            aria-expanded="false">
+            <i class="fas fa-list"></i>
+            <span class="badge badge-custom-pos bg-warning text-dark">15</span>
+        </a>
         <div aria-labelledby="simple-dropdown" class="dropdown-menu dropdown-menu-right dropdown-menu-lg"
             style="left: auto; right: 0px;">
             <div class="dropdown-header text-center"><strong>You have 5 pending tasks</strong></div><a href="#"
@@ -98,10 +170,14 @@
         </div>
         <!---->
     </li>
+
     <!---->
-    <li dropdown="" placement="bottom right" class="nav-item dropdown d-md-down-none"><a data-toggle="dropdown" href="#"
-            role="button" aria-haspopup="true" dropdowntoggle="" class="nav-link" aria-expanded="false"><i
-                class="icon-envelope-letter"></i><span class="badge badge-pill badge-info">7</span></a>
+    <li dropdown="" placement="bottom right" class="nav-item dropdown d-none d-lg-block">
+        <a data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" dropdowntoggle="" class="nav-link"
+            aria-expanded="false">
+            <i class="far fa-envelope"></i>
+            <span class="badge badge-custom-pos bg-info text-dark">7</span>
+        </a>
         <div aria-labelledby="simple-dropdown" class="dropdown-menu dropdown-menu-right dropdown-menu-lg"
             style="left: auto; right: 0px;">
             <div class="dropdown-header text-center"><strong>You have 4 messages</strong></div><a href="#"
@@ -158,29 +234,98 @@
         </div>
         <!---->
     </li>
+
     <!---->
-    <li class="nav-item d-md-down-none"><a href="#" class="nav-link"><i class="icon-location-pin"></i></a></li>
-    <li dropdown="" placement="bottom right" class="nav-item dropdown"><a data-toggle="dropdown" href="#" role="button"
-            aria-haspopup="true" dropdowntoggle="" class="nav-link" aria-expanded="false"><img
-                src="assets/img/avatars/6.jpg" alt="admin@bootstrapmaster.com" class="img-avatar"></a>
+    <li class="nav-item d-none d-lg-block">
+        <a href="#" class="nav-link">
+            <i class="fas fa-map-marker-alt"></i>
+            <!-- <i class="icon-location-pin"></i> -->
+        </a>
+    </li>
+
+    <li dropdown="" placement="bottom right" class="nav-item dropdown">
+        <a data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" dropdowntoggle="" class="nav-link"
+            aria-expanded="false">
+            <div class=" profileImageWrapper rounded m-auto">
+                <img src="assets/images/avatar.jpg" alt="admin@bootstrapmaster.com" class="img-avatar">
+            </div>
+        </a>
+
         <div aria-labelledby="simple-dropdown" class="dropdown-menu dropdown-menu-right"
             style="left: auto; right: 0px;">
-            <div class="dropdown-header text-center"><strong>Account</strong></div><a href="#" class="dropdown-item"><i
-                    class="fa fa-bell-o"></i> Updates<span class="badge badge-info">42</span></a><a href="#"
-                class="dropdown-item"><i class="fa fa-envelope-o"></i> Messages<span
-                    class="badge badge-success">42</span></a><a href="#" class="dropdown-item"><i
-                    class="fa fa-tasks"></i> Tasks<span class="badge badge-danger">42</span></a><a href="#"
-                class="dropdown-item"><i class="fa fa-comments"></i> Comment<span
-                    class="badge badge-warning">42</span></a>
-            <div class="dropdown-header text-center"><strong>Settings</strong></div><a href="#" class="dropdown-item"><i
-                    class="fa fa-user"></i> Profile</a><a href="#" class="dropdown-item"><i class="fa fa-wrench"></i>
-                Setting</a><a href="#" class="dropdown-item"><i class="fa fa-usd"></i> Payments<span
-                    class="badge badge-dark">42</span></a><a href="#" class="dropdown-item"><i class="fa fa-file"></i>
-                Projects<span class="badge badge-primary">42</span></a>
-            <div class="divider"></div><a href="#" class="dropdown-item"><i class="fa fa-shield"></i> Lock account</a><a
-                href="#" class="dropdown-item"><i class="fa fa-lock"></i> Logout</a>
+
+            <div class="dropdown-header text-center">
+                <strong>Account</strong>
+            </div>
+
+            <a href="#" class="dropdown-item">
+                <i class="far fa-bell icon-bell"></i>
+                Updates
+                <span class="badge info-custom_pos bg-info text">42</span>
+            </a>
+
+            <a href="#" class="dropdown-item">
+                <i class="far fa-envelope"></i>
+                Messages
+                <span class="badge info-custom_pos bg-success">42</span>
+            </a>
+
+            <a href="#" class="dropdown-item">
+                <i class="fa fa-tasks"></i>
+                Tasks
+                <span class="badge info-custom_pos bg-danger">42</span>
+            </a>
+
+
+            <a href="#" class="dropdown-item">
+                <i class="fa fa-comments"></i>
+                Comment
+                <span class="badge info-custom_pos bg-warning">42</span>
+            </a>
+
+
+
+
+            <div class="dropdown-header text-center">
+                <strong>Settings</strong>
+            </div>
+
+            <a href="#" class="dropdown-item"><i class="fa fa-user"></i> Profile</a>
+
+            <a href="#" class="dropdown-item"><i class="fa fa-wrench"></i>Setting</a>
+
+
+            <a href="#" class="dropdown-item">
+                <i class="fas fa-rupee-sign"></i>
+                Payments
+                <span class="badge info-custom_pos bg-dark">42</span>
+            </a>
+
+
+            <a href="#" class="dropdown-item">
+                <i class="fas fa-file"></i>
+                <!-- <i class="fa fa-file"></i> -->
+                Projects
+                <span class="badge info-custom_pos bg-primary">42</span></a>
+
+
+            <div class="divider"></div>
+
+            <a href="#" class="dropdown-item">
+                <i class="fas fa-shield-alt"></i>
+                Lock account
+            </a>
+
+            <a href="#" class="dropdown-item"><i class="fa fa-lock"></i> Logout</a>
+
         </div>
         <!---->
     </li>
     <!---->
+
 </ul>
+
+
+<button type="button" appasidemenutoggler="" class="navbar-toggler">
+    <span class="navbar-toggler-icon"></span>
+</button>
