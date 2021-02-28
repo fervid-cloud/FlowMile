@@ -45,7 +45,7 @@
         the particular type of element having drop-down-menu as class by using it's id attribute -->
         <a data-bs-toggle="dropdown" id="simple-dropdown" href="#" role="button" aria-haspopup="true" class="nav-link"
             aria-expanded="false" data-bs-target="#pointingToTheSpecificDropDownMenuForMultipleDropDowns">
-            <i class="far fa-bell icon-bell"></i>
+            <i class="far fa-bell icon-bell image_icon_custom_pos"></i>
             <!-- Badges can be used as part of links or buttons to provide a counter. -->
             <span class="badge badge-custom-pos badge-danger">5</span>
         </a>
@@ -64,29 +64,29 @@
             </div>
 
             <a href="#" class="dropdown-item">
-                <i class="fas fa-user text-success"></i>
-                <i class="icon-user-follow text-success"></i>
+                <i class="fas fa-user text-success image_icon_custom_pos"></i>
+                <!-- <i class="image_icon_custom_pos icon-user-follow text-success"></i> -->
                 New user registered
             </a>
 
             <a href="#" class="dropdown-item">
-                <i class="icon-user-unfollow text-danger">
+                <i class="icon-user-unfollow text-danger image_icon_custom_pos">
                 </i>
                 User deleted
             </a>
 
             <a href="#" class="dropdown-item">
-                <i class="icon-chart text-info"></i>
+                <i class="icon-chart text-info image_icon_custom_pos"></i>
                 Sales report is ready
             </a>
 
             <a href="#" class="dropdown-item">
-                <i class="icon-basket-loaded text-primary"></i>
+                <i class="icon-basket-loaded text-primary image_icon_custom_pos"></i>
                 New client
             </a>
 
             <a href="#" class="dropdown-item">
-                <i class="icon-speedometer text-warning"></i>
+                <i class="icon-speedometer text-warning image_icon_custom_pos"></i>
                 Server overloaded
             </a>
 
@@ -130,7 +130,7 @@
     <li dropdown="" placement="bottom right" class="nav-item dropdown d-none d-lg-block">
         <a data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" dropdowntoggle="" class="nav-link"
             aria-expanded="false">
-            <i class="fas fa-list"></i>
+            <i class="fas fa-list image_icon_custom_pos"></i>
             <span class="badge badge-custom-pos bg-warning text-dark">15</span>
         </a>
         <div aria-labelledby="simple-dropdown" class="dropdown-menu dropdown-menu-right dropdown-menu-lg"
@@ -175,41 +175,82 @@
     <li dropdown="" placement="bottom right" class="nav-item dropdown d-none d-lg-block">
         <a data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" dropdowntoggle="" class="nav-link"
             aria-expanded="false">
-            <i class="far fa-envelope"></i>
+            <i class="far fa-envelope image_icon_custom_pos"></i>
             <span class="badge badge-custom-pos bg-info text-dark">7</span>
         </a>
+
         <div aria-labelledby="simple-dropdown" class="dropdown-menu dropdown-menu-right dropdown-menu-lg"
             style="left: auto; right: 0px;">
-            <div class="dropdown-header text-center"><strong>You have 4 messages</strong></div><a href="#"
-                class="dropdown-item">
+
+            <div class="dropdown-header text-center">
+                <strong>You have 4 messages</strong>
+            </div>
+
+
+            <a href="#" class="dropdown-item">
+
+                <!-- message notification view component -->
+                <!-- lesson to learn- a divison inside a division takes full width of the parent as we know div is a block level element, (assuming there is not flex element in ancestor chain)
+                but here is a twist that if a div is in inside a flex, unless we don't specify it's widht or height, it will resize according to it's children and may overflow out of flex parent(yes even if parent flex is fixed size, otherwise flex parent will also go with it)
+                 -->
                 <div class="message">
-                    <div class="py-3 mr-3 float-left">
-                        <div class="avatar"><img src="assets/img/avatars/7.jpg" alt="admin@bootstrapmaster.com"
-                                class="img-avatar"><span class="avatar-status badge-success"></span></div>
+                    <div class="me-3">
+                        <div class="avatar">
+                            <img src="assets/images/avatars/profile1.jpeg" alt="profile_photo"
+                                class="img-avatar">
+                            <span class="avatar-status badge-success"></span>
+                        </div>
                     </div>
-                    <div><small class="text-muted">John Doe</small><small class="text-muted float-right mt-1">Just
-                            now</small></div>
-                    <div class="text-truncate font-weight-bold"><span class="fa fa-exclamation text-danger"></span>
-                        Important message</div>
-                    <div class="small text-muted text-truncate">Lorem ipsum dolor sit amet, consectetur adipisicing
-                        elit, sed do eiusmod tempor incididunt...</div>
+
+
+                    <div class="messageInfoWrapper">
+
+                        <div class="nameTimeInfo">
+                            <small class="text-muted">Mss2</small>
+                            <small class="text-muted">Just now</small>
+                        </div>
+
+                        <div class="text-truncate font-weight-bold">
+                            <!-- <span class="fa fa-exclamation text-danger"></span> -->
+                            ! Important message
+                        </div>
+
+
+                        <div class="small text-muted text-truncate">
+                            This is a test message to check if the overflowed text
+                            are truncated or not.
+                        </div>
+
+                    </div>
+
+
                 </div>
-            </a><a href="#" class="dropdown-item">
+
+            </a>
+
+
+
+            <a href="#" class="dropdown-item">
                 <div class="message">
                     <div class="py-3 mr-3 float-left">
-                        <div class="avatar"><img src="assets/img/avatars/6.jpg" alt="admin@bootstrapmaster.com"
+                        <div class="avatar"><img src="assets/img/avatars/6.jpg" alt="profile_photo"
                                 class="img-avatar"><span class="avatar-status badge-warning"></span></div>
                     </div>
-                    <div><small class="text-muted">John Doe</small><small class="text-muted float-right mt-1">5 minutes
-                            ago</small></div>
+                    <div>
+                        <small class="text-muted">John Doe</small>
+                        <small class="text-muted float-right mt-1">5 minutes
+                            ago</small>
+                    </div>
+
                     <div class="text-truncate font-weight-bold">Lorem ipsum dolor sit amet</div>
                     <div class="small text-muted text-truncate">Lorem ipsum dolor sit amet, consectetur adipisicing
                         elit, sed do eiusmod tempor incididunt...</div>
+
                 </div>
             </a><a href="#" class="dropdown-item">
                 <div class="message">
                     <div class="py-3 mr-3 float-left">
-                        <div class="avatar"><img src="assets/img/avatars/5.jpg" alt="admin@bootstrapmaster.com"
+                        <div class="avatar"><img src="assets/img/avatars/5.jpg" alt="profile_photo"
                                 class="img-avatar"><span class="avatar-status badge-danger"></span></div>
                     </div>
                     <div><small class="text-muted">John Doe</small><small class="text-muted float-right mt-1">1:52
@@ -221,7 +262,7 @@
             </a><a href="#" class="dropdown-item">
                 <div class="message">
                     <div class="py-3 mr-3 float-left">
-                        <div class="avatar"><img src="assets/img/avatars/4.jpg" alt="admin@bootstrapmaster.com"
+                        <div class="avatar"><img src="assets/img/avatars/4.jpg" alt="profile_photo"
                                 class="img-avatar"><span class="avatar-status badge-info"></span></div>
                     </div>
                     <div><small class="text-muted">John Doe</small><small class="text-muted float-right mt-1">4:03
@@ -238,7 +279,7 @@
     <!---->
     <li class="nav-item d-none d-lg-block">
         <a href="#" class="nav-link">
-            <i class="fas fa-map-marker-alt"></i>
+            <i class="fas fa-map-marker-alt image_icon_custom_pos"></i>
             <!-- <i class="icon-location-pin"></i> -->
         </a>
     </li>
@@ -247,7 +288,7 @@
         <a data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" dropdowntoggle="" class="nav-link"
             aria-expanded="false">
             <div class=" profileImageWrapper rounded m-auto">
-                <img src="assets/images/avatar.jpg" alt="admin@bootstrapmaster.com" class="img-avatar">
+                <img src="assets/images/avatar.jpg" alt="profile_photo" class="img-avatar">
             </div>
         </a>
 
@@ -259,26 +300,26 @@
             </div>
 
             <a href="#" class="dropdown-item">
-                <i class="far fa-bell icon-bell"></i>
+                <i class="far fa-bell icon-bell image_icon_custom_pos"></i>
                 Updates
                 <span class="badge info-custom_pos bg-info text">42</span>
             </a>
 
             <a href="#" class="dropdown-item">
-                <i class="far fa-envelope"></i>
+                <i class="far fa-envelope image_icon_custom_pos"></i>
                 Messages
                 <span class="badge info-custom_pos bg-success">42</span>
             </a>
 
             <a href="#" class="dropdown-item">
-                <i class="fa fa-tasks"></i>
+                <i class="fa fa-tasks image_icon_custom_pos"></i>
                 Tasks
                 <span class="badge info-custom_pos bg-danger">42</span>
             </a>
 
 
             <a href="#" class="dropdown-item">
-                <i class="fa fa-comments"></i>
+                <i class="fa fa-comments image_icon_custom_pos"></i>
                 Comment
                 <span class="badge info-custom_pos bg-warning">42</span>
             </a>
@@ -290,20 +331,20 @@
                 <strong>Settings</strong>
             </div>
 
-            <a href="#" class="dropdown-item"><i class="fa fa-user"></i> Profile</a>
+            <a href="#" class="dropdown-item"><i class="fa fa-user image_icon_custom_pos"></i> Profile</a>
 
-            <a href="#" class="dropdown-item"><i class="fa fa-wrench"></i>Setting</a>
+            <a href="#" class="dropdown-item"><i class="fa fa-wrench image_icon_custom_pos"></i>Setting</a>
 
 
             <a href="#" class="dropdown-item">
-                <i class="fas fa-rupee-sign"></i>
+                <i class="fas fa-rupee-sign image_icon_custom_pos"></i>
                 Payments
                 <span class="badge info-custom_pos bg-dark">42</span>
             </a>
 
 
             <a href="#" class="dropdown-item">
-                <i class="fas fa-file"></i>
+                <i class="fas fa-file image_icon_custom_pos"></i>
                 <!-- <i class="fa fa-file"></i> -->
                 Projects
                 <span class="badge info-custom_pos bg-primary">42</span></a>
@@ -312,11 +353,11 @@
             <div class="divider"></div>
 
             <a href="#" class="dropdown-item">
-                <i class="fas fa-shield-alt"></i>
+                <i class="fas fa-shield-alt image_icon_custom_pos"></i>
                 Lock account
             </a>
 
-            <a href="#" class="dropdown-item"><i class="fa fa-lock"></i> Logout</a>
+            <a href="#" class="dropdown-item"><i class="fa fa-lock image_icon_custom_pos"></i> Logout</a>
 
         </div>
         <!---->

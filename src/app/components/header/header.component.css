@@ -115,11 +115,40 @@
     right: 10px;
 }
 
-.dropdown-item svg {
+.dropdown-item .image_icon_custom_pos {
     display: inline-block;
     width: 20px;
     margin-right: 10px;
     margin-left: -10px;
     color: #73818f;
     text-align: center;
+}
+
+.avatar {
+    position: relative;
+    display: inline-block;
+    width: 36px;
+    height: 36px;
+}
+
+.message {
+    display: flex;
+    width: 100%;
+    align-items: center;
+}
+
+.messageInfoWrapper {
+    width: 75%;
+}
+
+
+.nameTimeInfo {
+    display: flex;
+    justify-content: space-between;
+}
+
+.small, small {
+    font-size: 80%;
+    font-weight: 400;
+
 }
