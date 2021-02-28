@@ -4,7 +4,10 @@
 </button>
 
 <a class="navbar-brand" [routerLink]="['/dashboard']">
-    <!----><img src="assets/images/logo1.jpg" width="89" height="25" alt="CoreUI Logo" class="navbar-brand-full">
+    <div class="logoWrapper">
+        <!-- <img src="assets/images/logo/logo.svg" width="89" height="35" alt="Mss Logo" class="logo-img"> -->
+        <img src="assets/images/logo/logo.svg" alt="Mss Logo" class="logo-img">
+    </div>
 </a>
 <button type="button" class="d-none d-lg-block navbar-toggler">
     <span class="navbar-toggler-icon"></span>
@@ -13,7 +16,7 @@
 <!-- hide on screens smaller than md(note that it means it will be there for lg, xl also, for removing lg, mentioned it specifically)-->
 <!-- <ul class="navbar-nav d-none d-md-block d-lg-none"> -->
 <ul class="navbar-nav d-none d-lg-flex">
-    <li class="nav-item px-3"><a href="#" class="nav-link">Dashboard</a></li>
+    <li class="nav-item px-3"><a href="#" [routerLink]="['/dashboard']" class="nav-link">Dashboard</a></li>
     <li class="nav-item px-3"><a href="#" class="nav-link">Users</a></li>
     <li class="nav-item px-3"><a href="#" class="nav-link">Settings</a></li>
 </ul>
@@ -131,7 +134,7 @@
         <a data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" dropdowntoggle="" class="nav-link"
             aria-expanded="false">
             <i class="fas fa-list image_icon_custom_pos"></i>
-            <span class="badge badge-custom-pos bg-warning text-dark">15</span>
+            <span class="badge badge-custom-pos bg-warning text-dark">5</span>
         </a>
         <div aria-labelledby="simple-dropdown" class="dropdown-menu dropdown-menu-right dropdown-menu-lg"
             style="left: auto; right: 0px;">
@@ -176,7 +179,7 @@
         <a data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" dropdowntoggle="" class="nav-link"
             aria-expanded="false">
             <i class="far fa-envelope image_icon_custom_pos"></i>
-            <span class="badge badge-custom-pos bg-info text-dark">7</span>
+            <span class="badge badge-custom-pos bg-info text-dark">4</span>
         </a>
 
         <div aria-labelledby="simple-dropdown" class="dropdown-menu dropdown-menu-right dropdown-menu-lg"
@@ -196,8 +199,7 @@
                 <div class="message">
                     <div class="me-3">
                         <div class="avatar">
-                            <img src="assets/images/avatars/profile1.jpeg" alt="profile_photo"
-                                class="img-avatar">
+                            <img src="assets/images/avatars/profile1.jpeg" alt="profile_photo" class="img-avatar">
                             <span class="avatar-status badge-success"></span>
                         </div>
                     </div>
@@ -216,6 +218,8 @@
                         </div>
 
 
+                        <!-- For longer content, we can add a .text-truncate class to truncate the text with an ellipsis. Requires display:
+                        inline-block or display: block. -->
                         <div class="small text-muted text-truncate">
                             This is a test message to check if the overflowed text
                             are truncated or not.
@@ -287,8 +291,8 @@
     <li dropdown="" placement="bottom right" class="nav-item dropdown">
         <a data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" dropdowntoggle="" class="nav-link"
             aria-expanded="false">
-            <div class=" profileImageWrapper rounded m-auto">
-                <img src="assets/images/avatar.jpg" alt="profile_photo" class="img-avatar">
+            <div class=" profileImageWrapper m-auto">
+                <img src="assets/images/my-profile/avatar.jpg" alt="profile_photo" class="img-avatar">
             </div>
         </a>
 
