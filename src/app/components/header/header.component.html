@@ -1,1 +1,186 @@
-<p>header works!</p>
+<!-- means at large screen diplay none, since we have not specified for other screens, it will visibe in other screen -->
+<button type="button" appsidebartoggler="" class="d-lg-none navbar-toggler">
+    <span class="navbar-toggler-icon"></span>
+</button>
+
+<a class="navbar-brand" [routerLink]="['/dashboard']">
+    <!----><img src="assets/images/logo1.jpg" width="89" height="25" alt="CoreUI Logo" class="navbar-brand-full">
+</a>
+<button type="button" class="d-lg-block d-none navbar-toggler">
+    <span class="navbar-toggler-icon"></span>
+</button>
+
+<!-- means at large screen have display block other wise display none -->
+<ul class="navbar-nav d-lg-flex d-none">
+    <li class="nav-item px-3"><a href="#" class="nav-link">Dashboard</a></li>
+    <li class="nav-item px-3"><a href="#" class="nav-link">Users</a></li>
+    <li class="nav-item px-3"><a href="#" class="nav-link">Settings</a></li>
+</ul>
+
+<!-- margin left auto -->
+<ul class="navbar-nav ms-auto">
+
+    <li dropdown="" placement="bottom right" class="nav-item dropdown d-md-down-none">
+        <a data-toggle="dropdown" href="#" role="button" aria-haspopup="true" dropdowntoggle="" class="nav-link"
+            aria-expanded="false">
+            <i class="icon-bell"></i>
+            <span class="badge badge-pill badge-danger">5</span>
+        </a>
+        <div aria-labelledby="simple-dropdown" class="dropdown-menu dropdown-menu-right dropdown-menu-lg"
+            style="left: auto; right: 0px;">
+            <div class="dropdown-header text-center"><strong>You have 5 notifications</strong></div><a href="#"
+                class="dropdown-item"><i class="icon-user-follow text-success"></i> New user registered </a><a href="#"
+                class="dropdown-item"><i class="icon-user-unfollow text-danger"></i> User deleted </a><a href="#"
+                class="dropdown-item"><i class="icon-chart text-info"></i> Sales report is ready </a><a href="#"
+                class="dropdown-item"><i class="icon-basket-loaded text-primary"></i> New client </a><a href="#"
+                class="dropdown-item"><i class="icon-speedometer text-warning"></i> Server overloaded </a>
+            <div class="dropdown-header text-center"><strong>Server</strong></div><a href="#" class="dropdown-item">
+                <div class="text-uppercase mb-1"><small><b>CPU Usage</b></small></div><span
+                    class="progress progress-xs">
+                    <div role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"
+                        class="progress-bar bg-info" style="width: 25%;"></div>
+                </span><small class="text-muted">348 Processes. 1/4 Cores.</small>
+            </a><a href="#" class="dropdown-item">
+                <div class="text-uppercase mb-1"><small><b>Memory Usage</b></small></div><span
+                    class="progress progress-xs">
+                    <div role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"
+                        class="progress-bar bg-warning" style="width: 70%;"></div>
+                </span><small class="text-muted">11444GB/16384MB</small>
+            </a><a href="#" class="dropdown-item">
+                <div class="text-uppercase mb-1"><small><b>SSD 1 Usage</b></small></div><span
+                    class="progress progress-xs">
+                    <div role="progressbar" aria-valuenow="95" aria-valuemin="0" aria-valuemax="100"
+                        class="progress-bar bg-danger" style="width: 95%;"></div>
+                </span><small class="text-muted">243GB/256GB</small>
+            </a>
+        </div>
+        <!---->
+    </li>
+
+    <!---->
+    <li dropdown="" placement="bottom right" class="nav-item dropdown d-md-down-none"><a data-toggle="dropdown" href="#"
+            role="button" aria-haspopup="true" dropdowntoggle="" class="nav-link" aria-expanded="false"><i
+                class="icon-list"></i><span class="badge badge-pill badge-warning">15</span></a>
+        <div aria-labelledby="simple-dropdown" class="dropdown-menu dropdown-menu-right dropdown-menu-lg"
+            style="left: auto; right: 0px;">
+            <div class="dropdown-header text-center"><strong>You have 5 pending tasks</strong></div><a href="#"
+                class="dropdown-item">
+                <div class="small mb-1">Upgrade NPM &amp; Bower <span class="float-right"><strong>0%</strong></span>
+                </div><span class="progress progress-xs">
+                    <div role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"
+                        class="progress-bar bg-info" style="width: 0%;"></div>
+                </span>
+            </a><a href="#" class="dropdown-item">
+                <div class="small mb-1">ReactJS Version <span class="float-right"><strong>25%</strong></span></div><span
+                    class="progress progress-xs">
+                    <div role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"
+                        class="progress-bar bg-danger" style="width: 25%;"></div>
+                </span>
+            </a><a href="#" class="dropdown-item">
+                <div class="small mb-1">VueJS Version <span class="float-right"><strong>50%</strong></span></div><span
+                    class="progress progress-xs">
+                    <div role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"
+                        class="progress-bar bg-warning" style="width: 50%;"></div>
+                </span>
+            </a><a href="#" class="dropdown-item">
+                <div class="small mb-1">Add new layouts <span class="float-right"><strong>75%</strong></span></div><span
+                    class="progress progress-xs">
+                    <div role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"
+                        class="progress-bar bg-info" style="width: 75%;"></div>
+                </span>
+            </a><a href="#" class="dropdown-item">
+                <div class="small mb-1">Angular 2 Cli Version <span class="float-right"><strong>100%</strong></span>
+                </div><span class="progress progress-xs">
+                    <div role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"
+                        class="progress-bar bg-success" style="width: 100%;"></div>
+                </span>
+            </a><a href="#" class="dropdown-item text-center"><strong>View all tasks</strong></a>
+        </div>
+        <!---->
+    </li>
+    <!---->
+    <li dropdown="" placement="bottom right" class="nav-item dropdown d-md-down-none"><a data-toggle="dropdown" href="#"
+            role="button" aria-haspopup="true" dropdowntoggle="" class="nav-link" aria-expanded="false"><i
+                class="icon-envelope-letter"></i><span class="badge badge-pill badge-info">7</span></a>
+        <div aria-labelledby="simple-dropdown" class="dropdown-menu dropdown-menu-right dropdown-menu-lg"
+            style="left: auto; right: 0px;">
+            <div class="dropdown-header text-center"><strong>You have 4 messages</strong></div><a href="#"
+                class="dropdown-item">
+                <div class="message">
+                    <div class="py-3 mr-3 float-left">
+                        <div class="avatar"><img src="assets/img/avatars/7.jpg" alt="admin@bootstrapmaster.com"
+                                class="img-avatar"><span class="avatar-status badge-success"></span></div>
+                    </div>
+                    <div><small class="text-muted">John Doe</small><small class="text-muted float-right mt-1">Just
+                            now</small></div>
+                    <div class="text-truncate font-weight-bold"><span class="fa fa-exclamation text-danger"></span>
+                        Important message</div>
+                    <div class="small text-muted text-truncate">Lorem ipsum dolor sit amet, consectetur adipisicing
+                        elit, sed do eiusmod tempor incididunt...</div>
+                </div>
+            </a><a href="#" class="dropdown-item">
+                <div class="message">
+                    <div class="py-3 mr-3 float-left">
+                        <div class="avatar"><img src="assets/img/avatars/6.jpg" alt="admin@bootstrapmaster.com"
+                                class="img-avatar"><span class="avatar-status badge-warning"></span></div>
+                    </div>
+                    <div><small class="text-muted">John Doe</small><small class="text-muted float-right mt-1">5 minutes
+                            ago</small></div>
+                    <div class="text-truncate font-weight-bold">Lorem ipsum dolor sit amet</div>
+                    <div class="small text-muted text-truncate">Lorem ipsum dolor sit amet, consectetur adipisicing
+                        elit, sed do eiusmod tempor incididunt...</div>
+                </div>
+            </a><a href="#" class="dropdown-item">
+                <div class="message">
+                    <div class="py-3 mr-3 float-left">
+                        <div class="avatar"><img src="assets/img/avatars/5.jpg" alt="admin@bootstrapmaster.com"
+                                class="img-avatar"><span class="avatar-status badge-danger"></span></div>
+                    </div>
+                    <div><small class="text-muted">John Doe</small><small class="text-muted float-right mt-1">1:52
+                            PM</small></div>
+                    <div class="text-truncate font-weight-bold">Lorem ipsum dolor sit amet</div>
+                    <div class="small text-muted text-truncate">Lorem ipsum dolor sit amet, consectetur adipisicing
+                        elit, sed do eiusmod tempor incididunt...</div>
+                </div>
+            </a><a href="#" class="dropdown-item">
+                <div class="message">
+                    <div class="py-3 mr-3 float-left">
+                        <div class="avatar"><img src="assets/img/avatars/4.jpg" alt="admin@bootstrapmaster.com"
+                                class="img-avatar"><span class="avatar-status badge-info"></span></div>
+                    </div>
+                    <div><small class="text-muted">John Doe</small><small class="text-muted float-right mt-1">4:03
+                            PM</small></div>
+                    <div class="text-truncate font-weight-bold">Lorem ipsum dolor sit amet</div>
+                    <div class="small text-muted text-truncate">Lorem ipsum dolor sit amet, consectetur adipisicing
+                        elit, sed do eiusmod tempor incididunt...</div>
+                </div>
+            </a><a href="#" class="dropdown-item text-center"><strong>View all messages</strong></a>
+        </div>
+        <!---->
+    </li>
+    <!---->
+    <li class="nav-item d-md-down-none"><a href="#" class="nav-link"><i class="icon-location-pin"></i></a></li>
+    <li dropdown="" placement="bottom right" class="nav-item dropdown"><a data-toggle="dropdown" href="#" role="button"
+            aria-haspopup="true" dropdowntoggle="" class="nav-link" aria-expanded="false"><img
+                src="assets/img/avatars/6.jpg" alt="admin@bootstrapmaster.com" class="img-avatar"></a>
+        <div aria-labelledby="simple-dropdown" class="dropdown-menu dropdown-menu-right"
+            style="left: auto; right: 0px;">
+            <div class="dropdown-header text-center"><strong>Account</strong></div><a href="#" class="dropdown-item"><i
+                    class="fa fa-bell-o"></i> Updates<span class="badge badge-info">42</span></a><a href="#"
+                class="dropdown-item"><i class="fa fa-envelope-o"></i> Messages<span
+                    class="badge badge-success">42</span></a><a href="#" class="dropdown-item"><i
+                    class="fa fa-tasks"></i> Tasks<span class="badge badge-danger">42</span></a><a href="#"
+                class="dropdown-item"><i class="fa fa-comments"></i> Comment<span
+                    class="badge badge-warning">42</span></a>
+            <div class="dropdown-header text-center"><strong>Settings</strong></div><a href="#" class="dropdown-item"><i
+                    class="fa fa-user"></i> Profile</a><a href="#" class="dropdown-item"><i class="fa fa-wrench"></i>
+                Setting</a><a href="#" class="dropdown-item"><i class="fa fa-usd"></i> Payments<span
+                    class="badge badge-dark">42</span></a><a href="#" class="dropdown-item"><i class="fa fa-file"></i>
+                Projects<span class="badge badge-primary">42</span></a>
+            <div class="divider"></div><a href="#" class="dropdown-item"><i class="fa fa-shield"></i> Lock account</a><a
+                href="#" class="dropdown-item"><i class="fa fa-lock"></i> Logout</a>
+        </div>
+        <!---->
+    </li>
+    <!---->
+</ul>

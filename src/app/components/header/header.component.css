@@ -1,0 +1,37 @@
+.navbar-brand {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 155px;
+    height: 55px;
+    padding: 0;
+    margin-right: 0;
+    background-color: transparent;
+
+}
+
+a {
+    color: #20a8d8;
+    text-decoration: none;
+    background-color: transparent;
+}
+
+.navbar-nav {
+    flex-direction: row;
+    align-items: center;
+}
+
+.navbar-toggler-icon {
+    height: 30px;
+    width: 24px;
+}
+
+.navbar-toggler {
+    border: 0;
+    /* outline: none; */
+}
+
+.navbar-toggler:hover {
+    border: 0;
+    /* outline: none; */
+}

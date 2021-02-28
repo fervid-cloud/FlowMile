@@ -1,5 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
 
+/* in angular.json in architect, styles array , put all the other third party library file before style.css so that style.css can override them
+as in css last value is taken and all above for the same property is discarded */
+
  /* @import "~../node_modules/bootstrap/dist/css/bootstrap.min.css"; */
 
  /* below comes as a default from bootstrap(with some other default of its own like font etc.)
@@ -13,16 +16,26 @@ html {
     overflow: auto;
 }
 
-body {
+/* body {
     position: relative;
     height: 100vh;
     width: 100vw;
     overflow: auto;
+} */
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
+
+
 
 body {
     font-size: .875rem;
     font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,Noto Sans,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji;
+    -webkit-font-smoothing: antialiased;
+    background-color: #e4e5e6;
 }
 
 
@@ -36,6 +49,26 @@ app-footer {
     margin-top: auto;
 }
 
+
+.app-header {
+    position: relative;
+    flex-direction: row;
+    height: 55px;
+    padding: 0;
+    margin: 0;
+    background-color: #fff;
+    border-bottom: 1px solid #c8ced3;
+
+}
+
+
+@media (min-width: 992px) {
+    .app-header {
+        position: fixed;
+        z-index: 1020;
+        width: 100%;
+    }
+}
 
 p {
     margin-bottom: .2rem;
