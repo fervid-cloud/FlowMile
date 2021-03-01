@@ -45,10 +45,6 @@ body {
     min-height: 100vh;
 }
 
-app-footer {
-    margin-top: auto;
-}
-
 
 .app-header {
     position: relative;
@@ -96,4 +92,58 @@ body {
     font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,Noto Sans,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji;
     -webkit-font-smoothing: antialiased;
     background-color: #e4e5e6;
+}
+
+.app-footer {
+    margin-top: auto;
+}
+
+@media (min-width: 992px) {
+    .app-footer, .main-content {
+        margin-left: 200px;
+    }
+}
+
+.app-body {
+    display: flex;
+    flex-direction: row;
+    flex-grow: 1;
+    overflow-x: hidden;
+}
+
+@media (min-width: 992px) {
+    .app-body {
+        margin-top: 55px;
+    }
+}
+
+
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    color: #fff;
+    background: #2f353a;
+}
+
+@media (min-width: 992px) {
+     .sidebar {
+        /* height value computed : 614px */
+        height: calc(100vh - 55px);
+        position: fixed;
+        z-index: 1019;
+        width: 200px;
+        /* height value computed : 669px */
+        /* height: 100vh; */
+        /* width: 20px; */
+    }
+}
+
+.app-header, .app-footer, .main-content, .sidebar {
+    transition: margin-left .25s,margin-right .25s,width .25s,flex .25s;
+}
+
+.app-body .main-content {
+    flex: 1;
+
 }
