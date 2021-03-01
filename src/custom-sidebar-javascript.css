@@ -1,0 +1,67 @@
+.app-header, .app-footer, .main-content, .sidebar {
+    transition: margin-left .25s, margin-right .25s, width .25s, flex .25s;
+}
+
+/* we are going in mobile first approach so that unless something is specified for larger screen, these property
+will be applied to the elements */
+
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    color: #fff;
+    background: #2f353a;
+    /* height value computed : 614px */
+    height: calc(100vh - 55px);
+    position: fixed;
+    z-index: 1019;
+    width: 200px;
+    margin-left: -200px;
+    /* height value computed : 669px */
+    /* height: 100vh; */
+}
+
+.app-footer, .main-content {
+    margin-left: 0px;
+}
+
+/* // X-Small devices (portrait phones, less than 576px) */
+
+/* // No media query for `xs` since this is the default in Bootstrap */
+
+/* // Small devices (landscape phones, 576px and up) */
+
+@media (min-width: 576px) {}
+
+/* // Medium devices (tablets, 768px and up) */
+
+@media (min-width: 768px) {}
+
+/* // Large devices (desktops, 992px and up) */
+
+.sidebar-show .sidebar {
+    margin-left: 0;
+}
+
+.sidebar-show .app-footer, .sidebar-show .main-content {
+    margin-left: 200px;
+}
+
+/* just like mentioned above, all below property will be applicable for screen equal to anad larger than specified width */
+
+@media (min-width: 992px) {
+    .sidebar-lg-show .app-footer, .sidebar-lg-show .main-content {
+        margin-left: 200px;
+    }
+    .sidebar-lg-show .sidebar {
+        margin-left: 0;
+    }
+}
+
+/* // X-Large devices (large desktops, 1200px and up) */
+
+@media (min-width: 1200px) {}
+
+/* // XX-Large devices (larger desktops, 1400px and up) */
+
+@media (min-width: 1400px) {}

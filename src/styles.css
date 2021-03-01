@@ -3,15 +3,18 @@
 /* in angular.json in architect, styles array , put all the other third party library file before style.css so that style.css can override them
 as in css last value is taken and all above for the same property is discarded */
 
- /* @import "~../node_modules/bootstrap/dist/css/bootstrap.min.css"; */
+/* @import "~../node_modules/bootstrap/dist/css/bootstrap.min.css"; */
 
- /* below comes as a default from bootstrap(with some other default of its own like font etc.)
+/* below comes as a default from bootstrap(with some other default of its own like font etc.)
  , so we dont' need to put them explicitly */
+
+/* @import "./sidebar-stye.css";  I have now updated it in angular.json */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
+
 html {
     overflow: auto;
 }
@@ -29,22 +32,18 @@ body {
     min-height: 100vh;
 }
 
-
-
 body {
     font-size: .875rem;
-    font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,Noto Sans,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji;
+    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
     -webkit-font-smoothing: antialiased;
     background-color: #e4e5e6;
 }
-
 
 .app, app-dashboard, app-root {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
 }
-
 
 .app-header {
     position: relative;
@@ -74,7 +73,6 @@ body {
     border: 0;
 }
 
-
 @media (min-width: 992px) {
     .app-header {
         position: fixed;
@@ -89,7 +87,7 @@ p {
 
 body {
     font-size: .875rem;
-    font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,Noto Sans,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji;
+    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
     -webkit-font-smoothing: antialiased;
     background-color: #e4e5e6;
 }
@@ -98,11 +96,7 @@ body {
     margin-top: auto;
 }
 
-@media (min-width: 992px) {
-    .app-footer, .main-content {
-        margin-left: 200px;
-    }
-}
+
 
 .app-body {
     display: flex;
@@ -117,33 +111,6 @@ body {
     }
 }
 
-
-.sidebar {
-    display: flex;
-    flex-direction: column;
-    padding: 0;
-    color: #fff;
-    background: #2f353a;
-}
-
-@media (min-width: 992px) {
-     .sidebar {
-        /* height value computed : 614px */
-        height: calc(100vh - 55px);
-        position: fixed;
-        z-index: 1019;
-        width: 200px;
-        /* height value computed : 669px */
-        /* height: 100vh; */
-        /* width: 20px; */
-    }
-}
-
-.app-header, .app-footer, .main-content, .sidebar {
-    transition: margin-left .25s,margin-right .25s,width .25s,flex .25s;
-}
-
 .app-body .main-content {
     flex: 1;
-
 }
