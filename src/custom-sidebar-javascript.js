@@ -29,8 +29,38 @@ let bodyElement;
 document.addEventListener("DOMContentLoaded", async function () {
     bodyElement = document.querySelector("body");
     bodyElement.classList.add(largerSidebarShow);
-    document.addEventListener('click', setupClickHandlers);
+    const toggleButtons = document.querySelectorAll(toggleTriggerButtonIdentifier);
+    // gets all elements i.e it works even if the element display style is set to none for some of the buttons according to screen requirement
+    // console.log(toggleButtons);
+    // document.addEventListener('click', setupClickHandlers);  seemed too much inefficient
+    for (let i = 0; i < toggleButtons.length; ++i) {
+        toggleButtons[i].addEventListener('click', handleClick);
+    }
 });
+
+
+function handleClick(event) {
+    try {
+    /*  note that target is not taken because that will be the actual element on click happened, but
+        currentTarget is the element through which event is propagating due to event bubbling(by default even listnere is activated for that)
+    */
+        const { currentTarget: reqTarget } = event;
+        if (bodyElement.classList.contains(smallerThanLargeSideBarShow)) {
+            bodyElement.classList.remove(smallerThanLargeSideBarShow)
+            bodyElement.classList.remove(largerSidebarShow);
+            return;
+        }
+
+        if (reqTarget.classList.contains(toggleButtonForLargeScreen)) {
+            bodyElement.classList.toggle(largerSidebarShow);
+        } else if (reqTarget.classList.contains(toggleButtonForSmallScreen)) {
+            bodyElement.classList.toggle(smallerThanLargeSideBarShow);
+        }
+    } catch (ex) {
+        console.log("error was : ", ex);
+    }
+}
+
 
 function setupClickHandlers(event) {
 
