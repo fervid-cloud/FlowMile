@@ -1,0 +1,54 @@
+.sidebar-content-wrapper {
+    position: relative;
+    flex: 1;
+    width: 200px;
+}
+
+.sidebar-content-wrapper .nav {
+    width: 100%;
+    flex-direction: column;
+    min-height: 100%;
+    padding: 0;
+}
+
+.sidebar-content-wrapper .nav-link {
+    color: #fff;
+}
+
+.sidebar-content-wrapper .nav-link.active {
+    background: #3a4248;
+}
+
+.nav-link {
+    /* relative just in case needed in future */
+    position: relative;
+
+}
+
+/* even though it is at the top of the lower one, the lower one should override it but thing is that actually
+specificity is checked, and this one has higher specificity because of extra added class */
+
+.nav-link .image_icon_custom_pos.welcome {
+    color: white;
+}
+
+.nav-link .image_icon_custom_pos {
+    display: inline-block;
+    /* width: 20px; */
+    text-align: center;
+    margin-right: .5rem;
+    color: #73818f;
+}
+
+.nav-link .home {
+    float: right;
+    margin-top: 2px;
+}
+
+.nav-item .custom-nav-title {
+    padding: .75rem 1rem;
+    font-size: 80%;
+    font-weight: 700;
+    color: #e4e7ea;
+    text-transform: uppercase;
+}
