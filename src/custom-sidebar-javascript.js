@@ -26,6 +26,8 @@ const toggleButtonForLargeScreen = "d-lg-block";
 const toggleButtonForSmallScreen = "d-lg-none";
 let bodyElement;
 
+
+
 document.addEventListener("DOMContentLoaded", async function () {
     bodyElement = document.querySelector("body");
     bodyElement.classList.add(largerSidebarShow);

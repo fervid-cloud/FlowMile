@@ -2,9 +2,9 @@
 <div class="nav">
     <div class="nav-item">
         <a href="#" routerLink="[/dashboard]" class="nav-link active">
-                <i class="fas fa-tachometer-alt image_icon_custom_pos welcome"></i>
-                    Welcome
-                    <span class="badge bg-info home">NEW</span>
+        <i class="fab fa-openid image_icon_custom_pos welcome"></i>
+            Welcome
+            <span class="badge bg-info home">NEW</span>
         </a>
     </div>
 
@@ -16,8 +16,8 @@
 
     <div class="nav-item">
         <a href="#" routerLink="[/dashboard]" class="nav-link">
-                <i class="fas fa-tachometer-alt image_icon_custom_pos"></i>
-                Home
+            <i class="fas fa-home image_icon_custom_pos"></i>
+            Home
         </a>
     </div>
 
@@ -36,12 +36,48 @@
     </div>
 
 
-    <div class="nav-item">
-        <a href="#" routerLink="[/dashboard]" class="nav-link">
+    <div class="nav-item customDropdown" >
+        <!-- it doesn't matter if I set true without string, it will still be converted to string for dataset map/object  where customToggler will be key and "true" as value -->
+        <a data-custom-toggler="true" (click)="toggleDropdown($event)" href="#" routerLink="./" class="nav-link">
             <i class="fas fa-tasks image_icon_custom_pos"></i>
             Todo
+
+            <i class="fas fa-caret-right custom-toggle-indicator"></i>
         </a>
+
+        <div class="nav-customItems">
+
+            <div class="nav-item text-white">
+                <a href="#" routerLink="[/dashboard]" class="nav-link">
+                    <i class="fas fa-tasks image_icon_custom_pos"></i>
+                    Pending
+                </a>
+
+            </div>
+            <div class="nav-item text-white">
+                <a href="#" routerLink="[/dashboard]" class="nav-link">
+                    <i class="fas fa-tasks image_icon_custom_pos"></i>
+                    Completed
+                </a>
+
+            </div>
+            <div class="nav-item text-white">
+                <a href="#" routerLink="[/dashboard]" class="nav-link">
+                    <i class="fas fa-tasks image_icon_custom_pos"></i>
+                    All
+                </a>
+
+            </div>
+
+        </div>
     </div>
+
+        <div class="nav-item">
+            <a href="#" routerLink="[/dashboard]" class="nav-link">
+                <i class="fas fa-tachometer-alt image_icon_custom_pos"></i>
+                Test
+            </a>
+        </div>
 
 </div>
 

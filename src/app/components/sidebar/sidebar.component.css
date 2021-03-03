@@ -19,10 +19,15 @@
     background: #3a4248;
 }
 
+/* now since specificity is same, we can put this one below to override above mentioned property with new one */
+
+.nav-item .nav-link:hover {
+    background-color: #63c2de;
+}
+
 .nav-link {
     /* relative just in case needed in future */
     position: relative;
-
 }
 
 /* even though it is at the top of the lower one, the lower one should override it but thing is that actually
@@ -33,15 +38,22 @@ specificity is checked, and this one has higher specificity because of extra add
 }
 
 .nav-link .image_icon_custom_pos {
-    display: inline-block;
+    /* display: inline-block; */
     /* width: 20px; */
     text-align: center;
+    width: 1.09375rem;
     margin-right: .5rem;
     color: #73818f;
 }
 
+/* .nav-link .nav-link-text {
+    line-height: 1em;
+    vertical-align: -.125em;
+} */
+
 .nav-link .home {
-    float: right;
+    position: absolute;
+    right: 15px;
     margin-top: 2px;
 }
 
@@ -51,4 +63,57 @@ specificity is checked, and this one has higher specificity because of extra add
     font-weight: 700;
     color: #e4e7ea;
     text-transform: uppercase;
+}
+
+/*
+
+explanation as for why transitions don't apply to display attributes
+https://stackoverflow.com/questions/3331353/transitions-on-the-css-display-property
+
+display: none on the other hand actually prevents the element from rendering entirely.
+It does not take up any layout space.
+
+Other elements that would’ve occupied some or all of the space taken up by this element now adjust
+to occupy that space, as if the element simply did not exist at all. display is not just another
+visual attribute. It establishes the entire rendering mode of the element, such as whether it’s a
+block, inline, inline-block, table, table-row, table-cell, list-item, or whatever! Each of those
+have very different layout ramifications, and there would be no reasonable way to animate or
+smoothly transition them (try to imagine a smooth transition from block to inline or vice-versa,
+for instance!). This is why transitions are disabled if display changes (even if the change is to
+or from none — none isn’t merely invisibility, it’s its own element rendering mode that means no
+rendering at all!).
+*/
+
+.customDropdown .nav-customItems {
+    /* https: //stackoverflow.com/questions/3508605/how-can-i-transition-height-0-to-height-auto-using-css
+    Use max-height in the transition and not height. And set a value on max-height to something bigger
+    than your box will ever get. */
+    /* height: 0; */
+    max-height: 0;
+    overflow: hidden;
+    pointer-events: none;
+    background-color: #1b1f22;
+    transition: max-height .4s ease-in-out;
+}
+
+.customDropdown.open .nav-customItems {
+    display: block;
+    max-height: 1500px;
+    /* transition short hand property: property-on-which-we-want-to-show-change transition-duration transition-timing-function transition-delay */
+    transition: max-height .4s ease-in-out;
+}
+
+.customDropdown>.nav-link .custom-toggle-indicator {
+    position: absolute;
+    top: 50%;
+    right: 1rem;
+    display: block;
+    content: "";
+    color: wheat;
+    transition: transform .4s ease-in-out;
+    transform: translateY(-30%) rotate(0deg);
+}
+
+.customDropdown.open>.nav-link .custom-toggle-indicator {
+    transform: translateY(-30%) rotate(+90deg);
 }
