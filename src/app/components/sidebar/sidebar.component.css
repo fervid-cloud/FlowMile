@@ -91,7 +91,6 @@ rendering at all!).
     /* height: 0; */
     max-height: 0;
     overflow: hidden;
-    pointer-events: none;
     background-color: #1b1f22;
     transition: max-height .4s ease-in-out;
 }
@@ -109,8 +108,9 @@ rendering at all!).
     right: 1rem;
     display: block;
     content: "";
-    color: wheat;
-    transition: transform .4s ease-in-out;
+    color: #73818f;
+    /* transition function : ease Default value. Specifies a transition effect with a slow start, then fast, then end slowly */
+    transition: transform .4s;
     transform: translateY(-30%) rotate(0deg);
 }
 
