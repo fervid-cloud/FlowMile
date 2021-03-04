@@ -37,8 +37,6 @@ will be applied to the elements */
 
 @media (min-width: 768px) {}
 
-/* // Large devices (desktops, 992px and up) */
-
 .sidebar-show .sidebar {
     margin-left: 0;
 }
@@ -48,6 +46,8 @@ will be applied to the elements */
 }
 
 /* just like mentioned above, all below property will be applicable for screen equal to anad larger than specified width */
+
+/* // Large devices (desktops, 992px and up) */
 
 @media (min-width: 992px) {
     .sidebar-lg-show .app-footer, .sidebar-lg-show .main-content {

@@ -9,6 +9,7 @@ as in css last value is taken and all above for the same property is discarded *
  , so we dont' need to put them explicitly */
 
 /* @import "./sidebar-stye.css";  I have now updated it in angular.json */
+
 * {
     margin: 0;
     padding: 0;
@@ -39,7 +40,7 @@ body {
     background-color: #e4e5e6;
 }
 
-.app, app-dashboard, app-root {
+.app, app-dashboard, app-root, app-not-found, app-internal-server-error {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
@@ -95,8 +96,6 @@ body {
 .app-footer {
     margin-top: auto;
 }
-
-
 
 .app-body {
     display: flex;

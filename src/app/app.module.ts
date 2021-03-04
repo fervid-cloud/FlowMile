@@ -9,7 +9,8 @@ import { HeaderComponent } from './components/header/header.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { MainContentComponent } from './components/main-content/main-content.component';
-
+import { NotFoundComponent } from './components/error-handling/not-found/not-found.component';
+import { InternalServerErrorComponent } from './components/error-handling/internal-server-error/internal-server-error.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,9 @@ import { MainContentComponent } from './components/main-content/main-content.com
     FooterComponent,
     BodyComponent,
     SidebarComponent,
-    MainContentComponent
+    MainContentComponent,
+    NotFoundComponent,
+    InternalServerErrorComponent
   ],
   imports: [
     BrowserModule,

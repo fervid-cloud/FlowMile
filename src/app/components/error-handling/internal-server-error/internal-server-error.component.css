@@ -1,0 +1,28 @@
+.not-found-wrapper {
+    min-height: 100%;
+}
+
+.content {
+    margin: auto;
+    display: flex;
+}
+
+.completeWrapper {
+    display: flex;
+    margin: auto;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+}
+
+.completeWrapper * {
+    text-align: center;
+}
+
+/* greter than small screen  */
+
+@media (min-width: 576px) {
+    .completeWrapper .messageWrapper * {
+        text-align: left;
+    }
+}
