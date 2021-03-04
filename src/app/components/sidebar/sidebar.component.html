@@ -49,7 +49,7 @@
             <div class="nav-customItems">
 
                 <div class="nav-item text-white">
-                    <a href="#" routerLink="[/dashboard]" class="nav-link">
+                    <a href="#" [routerLink]="['todo']" data-name="todo" (click)="handleClickOnOption($event)" class="nav-link">
                         <i class="fas fa-tasks image_icon_custom_pos"></i>
                         Pending
                     </a>
