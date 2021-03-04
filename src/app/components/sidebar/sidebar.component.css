@@ -117,3 +117,41 @@ rendering at all!).
 .customDropdown.open>.nav-link .custom-toggle-indicator {
     transform: translateY(-30%) rotate(+90deg);
 }
+
+.sidebar-content-wrapper:hover {
+    overflow-y: auto;
+}
+/* .scrollContainer {
+    position: absolute;
+    width: 7px;
+    height: 614px;;
+    top: 0px;
+    right: 0px;
+    opacity: 0;
+}
+
+.scrollContainer:hover {
+    background-color: #eee;
+    display: block;
+    opacity: .6;
+    width: 15px;
+    transition: background-color .2s linear, opacity .2s linear;
+}
+
+.scrollbar {
+    position: absolute;
+    background-color: #aaa;
+    border-radius: 6px;
+    right: 2px;
+    width: 6px;
+    top: 0px;
+    height: 421px;
+}
+
+.scrollbar:hover {
+    width: 11px;
+} */
+
+/* .si:hover > .scrollbar {
+        opacity: .6;
+    } */
