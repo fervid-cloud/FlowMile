@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { DashboardComponent } from './components/dashboard/dashboard.component';
-import { InternalServerErrorComponent } from './components/error-handling/internal-server-error/internal-server-error.component';
-import { NotFoundComponent } from './components/error-handling/not-found/not-found.component';
-import { ToDoComponent } from './components/features/to-do/to-do.component';
+import { DashboardComponent } from './shared/components/dashboard/dashboard.component';
+import { InternalServerErrorComponent } from './shared/components/error-handling/internal-server-error/internal-server-error.component';
+import { NotFoundComponent } from './shared/components/error-handling/not-found/not-found.component';
+import { ToDoComponent } from './features/to-do/components/to-do.component';
 
 /* What about path: '**' ?
     path : '**' will match absolutely anything(af / frewf / 321532152 / fsa is a match) with or without a pathMatch: 'full'.

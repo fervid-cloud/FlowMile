@@ -38,7 +38,12 @@
 
         <div class="nav-item customDropdown">
             <!-- it doesn't matter if I set true without string, it will still be converted to string for dataset map/object  where customToggler will be key and "true" as value -->
-            <a data-custom-toggler="true" (click)="toggleDropdown($event)" href="#" routerLink="./" class="nav-link">
+
+            <!-- if you want to no link operation with href , you can use it like :
+
+            <a href="javascript:void(0);">something</a> -->
+
+            <a data-custom-toggler="true" (click)="toggleDropdown($event)" href="javascript:void(0);" class="nav-link">
                 <i class="fas fa-tasks image_icon_custom_pos"></i>
                 Todo
 
