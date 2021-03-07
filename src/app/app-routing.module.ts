@@ -44,7 +44,6 @@ const routes: Routes = [
         path: 'dashboard',
         // pathMatch: 'full',
         component: DashboardComponent,
-        // outlet: 'main-outlet',
         children: [
             {
                 path: 'todo', component: ToDoComponent, pathMatch: 'full'

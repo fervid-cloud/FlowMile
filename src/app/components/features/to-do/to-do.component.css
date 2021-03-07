@@ -1,0 +1,12 @@
+.text-truncate-override {
+    -webkit-line-clamp: 3;
+    white-space: normal;
+    -webkit-box-orient: vertical;
+    display: -webkit-box;
+}
+
+.nav-link.active {
+    /* background-color: rgb(0, 123, 255); */
+    background-color: rgb(40, 167, 69);
+     color: white;
+}

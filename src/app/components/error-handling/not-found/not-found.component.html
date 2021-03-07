@@ -4,6 +4,15 @@
         <div class="messageWrapper">
             <h4 class="">Oops! Looks like you're lost</h4>
             <p class="text-muted">The page you are looking for was not found.</p>
+
+            <!-- Angular docs say:
+            If the first segment begins with /, the router will look up the route from the root of the app.
+            If the first segment begins with ./, or doesn't begin with a slash, the router will instead look in the children of the
+            current activated route.
+            And if the first segment begins with ../, the router will go up one level. -->
+
+            <a href="#" [routerLink]="['/dashboard']" class="btn btn-success">Go to Home</a>
         </div>
+
     </div>
 </div>
