@@ -12,6 +12,7 @@ import { MainContentComponent } from './shared/components/main-content/main-cont
 import { NotFoundComponent } from './shared/components/error-handling/not-found/not-found.component';
 import { InternalServerErrorComponent } from './shared/components/error-handling/internal-server-error/internal-server-error.component';
 import { ToDoComponent } from './features/to-do/components/to-do.component';
+import { ToDoBoxComponent } from './features/to-do/components/to-do-box/to-do-box.component';
 
 
 @NgModule({
@@ -25,7 +26,8 @@ import { ToDoComponent } from './features/to-do/components/to-do.component';
     MainContentComponent,
     NotFoundComponent,
     InternalServerErrorComponent,
-    ToDoComponent
+    ToDoComponent,
+    ToDoBoxComponent
   ],
   imports: [
     BrowserModule,

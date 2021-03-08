@@ -41,8 +41,22 @@ will be applied to the elements */
     margin-left: 0;
 }
 
+/* we want to let sidebar go over the footer and main content if the width of the screen is less than large */
+
 .sidebar-show .app-footer, .sidebar-show .main-content {
-    margin-left: 200px;
+    margin-left: 0px;
+}
+
+.sidebar-show .main-content:before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1018;
+    width: 100%;
+    height: 100%;
+    content: "";
+    background: rgba(0, 0, 0, .7);
+    animation: opacity .4s;
 }
 
 /* just like mentioned above, all below property will be applicable for screen equal to anad larger than specified width */
@@ -55,6 +69,14 @@ will be applied to the elements */
     }
     .sidebar-lg-show .sidebar {
         margin-left: 0;
+    }
+
+    .sidebar-show .app-footer, .sidebar-show .main-content {
+        margin-left: 200px;
+    }
+
+    .sidebar-show .main-content:before {
+        background: transparent;
     }
 }
 

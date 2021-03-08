@@ -56,6 +56,12 @@ body {
     border-bottom: 1px solid #c8ced3;
 }
 
+.app-header {
+    position: fixed;
+    z-index: 1020;
+    width: 100%;
+}
+
 .app-header .nav-item {
     position: relative;
     min-width: 50px;
@@ -72,14 +78,6 @@ body {
     padding-bottom: 0;
     background: 0;
     border: 0;
-}
-
-@media (min-width: 992px) {
-    .app-header {
-        position: fixed;
-        z-index: 1020;
-        width: 100%;
-    }
 }
 
 p {
@@ -102,12 +100,8 @@ body {
     flex-direction: row;
     flex-grow: 1;
     overflow-x: hidden;
-}
-
-@media (min-width: 992px) {
-    .app-body {
-        margin-top: 55px;
-    }
+    margin-top: 55px;
+    position: relative;
 }
 
 .app-body .main-content {

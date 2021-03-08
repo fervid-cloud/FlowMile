@@ -1,0 +1,15 @@
+.custom-text-truncate {
+    -webkit-line-clamp: 3;
+    white-space: normal;
+    -webkit-box-orient: vertical;
+    display: -webkit-box;
+    overflow: hidden;/*( for hiding text more than 3 lines */
+}
+
+.done {
+    background-color: rgb(121, 184, 121);
+}
+
+.pending {
+    background-color: rgb(223, 111, 111);
+}

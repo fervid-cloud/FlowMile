@@ -13,16 +13,35 @@ export class ToDoComponent implements OnInit {
     constructor() { }
 
     ngOnInit(): void {
-        this.createTask("TaskTitle", "Word of the task", true);
-        this.createTask("TaskTitle", "Word of the task 2", false);
-
+        this.createTask("TaskTitle", "Word of the task Word of the task Word of the task Word of the task", true, 1);
+        this.createTask("TaskTitle", "Word of the task 2", false, 6);
+        this.toDoList[0].setTextContent("Word of the task Word of the task Word of the task Word of the task task Word of the task Word of the task Word of the task");
 
     }
 
-    createTask(arg0: string, arg1: string, arg2: boolean) {
-        for (let i = 0; i < 5; ++i) {
-
+    createTask(title: string, textContent: string, taskStatus: boolean, start: number) {
+        for (let i = start; i < start + 5; ++i) {
+            const currentToDo: Todo = new Todo();
+            currentToDo.setTodoId(i);
+            currentToDo.setTitle(title);
+            currentToDo.setTextContent(textContent);
+            currentToDo.setTaskStatus(taskStatus);
+            currentToDo.setCreationTime(new Date());
+            currentToDo.setUpdationTime(new Date());
+            this.toDoList.push(currentToDo);
         }
+    }
+
+    getAllTodo() {
+        return this.toDoList;
+    }
+
+    getPendingTask() {
+        return this.toDoList.filter((task) => task.getTaskStatus() == false);
+    }
+
+    getDoneTask() {
+        return this.toDoList.filter((task) => task.getTaskStatus() == true);
     }
 
     private makeArray(n: number) : number []{

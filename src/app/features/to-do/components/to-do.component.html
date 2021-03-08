@@ -6,57 +6,19 @@
             role="tab" aria-controls="nav-profile" aria-selected="false">Done</button>
         <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact" type="button"
             role="tab" aria-controls="nav-contact" aria-selected="false">Pending</button>
+        <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-add" type="button"
+            role="tab" aria-controls="nav-add" aria-selected="false">Add</button>
     </div>
 </nav>
+
 <div class="tab-content" id="nav-tabContent">
+
     <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
 
         <div class="row">
-            <div *ngFor="let cur of getArray(4)" class="col-sm-6 col-md-4 col-lg-3 mt-2">
-                <div class="card text-center" style="max-width: 100%">
-                    <div class="card-header">
-                        Featured
-                    </div>
-                    <div class="card-body">
-                        <h5 class="card-title">Special title treatment</h5>
-                        <p class="resource-container card-text text-truncate text-truncate-override">With supporting text below as a natural lead-in to additional content. With supporting text below as a natural lead-in to additional content.
-                        With supporting text below as a natural lead-in to additional content. With supporting text below as a natural
-                        With supporting text below as a natural lead-in to additional content. With supporting text below as a natural
-                        lead-in to additional content.</p>
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
-                    </div>
-                    <div class="card-footer text-muted">
-                        2 days ago
-                    </div>
-                </div>
-            </div>
+            <div *ngFor="let cur of getAllTodo()" class="col-sm-6 col-md-4 col-lg-3 mt-2">
+                <app-to-do-box [unitTodo]="cur"></app-to-do-box>
 
-            <div class="col-sm-6 col-md-4 col-lg-3 mt-2">
-                <div class="card text-center">
-                    <div class="card-header">
-                        Featured
-                    </div>
-                    <div class="card-body">
-                        <h5 class="card-title ">Special title treatment</h5>
-                        <p class="card-text text-truncate text-truncate-override">With supporting text below as a natural lead-in to additional content. With supporting
-                            text below as a natural lead-in to additional content.
-                            With supporting text below as a natural lead-in to additional content. With supporting text below as a
-                            natural
-                            With supporting text below as a natural lead-in to additional content. With supporting text below as a
-                            natural
-                            With supporting text below as a natural lead-in to additional content. With supporting text below as a
-                            natural
-                            With supporting text below as a natural lead-in to additional content. With supporting text below as a
-                            natural
-                            With supporting text below as a natural lead-in to additional content. With supporting text below as a
-                            natural
-                            lead-in to additional content.</p>
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
-                    </div>
-                    <div class="card-footer text-muted">
-                        2 days ago
-                    </div>
-                </div>
             </div>
 
         </div>
@@ -64,18 +26,23 @@
     </div>
 
     <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
-        Placeholder content for the Profile tab panel. This one relates to the profile tab. You got the finest architecture. Passport
-        stamps, she's cosmopolitan. Fine, fresh, fierce, we got it on lock. Never planned that one day I'd be losing you. She
-        eats your heart out. Your kiss is cosmic, every move is magic. I mean the ones, I mean like she's the one. Greetings
-        loved ones let's take a journey. Just own the night like the 4th of July! But you'd rather get wasted.
+        <div class="row">
+            <div *ngFor="let cur of getDoneTask()" class="col-sm-6 col-md-4 col-lg-3 mt-2">
+                <app-to-do-box [unitTodo]="cur"></app-to-do-box>
+            </div>
+
+        </div>
     </div>
 
     <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
-        Placeholder content for the Contact tab panel. This one relates to the contact tab. Her love is like a drug. All my girls
-        vintage Chanel baby. Got a motel and built a fort out of sheets. 'Cause she's the muse and the artist. (This is how we
-        do) So you wanna play with magic. So just be sure before you give it all to me. I'm walking, I'm walking on air
-        (tonight). Skip the talk, heard it all, time to walk the walk. Catch her if you can. Stinging like a bee I earned my
-        stripes.
+        <div class="row">
+            <div *ngFor="let cur of getPendingTask()" class="col-sm-6 col-md-4 col-lg-3 mt-2">
+                <app-to-do-box [unitTodo]="cur"></app-to-do-box>
+            </div>
+        </div>
+    </div>
+    <div class="tab-pane fade" id="nav-add" role="tabpanel" aria-labelledby="nav-add-tab">
+        Placeholder content for the Adding ToDo
     </div>
 
 </div>
