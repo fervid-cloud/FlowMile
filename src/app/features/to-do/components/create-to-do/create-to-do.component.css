@@ -7,6 +7,8 @@
 
 .customAnimation {
     animation: rightToLeft 0.5s ease forwards;
+    /* to avoid wrapping of text when screen width is small during animation for eg. mobile */
+    white-space: nowrap;
 }
 
 @keyframes rightToLeft {
@@ -17,7 +19,6 @@
         margin-left: 0%;
     }
 }
-
 
 .customField {
     margin-bottom: 0.7rem;

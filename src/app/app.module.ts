@@ -15,6 +15,8 @@ import { InternalServerErrorComponent } from './shared/components/error-handling
 import { ToDoComponent } from './features/to-do/components/to-do.component';
 import { ToDoBoxComponent } from './features/to-do/components/to-do-box/to-do-box.component';
 import { CreateToDoComponent } from './features/to-do/components/create-to-do/create-to-do.component';
+import { ToDoDetailComponent } from './features/to-do/components/to-do-detail/to-do-detail.component';
+import { ToDoListComponent } from './features/to-do/components/to-do-list/to-do-list.component';
 
 
 @NgModule({
@@ -30,7 +32,9 @@ import { CreateToDoComponent } from './features/to-do/components/create-to-do/cr
         InternalServerErrorComponent,
         ToDoComponent,
         ToDoBoxComponent,
-        CreateToDoComponent
+        CreateToDoComponent,
+        ToDoDetailComponent,
+        ToDoListComponent
     ],
     imports: [
         BrowserModule,

@@ -1,10 +1,10 @@
 <nav>
     <div class="nav nav-tabs mt-2 bg-light" id="nav-tab" role="tablist">
-        <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button"
+        <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-all" type="button"
             role="tab" aria-controls="nav-home" aria-selected="true">All</button>
-        <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button"
+        <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-done" type="button"
             role="tab" aria-controls="nav-profile" aria-selected="false">Done</button>
-        <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact" type="button"
+        <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-pending" type="button"
             role="tab" aria-controls="nav-contact" aria-selected="false">Pending</button>
         <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-add" type="button"
             role="tab" aria-controls="nav-add" aria-selected="false">Add</button>
@@ -13,34 +13,18 @@
 
 <div class="tab-content" id="nav-tabContent">
 
-    <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-
-        <div class="row">
-            <div *ngFor="let cur of getAllTodo()" class="col-sm-6 col-md-4 col-lg-3 mt-2">
-                <app-to-do-box [unitTodo]="cur"></app-to-do-box>
-
-            </div>
-
-        </div>
-
+    <div class="tab-pane fade show active" id="nav-all" role="tabpanel" aria-labelledby="nav-home-tab">
+        <app-to-do-list [curTodoList]="getAllTodo()"></app-to-do-list>
     </div>
 
-    <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
-        <div class="row">
-            <div *ngFor="let cur of getDoneTask()" class="col-sm-6 col-md-4 col-lg-3 mt-2">
-                <app-to-do-box [unitTodo]="cur"></app-to-do-box>
-            </div>
-
-        </div>
+    <div class="tab-pane fade" id="nav-done" role="tabpanel" aria-labelledby="nav-profile-tab">
+        <app-to-do-list [curTodoList]="getDoneTask()"></app-to-do-list>
     </div>
 
-    <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
-        <div class="row">
-            <div *ngFor="let cur of getPendingTask()" class="col-sm-6 col-md-4 col-lg-3 mt-2">
-                <app-to-do-box [unitTodo]="cur"></app-to-do-box>
-            </div>
-        </div>
+    <div class="tab-pane fade" id="nav-pending" role="tabpanel" aria-labelledby="nav-profile-tab">
+        <app-to-do-list [curTodoList]="getPendingTask()"></app-to-do-list>
     </div>
+
     <div class="tab-pane fade" id="nav-add" role="tabpanel" aria-labelledby="nav-add-tab">
        <app-create-to-do></app-create-to-do>
     </div>

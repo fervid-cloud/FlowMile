@@ -4,6 +4,9 @@ import { DashboardComponent } from './shared/components/dashboard/dashboard.comp
 import { InternalServerErrorComponent } from './shared/components/error-handling/internal-server-error/internal-server-error.component';
 import { NotFoundComponent } from './shared/components/error-handling/not-found/not-found.component';
 import { ToDoComponent } from './features/to-do/components/to-do.component';
+import { ToDoListComponent } from './features/to-do/components/to-do-list/to-do-list.component';
+import { CreateToDoComponent } from './features/to-do/components/create-to-do/create-to-do.component';
+import { ToDoDetailComponent } from './features/to-do/components/to-do-detail/to-do-detail.component';
 
 /* What about path: '**' ?
     path : '**' will match absolutely anything(af / frewf / 321532152 / fsa is a match) with or without a pathMatch: 'full'.
@@ -46,7 +49,24 @@ const routes: Routes = [
         component: DashboardComponent,
         children: [
             {
-                path: 'todo', component: ToDoComponent, pathMatch: 'full'
+                path: 'todo', component: ToDoComponent, pathMatch: 'full',
+                children: [
+                    {
+                        path: 'list/all', component: ToDoListComponent, pathMatch: 'full',
+                    },
+                    {
+                        path: 'list/done', component: ToDoListComponent, pathMatch: 'full',
+                    },
+                    {
+                        path: 'list/pending', component: ToDoListComponent, pathMatch: 'full',
+                    },
+                    {
+                        path: 'add', component: CreateToDoComponent, pathMatch: 'full',
+                    },
+                    {
+                        path: 'detail', component: ToDoDetailComponent, pathMatch: 'full',
+                    }
+                ]
             }
         ]
     }
