@@ -15,7 +15,7 @@ export class ToDoComponent implements OnInit {
     ngOnInit(): void {
         this.createTask("TaskTitle", "Word of the task Word of the task Word of the task Word of the task", true, 1);
         this.createTask("TaskTitle", "Word of the task 2", false, 6);
-        this.toDoList[0].setTextContent("Word of the task Word of the task Word of the task Word of the task task Word of the task Word of the task Word of the task");
+        this.toDoList[0].setTextContent("Word of the tasdf dsfsdfdsdfg gfdgdfhfghgfh jhhgj g k Word of the task Word of the task Word of the task task Word of the task Word of the task Word of the task");
 
     }
 

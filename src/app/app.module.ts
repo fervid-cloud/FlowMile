@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms'; // <-- NgModel lives here
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -13,27 +14,30 @@ import { NotFoundComponent } from './shared/components/error-handling/not-found/
 import { InternalServerErrorComponent } from './shared/components/error-handling/internal-server-error/internal-server-error.component';
 import { ToDoComponent } from './features/to-do/components/to-do.component';
 import { ToDoBoxComponent } from './features/to-do/components/to-do-box/to-do-box.component';
+import { CreateToDoComponent } from './features/to-do/components/create-to-do/create-to-do.component';
 
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    DashboardComponent,
-    HeaderComponent,
-    FooterComponent,
-    BodyComponent,
-    SidebarComponent,
-    MainContentComponent,
-    NotFoundComponent,
-    InternalServerErrorComponent,
-    ToDoComponent,
-    ToDoBoxComponent
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent,
+        DashboardComponent,
+        HeaderComponent,
+        FooterComponent,
+        BodyComponent,
+        SidebarComponent,
+        MainContentComponent,
+        NotFoundComponent,
+        InternalServerErrorComponent,
+        ToDoComponent,
+        ToDoBoxComponent,
+        CreateToDoComponent
+    ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        FormsModule
+    ],
+    providers: [],
+    bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -47,16 +47,49 @@ will be applied to the elements */
     margin-left: 0px;
 }
 
-.sidebar-show .main-content:before {
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 1018;
-    width: 100%;
-    height: 100%;
-    content: "";
-    background: rgba(0, 0, 0, .7);
-    animation: opacity .4s;
+/* basically transition has not efect on pseudo class selectors but only on normal selector, but animation can work
+here i.e why animation was used instead of transition
+Pseudo class selectors are CSS selectors with a colon preceding them.
+You are probably very familiar with a few of them. Like hover:
+
+According to those docs, they are equivalent:
+
+element:before  { style properties }   CSS2 syntax
+
+element::before {
+    style properties
+}
+
+CSS3 syntax
+
+The only difference is that the double colon is used in CSS3, whereas the single colon is the legacy version.
+Reasoning: The ::before notation was introduced in CSS 3 in order to establish a discrimination between
+pseudo-classes and pseudo-elements. Browsers also accept the notation :before introduced in CSS 2. */
+@media(max-width: 991px) {
+    .sidebar-show .main-content:before {
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 1018;
+        width: 100%;
+        height: 100%;
+        content: "";
+        /* forwards tells animation to know reset after it has reached 100%, i.e to stay at the state of 100% */
+        animation: changeBackgroundColor 0.5s ease forwards;
+    }
+}
+
+/* just like media queries, we can define our keyframes */
+
+@keyframes changeBackgroundColor {
+    /* we can add more steps at different percentage if we want more complex animation */
+    /* if we don't specify 0% it takes the initial one, so basically we could skip this 0% one definition  */
+    0% {
+        background-color: transparent;
+    }
+    100% {
+        background-color: rgba(0, 0, 0, .7);
+    }
 }
 
 /* just like mentioned above, all below property will be applicable for screen equal to anad larger than specified width */
@@ -70,14 +103,12 @@ will be applied to the elements */
     .sidebar-lg-show .sidebar {
         margin-left: 0;
     }
-
     .sidebar-show .app-footer, .sidebar-show .main-content {
         margin-left: 200px;
     }
-
-    .sidebar-show .main-content:before {
-        background: transparent;
-    }
+    /* .sidebar-show .main-content:before {
+        background-color: transparent;
+    } */
 }
 
 /* // X-Large devices (large desktops, 1200px and up) */

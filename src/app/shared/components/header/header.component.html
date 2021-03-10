@@ -16,9 +16,9 @@
 <!-- hide on screens smaller than md(note that it means it will be there for lg, xl also, for removing lg, mentioned it specifically)-->
 <!-- <ul class="navbar-nav d-none d-md-block d-lg-none"> -->
 <ul class="navbar-nav d-none d-lg-flex">
-    <li class="nav-item px-3"><a href="#" [routerLink]="['/dashboard']" class="nav-link">Dashboard</a></li>
-    <li class="nav-item px-3"><a href="#" class="nav-link">Users</a></li>
-    <li class="nav-item px-3"><a href="#" class="nav-link">Settings</a></li>
+    <li class="nav-item px-3"><a href="javascript:void(0);" [routerLink]="['/dashboard']" class="nav-link">Dashboard</a></li>
+    <li class="nav-item px-3"><a href="javascript:void(0);" class="nav-link">Users</a></li>
+    <li class="nav-item px-3"><a href="javascript:void(0);" class="nav-link">Settings</a></li>
 </ul>
 
 <!-- margin left auto -->
@@ -46,14 +46,14 @@
         <!-- note that data-bs-target is optional, as bootstrap will take the div having class of dropdown-menu as dropdown, but if we have
         suppose multiple drowdowns depending upon some condition, we can show our particular drop down by pointing to
         the particular type of element having drop-down-menu as class by using it's id attribute -->
-        <a data-bs-toggle="dropdown" id="simple-dropdown" href="#" role="button" aria-haspopup="true" class="nav-link"
+        <a data-bs-toggle="dropdown" id="simple-dropdown" href="javascript:void(0);" role="button" aria-haspopup="true" class="nav-link"
             aria-expanded="false" data-bs-target="#pointingToTheSpecificDropDownMenuForMultipleDropDowns">
             <i class="far fa-bell icon-bell image_icon_custom_pos"></i>
             <!-- Badges can be used as part of links or buttons to provide a counter. -->
             <span class="badge badge-custom-pos badge-danger">5</span>
         </a>
         <!-- <div id="pointingToTheSpecificDropDownMenuForMultipleDropDowns" class="dropdown-menu dropdown-menu-right dropdown-menu-lg" style="left: auto; right: 0px;">
-            <a href="#" class="dropdown-item">
+            <a href="javascript:void(0);" class="dropdown-item">
                 <i class="fas fa-user text-success"></i>
                 <i class="icon-user-follow text-success"></i>
                 New user registered
@@ -66,29 +66,29 @@
                 <strong>You have 5 notifications</strong>
             </div>
 
-            <a href="#" class="dropdown-item">
+            <a href="javascript:void(0);" class="dropdown-item">
                 <i class="fas fa-user text-success image_icon_custom_pos"></i>
                 <!-- <i class="image_icon_custom_pos icon-user-follow text-success"></i> -->
                 New user registered
             </a>
 
-            <a href="#" class="dropdown-item">
+            <a href="javascript:void(0);" class="dropdown-item">
                 <i class="icon-user-unfollow text-danger image_icon_custom_pos">
                 </i>
                 User deleted
             </a>
 
-            <a href="#" class="dropdown-item">
+            <a href="javascript:void(0);" class="dropdown-item">
                 <i class="icon-chart text-info image_icon_custom_pos"></i>
                 Sales report is ready
             </a>
 
-            <a href="#" class="dropdown-item">
+            <a href="javascript:void(0);" class="dropdown-item">
                 <i class="icon-basket-loaded text-primary image_icon_custom_pos"></i>
                 New client
             </a>
 
-            <a href="#" class="dropdown-item">
+            <a href="javascript:void(0);" class="dropdown-item">
                 <i class="icon-speedometer text-warning image_icon_custom_pos"></i>
                 Server overloaded
             </a>
@@ -96,7 +96,7 @@
             <div class="dropdown-header text-center">
                 <strong>Server</strong>
             </div>
-            <a href="#" class="dropdown-item">
+            <a href="javascript:void(0);" class="dropdown-item">
                 <div class="text-uppercase mb-1">
                     <small><b>CPU Usage</b></small>
                 </div>
@@ -107,7 +107,7 @@
                 <small class="text-muted">348 Processes. 1/4 Cores.</small>
             </a>
 
-            <a href="#" class="dropdown-item">
+            <a href="javascript:void(0);" class="dropdown-item">
                 <div class="text-uppercase mb-1">
                     <small><b>Memory Usage</b></small>
                 </div>
@@ -117,7 +117,7 @@
                     </div>
                 </span>
                 <small class="text-muted">11444GB/16384MB</small>
-            </a><a href="#" class="dropdown-item">
+            </a><a href="javascript:void(0);" class="dropdown-item">
                 <div class="text-uppercase mb-1"><small><b>SSD 1 Usage</b></small></div><span
                     class="progress progress-xs">
                     <div role="progressbar" aria-valuenow="95" aria-valuemin="0" aria-valuemax="100"
@@ -131,52 +131,52 @@
     <!---->
     <!-- hide on screens smaller than large -->
     <li dropdown="" placement="bottom right" class="nav-item dropdown d-none d-lg-block">
-        <a data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" dropdowntoggle="" class="nav-link"
+        <a data-bs-toggle="dropdown" href="javascript:void(0);" role="button" aria-haspopup="true" dropdowntoggle="" class="nav-link"
             aria-expanded="false">
             <i class="fas fa-list image_icon_custom_pos"></i>
             <span class="badge badge-custom-pos bg-warning text-dark">5</span>
         </a>
         <div aria-labelledby="simple-dropdown" class="dropdown-menu dropdown-menu-right dropdown-menu-lg"
             style="left: auto; right: 0px;">
-            <div class="dropdown-header text-center"><strong>You have 5 pending tasks</strong></div><a href="#"
+            <div class="dropdown-header text-center"><strong>You have 5 pending tasks</strong></div><a href="javascript:void(0);"
                 class="dropdown-item">
                 <div class="small mb-1">Upgrade NPM &amp; Bower <span class="float-right"><strong>0%</strong></span>
                 </div><span class="progress progress-xs">
                     <div role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"
                         class="progress-bar bg-info" style="width: 0%;"></div>
                 </span>
-            </a><a href="#" class="dropdown-item">
+            </a><a href="javascript:void(0);" class="dropdown-item">
                 <div class="small mb-1">ReactJS Version <span class="float-right"><strong>25%</strong></span></div><span
                     class="progress progress-xs">
                     <div role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"
                         class="progress-bar bg-danger" style="width: 25%;"></div>
                 </span>
-            </a><a href="#" class="dropdown-item">
+            </a><a href="javascript:void(0);" class="dropdown-item">
                 <div class="small mb-1">VueJS Version <span class="float-right"><strong>50%</strong></span></div><span
                     class="progress progress-xs">
                     <div role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"
                         class="progress-bar bg-warning" style="width: 50%;"></div>
                 </span>
-            </a><a href="#" class="dropdown-item">
+            </a><a href="javascript:void(0);" class="dropdown-item">
                 <div class="small mb-1">Add new layouts <span class="float-right"><strong>75%</strong></span></div><span
                     class="progress progress-xs">
                     <div role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"
                         class="progress-bar bg-info" style="width: 75%;"></div>
                 </span>
-            </a><a href="#" class="dropdown-item">
+            </a><a href="javascript:void(0);" class="dropdown-item">
                 <div class="small mb-1">Angular 2 Cli Version <span class="float-right"><strong>100%</strong></span>
                 </div><span class="progress progress-xs">
                     <div role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"
                         class="progress-bar bg-success" style="width: 100%;"></div>
                 </span>
-            </a><a href="#" class="dropdown-item text-center"><strong>View all tasks</strong></a>
+            </a><a href="javascript:void(0);" class="dropdown-item text-center"><strong>View all tasks</strong></a>
         </div>
         <!---->
     </li>
 
     <!---->
     <li dropdown="" placement="bottom right" class="nav-item dropdown d-none d-lg-block">
-        <a data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" dropdowntoggle="" class="nav-link"
+        <a data-bs-toggle="dropdown" href="javascript:void(0);" role="button" aria-haspopup="true" dropdowntoggle="" class="nav-link"
             aria-expanded="false">
             <i class="far fa-envelope image_icon_custom_pos"></i>
             <span class="badge badge-custom-pos bg-info text-dark">4</span>
@@ -190,7 +190,7 @@
             </div>
 
 
-            <a href="#" class="dropdown-item">
+            <a href="javascript:void(0);" class="dropdown-item">
 
                 <!-- message notification view component -->
                 <!-- lesson to learn- a divison inside a division takes full width of the parent as we know div is a block level element, (assuming there is not flex element in ancestor chain)
@@ -234,7 +234,7 @@
 
 
 
-            <a href="#" class="dropdown-item">
+            <a href="javascript:void(0);" class="dropdown-item">
                 <div class="message">
                     <div class="py-3 mr-3 float-left">
                         <div class="avatar"><img src="assets/img/avatars/6.jpg" alt="profile_photo"
@@ -251,7 +251,7 @@
                         elit, sed do eiusmod tempor incididunt...</div>
 
                 </div>
-            </a><a href="#" class="dropdown-item">
+            </a><a href="javascript:void(0);" class="dropdown-item">
                 <div class="message">
                     <div class="py-3 mr-3 float-left">
                         <div class="avatar"><img src="assets/img/avatars/5.jpg" alt="profile_photo"
@@ -263,7 +263,7 @@
                     <div class="small text-muted text-truncate">Lorem ipsum dolor sit amet, consectetur adipisicing
                         elit, sed do eiusmod tempor incididunt...</div>
                 </div>
-            </a><a href="#" class="dropdown-item">
+            </a><a href="javascript:void(0);" class="dropdown-item">
                 <div class="message">
                     <div class="py-3 mr-3 float-left">
                         <div class="avatar"><img src="assets/img/avatars/4.jpg" alt="profile_photo"
@@ -275,21 +275,21 @@
                     <div class="small text-muted text-truncate">Lorem ipsum dolor sit amet, consectetur adipisicing
                         elit, sed do eiusmod tempor incididunt...</div>
                 </div>
-            </a><a href="#" class="dropdown-item text-center"><strong>View all messages</strong></a>
+            </a><a href="javascript:void(0);" class="dropdown-item text-center"><strong>View all messages</strong></a>
         </div>
         <!---->
     </li>
 
     <!---->
     <li class="nav-item d-none d-lg-block">
-        <a href="#" class="nav-link">
+        <a href="javascript:void(0);" class="nav-link">
             <i class="fas fa-map-marker-alt image_icon_custom_pos"></i>
             <!-- <i class="icon-location-pin"></i> -->
         </a>
     </li>
 
     <li dropdown="" placement="bottom right" class="nav-item dropdown">
-        <a data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" dropdowntoggle="" class="nav-link"
+        <a data-bs-toggle="dropdown" href="javascript:void(0);" role="button" aria-haspopup="true" dropdowntoggle="" class="nav-link"
             aria-expanded="false">
             <div class=" profileImageWrapper m-auto">
                 <img src="../../../../assets/images/my-profile/avatar.jpg" alt="profile_photo" class="img-avatar">
@@ -303,26 +303,26 @@
                 <strong>Account</strong>
             </div>
 
-            <a href="#" class="dropdown-item">
+            <a href="javascript:void(0);" class="dropdown-item">
                 <i class="far fa-bell icon-bell image_icon_custom_pos"></i>
                 Updates
                 <span class="badge info-custom_pos bg-info text">42</span>
             </a>
 
-            <a href="#" class="dropdown-item">
+            <a href="javascript:void(0);" class="dropdown-item">
                 <i class="far fa-envelope image_icon_custom_pos"></i>
                 Messages
                 <span class="badge info-custom_pos bg-success">42</span>
             </a>
 
-            <a href="#" class="dropdown-item">
+            <a href="javascript:void(0);" class="dropdown-item">
                 <i class="fa fa-tasks image_icon_custom_pos"></i>
                 Tasks
                 <span class="badge info-custom_pos bg-danger">42</span>
             </a>
 
 
-            <a href="#" class="dropdown-item">
+            <a href="javascript:void(0);" class="dropdown-item">
                 <i class="fa fa-comments image_icon_custom_pos"></i>
                 Comment
                 <span class="badge info-custom_pos bg-warning">42</span>
@@ -335,19 +335,19 @@
                 <strong>Settings</strong>
             </div>
 
-            <a href="#" class="dropdown-item"><i class="fa fa-user image_icon_custom_pos"></i> Profile</a>
+            <a href="javascript:void(0);" class="dropdown-item"><i class="fa fa-user image_icon_custom_pos"></i> Profile</a>
 
-            <a href="#" class="dropdown-item"><i class="fa fa-wrench image_icon_custom_pos"></i>Setting</a>
+            <a href="javascript:void(0);" class="dropdown-item"><i class="fa fa-wrench image_icon_custom_pos"></i>Setting</a>
 
 
-            <a href="#" class="dropdown-item">
+            <a href="javascript:void(0);" class="dropdown-item">
                 <i class="fas fa-rupee-sign image_icon_custom_pos"></i>
                 Payments
                 <span class="badge info-custom_pos bg-dark">42</span>
             </a>
 
 
-            <a href="#" class="dropdown-item">
+            <a href="javascript:void(0);" class="dropdown-item">
                 <i class="fas fa-file image_icon_custom_pos"></i>
                 <!-- <i class="fa fa-file"></i> -->
                 Projects
@@ -356,12 +356,12 @@
 
             <div class="divider"></div>
 
-            <a href="#" class="dropdown-item">
+            <a href="javascript:void(0);" class="dropdown-item">
                 <i class="fas fa-shield-alt image_icon_custom_pos"></i>
                 Lock account
             </a>
 
-            <a href="#" class="dropdown-item"><i class="fa fa-lock image_icon_custom_pos"></i> Logout</a>
+            <a href="javascript:void(0);" class="dropdown-item"><i class="fa fa-lock image_icon_custom_pos"></i> Logout</a>
 
         </div>
         <!---->
