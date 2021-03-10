@@ -11,8 +11,8 @@ as in css last value is taken and all above for the same property is discarded *
 /* @import "./sidebar-stye.css";  I have now updated it in angular.json */
 
 * {
-    margin: 0;
-    padding: 0;
+    margin: 0px;
+    padding: 0px;
     box-sizing: border-box;
 }
 

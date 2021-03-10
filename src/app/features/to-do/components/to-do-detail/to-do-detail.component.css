@@ -1,0 +1,42 @@
+.udButton {}
+
+.wholeWrapper {}
+
+.createTaskHeader {
+    background-color: #2880ff;
+}
+
+.contentWrapper {
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+    background-color: aliceblue;
+}
+
+.udButtonWrapper {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.detailWrapper {
+    background-color: #d9e6f7;
+    /* https: //stackoverflow.com/questions/9519841/why-does-this-css-margin-top-style-not-work */
+    overflow: auto
+    /* box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23); */
+}
+
+.individualField {
+    border-bottom: 0.1rem solid darkblue;
+}
+
+/* .individualField h6::after {
+    content: '';
+    background: rgba(255, 255, 255, 0);
+    display: block;
+    width: 15%;
+    height: 0.1rem;
+    border-bottom: 0.05rem solid green;
+} */
+
+.lead {
+    font-size: 1rem;
+}

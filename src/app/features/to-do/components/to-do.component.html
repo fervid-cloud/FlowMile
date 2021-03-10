@@ -8,6 +8,8 @@
             role="tab" aria-controls="nav-contact" aria-selected="false">Pending</button>
         <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-add" type="button"
             role="tab" aria-controls="nav-add" aria-selected="false">Add</button>
+        <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-detail" type="button" role="tab"
+            aria-controls="nav-view" aria-selected="false">details</button>
     </div>
 </nav>
 
@@ -27,6 +29,10 @@
 
     <div class="tab-pane fade" id="nav-add" role="tabpanel" aria-labelledby="nav-add-tab">
        <app-create-to-do></app-create-to-do>
+    </div>
+
+    <div class="tab-pane fade" id="nav-detail" role="tabpanel" aria-labelledby="nav-add-tab">
+        <app-to-do-detail></app-to-do-detail>
     </div>
 
 </div>

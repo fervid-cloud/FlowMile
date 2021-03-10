@@ -67,7 +67,9 @@ const routes: Routes = [
                         path: 'detail', component: ToDoDetailComponent, pathMatch: 'full',
                     }
                 ]
-            }
+            },
+
+
         ]
     }
     ,
