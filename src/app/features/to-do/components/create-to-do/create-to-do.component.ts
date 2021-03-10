@@ -1,12 +1,32 @@
+import { animate, keyframes, sequence, state, style, transition, trigger } from '@angular/animations';
 import { isEmptyExpression } from '@angular/compiler';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { AbstractControl, FormControl, NgForm } from '@angular/forms';
-import { NewTodo } from '../../model/new-to-do';
 
 @Component({
     selector: 'app-create-to-do',
     templateUrl: './create-to-do.component.html',
-    styleUrls: ['./create-to-do.component.css']
+    styleUrls: ['./create-to-do.component.css'],
+    animations: [
+        trigger('customLeftToRightAngularAnimation', [
+            //non exising(in dom) to existing state of element
+            transition('void => *', [
+                animate(500, keyframes([
+                    style({ opacity: 0, transform: 'translateX(-100%)', offset: 0 }),
+                    style({ opacity: 1, transform: 'translateX(15px)', offset: 0.3 }),
+                    style({ opacity: 1, transform: 'translateX(0)', offset: 1.0 })
+                ]))
+            ]),
+            //existing to non-existing state of element
+            transition('* => void', [
+                animate(500, keyframes([
+                    style({ opacity: 1, transform: 'translateX(0)', offset: 0 }),
+                    style({ opacity: 1, transform: 'translateX(-15px)', offset: 0.7 }),
+                    style({ opacity: 0, transform: 'translateX(100%)', offset: 1.0 })
+                ]))
+            ])
+        ])
+    ]
 })
 export class CreateToDoComponent implements OnInit {
 

@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms'; // <-- NgModel lives here
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -39,6 +40,7 @@ import { ToDoListComponent } from './features/to-do/components/to-do-list/to-do-
     imports: [
         BrowserModule,
         AppRoutingModule,
+        BrowserAnimationsModule,
         FormsModule
     ],
     providers: [],

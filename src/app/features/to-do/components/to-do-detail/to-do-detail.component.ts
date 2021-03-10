@@ -12,4 +12,8 @@ export class ToDoDetailComponent implements OnInit {
   ngOnInit(): void {
   }
 
+    onTaskEdit() {
+
+    }
+
 }
