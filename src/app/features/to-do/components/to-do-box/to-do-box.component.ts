@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ToDoTask } from '../../model/to-do-task';
 
 @Component({
@@ -10,10 +10,17 @@ export class ToDoBoxComponent implements OnInit {
 
     @Input() unitTodo: ToDoTask = new ToDoTask();
 
-    constructor() { }
+    @Output() viewEventNotifier: EventEmitter<number> = new EventEmitter<number>();
+
+    constructor() {
+    }
 
     ngOnInit(): void {
     }
 
+    onViewClick() {
+        console.debug("view------------- clicked");
+        this.viewEventNotifier.emit(this.unitTodo.getTodoId());
+    }
 
 }

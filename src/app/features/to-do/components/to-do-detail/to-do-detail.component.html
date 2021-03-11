@@ -1,11 +1,11 @@
-<div class="container-fluid my-3 wholeWrapper">
-    <p class="createTaskHeader text-center text-white py-2 mb-0">Task Detail</p>
+<div *ngIf="currentToDoTask" class="container-fluid my-3 wholeWrapper">
+    <p  class="createTaskHeader text-center text-white py-2 mb-0">Task Detail</p>
 
     <div class="contentWrapper pb-3">
-        <div class="udButtonWrapper px-3 py-3">
-            <div></div>
+        <div class="udButtonWrapper mx-4 py-3">
+            <div class="btn btn-primary px-3 py-1 me-auto" (click)="goBack()">Back</div>
             <div class="btn btn-primary px-3 py-1 me-3" (click)="onTaskEdit()">Edit</div>
-            <div class="udButton btn btn-danger px-2 py-1 me-1">Delete</div>
+            <div class="udButton btn btn-danger px-3 py-1">Delete</div>
         </div>
 
        <div class="detailWrapper rounded mx-4 px-3">
@@ -45,7 +45,7 @@
         <div class="btn btn-success px-3 py-1 me-3">Mark as Done</div>
     </div>
     </div>
-
-
-
 </div>
+
+<!-- //local reference kind of like pointer to the element or we can treat the div like a variable through this -->
+<div *ngIf="!currentToDoTask" #errorElement class="container-fluid my-3 wholeWrapper"> Task is either deleted or doesn't exists</div>

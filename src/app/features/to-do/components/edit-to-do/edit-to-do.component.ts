@@ -1,10 +1,15 @@
 import { animate, keyframes, style, transition, trigger } from '@angular/animations';
+import { Location } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { AbstractControl, NgForm } from '@angular/forms';
+import { ActivatedRoute, NavigationEnd, Params, Router } from '@angular/router';
+import { Subscription } from 'rxjs/internal/Subscription';
+import { ToDoTask } from '../../model/to-do-task';
+import { ToDoManagementService } from '../../service/to-do-management/to-do-management.service';
 
 @Component({
-  selector: 'app-edit-to-do',
-  templateUrl: './edit-to-do.component.html',
+    selector: 'app-edit-to-do',
+    templateUrl: './edit-to-do.component.html',
     styleUrls: ['./edit-to-do.component.css'],
     animations: [
         trigger('customLeftToRightAngularAnimation', [
@@ -38,16 +43,44 @@ export class EditToDoComponent implements OnInit {
 
     successMessages: string[] = [];
 
-    constructor() { }
+
+    currentToDoTask: ToDoTask | null | undefined = undefined;
+
+    private activatedRouteSubscription!: Subscription;
+
+    private history: string[] = []
+    private routerEventSubscription: Subscription;
+
+    constructor(private activatedRoute: ActivatedRoute,
+        private router: Router,
+        private location: Location,
+        private taskManagementService: ToDoManagementService
+    ) {
+
+        //our choice where we want to subscribe if the observable/subject we are subscribing to exist at
+        // the time of subscribing
+
+        this.routerEventSubscription = this.router.events.subscribe((event) => {
+            if (event instanceof NavigationEnd) {
+                this.history.push(event.urlAfterRedirects)
+            }
+        });
+
+    }
 
     ngOnInit(): void {
-        // if we have to use viewChild decorated object here, decllare it like this
-        // @ViewChild('elementLocalRefereneName', { static: true }) element: ElementRef;
-        // { static: true } as a second argument) needs to be applied to ALL usages of @ViewChild()(and also
-        // @ContentChild() which you'll learn about later) IF you plan on accessing the selected element inside of ngOnInit().
-        // If you DON'T access the selected element in ngOnInit (but anywhere else in your component), set static: false instead!
-        // Angular 9 +, you only need to add { static: true } (if needed) but not { static: false }.
+        this.activatedRouteSubscription = this.activatedRoute.params.subscribe((updatedParams: Params) => {
+            const providedTaskId = updatedParams['taskId'];
+            console.log("Provided taskId is : ", providedTaskId);
+            this.currentToDoTask = this.taskManagementService.findByTaskId(providedTaskId);
+        });
     }
+
+    ngOnDestroy() {
+        this.activatedRouteSubscription.unsubscribe();
+        this.routerEventSubscription.unsubscribe();
+    }
+
 
     ngAfterViewInit() {
         console.log(this.formObject)
@@ -95,8 +128,25 @@ export class EditToDoComponent implements OnInit {
 
     }
 
+    onCancel() {
+        this.reset();
+        this.back();
+    }
 
-    onReset() {
+
+    private back(): void {
+        console.debug("The history is : ", this.history);
+        if (this.history.length > 0) {
+            this.location.back()
+        } else {
+            // in case we opened the browser directly with this link, or new tab with this link, then try to go back
+            console.debug("going back through backup as no history is there-----------------");
+            this.router.navigateByUrl('/')
+        }
+    }
+
+
+    private reset() {
         this.successMessages = [];
         this.enableForm();
         this.formObject.resetForm();

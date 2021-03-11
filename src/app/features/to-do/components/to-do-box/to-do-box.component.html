@@ -8,7 +8,7 @@
             {{ unitTodo.getTextContent() }}
         </p>
     </div>
-    <a href="#" class="btn btn-primary m-auto mb-3">View Detail</a>
+    <a (click)="onViewClick()" class="btn btn-primary m-auto mb-3">View Detail</a>
     <div class="card-footer text-muted">
         {{ unitTodo.getCreationTime() }}
     </div>

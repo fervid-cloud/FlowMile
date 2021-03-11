@@ -7,6 +7,7 @@ import { ToDoTask } from '../../model/to-do-task';
 })
 export class ToDoManagementService {
 
+
     private toDoTasks: ToDoTask[] = [];
 
     private _toDoTasks: BehaviorSubject<ToDoTask[]> = new BehaviorSubject<ToDoTask[]>([]);
@@ -34,9 +35,14 @@ export class ToDoManagementService {
             currentToDo.setTextContent(textContent);
             currentToDo.setTaskStatus(taskStatus);
             currentToDo.setCreationTime(new Date());
-            currentToDo.setUpdationTime(new Date());
+            currentToDo.setModifiedTime(new Date());
             this.toDoTasks.push(currentToDo);
         }
+    }
+
+
+    findByTaskId(providedTaskId: number): ToDoTask | undefined {
+        return this.toDoTasks.find(toDoTask => toDoTask.getTodoId() == providedTaskId);
     }
 
 

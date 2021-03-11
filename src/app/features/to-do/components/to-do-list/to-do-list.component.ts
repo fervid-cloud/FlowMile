@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ToDoTask } from '../../model/to-do-task';
 import { ToDoManagementService } from '../../service/to-do-management/to-do-management.service';
@@ -19,20 +19,21 @@ export class ToDoListComponent implements OnInit {
     private toDoTaskSubscription!: Subscription;
     private activatedRouteSubscription!: Subscription;
 
-    constructor(private todoManagementService: ToDoManagementService, private activatedRoute: ActivatedRoute) {
+    constructor(private todoManagementService: ToDoManagementService, private router : Router, private activatedRoute: ActivatedRoute) {
 
     }
 
     ngOnInit(): void {
         console.log("reached ngOnInit of list component here");
         this.initializeSubscriptions();
-
     }
+
 
     private initializeSubscriptions() {
         this.subscribeToTaskManagement();
         this.subscribeToActivatedRoute();
     }
+
 
     subscribeToActivatedRoute() {
         this.activatedRouteSubscription = this.activatedRoute.params.subscribe((updatedParams: Params) => {
@@ -54,25 +55,37 @@ export class ToDoListComponent implements OnInit {
         });
     }
 
+
     ngOnDestroy(): void {
         this.clearSubscriptions();
     }
+
 
     private clearSubscriptions() {
         this.toDoTaskSubscription.unsubscribe();
         this.activatedRouteSubscription.unsubscribe();
     }
 
+
     getAllTodo(): ToDoTask[] {
         return this.toDoTasks;
     }
+
 
     getPendingTask(): ToDoTask[] {
         return this.toDoTasks.filter((task) => task.getTaskStatus() == false);
     }
 
+
     getDoneTask(): ToDoTask[] {
         return this.toDoTasks.filter((task) => task.getTaskStatus() == true);
+    }
+
+
+    onChoosingViewDetail(taskId : number) {
+        this.router.navigate([taskId], {
+            relativeTo: this.activatedRoute
+        });
     }
 
 }

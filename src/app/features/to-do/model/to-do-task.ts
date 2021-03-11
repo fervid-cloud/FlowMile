@@ -1,3 +1,24 @@
+/* When a decorator function is applied to a Class, the decorator function will only receive one argument which is basically the object of the class being decorated.
+Being able to access the argument, you can modify the class as per your requirement.You can change
+the constructor of the class, add new prototypes, etc. */
+
+
+/* function DefaultInitialization(constructorFunction : Function) {
+    constructorFunction.prototype.forEach((element: any) => {
+        let defaultValue: any = null;
+        if (element instanceof String) {
+            defaultValue = "default";
+        } else if (element instanceof Number) {
+            defaultValue = -1;
+        } else if (element instanceof Boolean) {
+            defaultValue = false;
+        }
+        if (defaultValue != null) {
+            constructorFunction.prototype[`${element}`] = defaultValue;
+        }
+    });
+}
+ */
 
 
 
@@ -5,19 +26,30 @@
 and variable declarations to relay to TypeScript that a variable is indeed assigned for all intents
 and purposes, even if TypeScript’s analyses cannot detect so. */
 
+// @DefaultInitialization
 export class ToDoTask {
 
-    private todoId!: number;
+    private todoId: number;
 
-    private title!: string;
+    private title: string;
 
-    private textContent!: string;
+    private textContent: string;
 
-    private creationTime!: Date;
+    private creationTime: Date;
 
-    private updationTime!: Date;
+    private modifiedTime: Date;
 
-    private taskStatus!: boolean;
+    private taskStatus: boolean;
+
+    constructor() {
+        this.creationTime = new Date();
+        this.taskStatus = false;
+        this.modifiedTime = new Date();
+        this.title = "";
+        this.taskStatus = false;
+        this.todoId = 0;
+        this.textContent = "";
+    }
 
     public getTodoId(): number {
         return this.todoId;
@@ -51,12 +83,12 @@ export class ToDoTask {
         this.creationTime = creationTime;
     }
 
-    public getUpdationTime(): Date {
-        return this.updationTime;
+    public getModifiedTime(): Date {
+        return this.modifiedTime;
     }
 
-    public setUpdationTime(updationTime: Date): void {
-        this.updationTime = updationTime;
+    public setModifiedTime(modifiedTime: Date): void {
+        this.modifiedTime = modifiedTime;
     }
 
     public getTaskStatus(): boolean {
@@ -66,5 +98,7 @@ export class ToDoTask {
     public setTaskStatus(taskStatus: boolean): void {
         this.taskStatus = taskStatus;
     }
+
+
 
 }

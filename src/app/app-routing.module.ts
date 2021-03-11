@@ -7,6 +7,7 @@ import { ToDoComponent } from './features/to-do/components/to-do.component';
 import { ToDoListComponent } from './features/to-do/components/to-do-list/to-do-list.component';
 import { CreateToDoComponent } from './features/to-do/components/create-to-do/create-to-do.component';
 import { ToDoDetailComponent } from './features/to-do/components/to-do-detail/to-do-detail.component';
+import { EditToDoComponent } from './features/to-do/components/edit-to-do/edit-to-do.component';
 
 /* What about path: '**' ?
     path : '**' will match absolutely anything(af / frewf / 321532152 / fsa is a match) with or without a pathMatch: 'full'.
@@ -58,10 +59,10 @@ const routes: Routes = [
                         path: 'add', component: CreateToDoComponent, pathMatch: 'full',
                     },
                     {
-                        path: 'detail/:id', component: ToDoDetailComponent, pathMatch: 'full',
+                        path: 'list/:listType/:taskId', component: ToDoDetailComponent, pathMatch: 'full',
                     },
                     {
-                        path: 'detail/edit/:id', component: ToDoDetailComponent, pathMatch: 'full'
+                        path: 'edit/:taskId', component: EditToDoComponent, pathMatch: 'full'
                     }
                 ]
             },
