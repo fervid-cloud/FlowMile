@@ -1,38 +1,48 @@
-<nav>
+<!-- <nav>
     <div class="nav nav-tabs mt-2 bg-light" id="nav-tab" role="tablist">
         <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-all" type="button"
-            role="tab" aria-controls="nav-home" aria-selected="true">All</button>
+            role="tab" aria-controls="nav-home" aria-selected="true">
+            <a routerLink="list/all">All</a>
+        </button>
         <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-done" type="button"
-            role="tab" aria-controls="nav-profile" aria-selected="false">Done</button>
+            role="tab" aria-controls="nav-profile" aria-selected="false">
+            <a routerLink="list/done">Done</a>
+            </button>
         <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-pending" type="button"
-            role="tab" aria-controls="nav-contact" aria-selected="false">Pending</button>
-        <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-add" type="button"
-            role="tab" aria-controls="nav-add" aria-selected="false">Add</button>
-        <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-detail" type="button" role="tab"
-            aria-controls="nav-view" aria-selected="false">details</button>
+            role="tab" aria-controls="nav-contact" aria-selected="false">
+            <a routerLink="list/pending">Pending</a>
+            </button>
+    </div>
+</nav> -->
+
+
+<!--
+    RouterLinkActive
+    DIRECTIVE
+    Tracks whether the linked route of an element is currently active, and allows you to specify one or more CSS classes to
+    add to the element when the linked route is active.
+    basically here it is setting the class as 'active' for the currently linked active route, then for that .active we
+    can apply our own css, but since we are using bootstrap here, it is applying the css for .active for us
+ -->
+
+
+<nav>
+    <div class="nav nav-tabs mt-2 bg-light" id="nav-tab" role="tablist">
+        <!-- routerLink can be attached to a tag, button tag, div tag fine, not tested for others  -->
+        <button routerLinkActive="active" routerLink="list/all" class="nav-link" type="button" role="tab"
+            aria-controls="nav-home" aria-selected="true">
+            All
+        </button>
+
+        <button routerLink="list/done" routerLinkActive="active" class="nav-link" type="button" role="tab"
+            aria-controls="nav-profile" aria-selected="false">
+            Done
+        </button>
+        <button routerLink="list/pending" routerLinkActive="active" class="nav-link" type="button" role="tab"
+            aria-controls="nav-contact" aria-selected="false">
+            Pending
+        </button>
     </div>
 </nav>
 
-<div class="tab-content" id="nav-tabContent">
-
-    <div class="tab-pane fade show active" id="nav-all" role="tabpanel" aria-labelledby="nav-home-tab">
-        <app-to-do-list [curTodoList]="getAllTodo()"></app-to-do-list>
-    </div>
-
-    <div class="tab-pane fade" id="nav-done" role="tabpanel" aria-labelledby="nav-profile-tab">
-        <app-to-do-list [curTodoList]="getDoneTask()"></app-to-do-list>
-    </div>
-
-    <div class="tab-pane fade" id="nav-pending" role="tabpanel" aria-labelledby="nav-profile-tab">
-        <app-to-do-list [curTodoList]="getPendingTask()"></app-to-do-list>
-    </div>
-
-    <div class="tab-pane fade" id="nav-add" role="tabpanel" aria-labelledby="nav-add-tab">
-       <app-create-to-do></app-create-to-do>
-    </div>
-
-    <div class="tab-pane fade" id="nav-detail" role="tabpanel" aria-labelledby="nav-add-tab">
-        <app-to-do-detail></app-to-do-detail>
-    </div>
-
-</div>
+<router-outlet></router-outlet>

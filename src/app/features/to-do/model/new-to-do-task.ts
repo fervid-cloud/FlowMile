@@ -1,4 +1,4 @@
-export interface NewTodo {
+export interface NewToDoTask {
     title: string;
     description: string;
 }

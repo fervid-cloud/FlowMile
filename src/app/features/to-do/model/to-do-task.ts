@@ -1,11 +1,11 @@
-import { TaskStatus } from "../enum/TaskStatus";
+
 
 
 /* The definite assignment assertion is a feature that allows a! to be placed after instance property
 and variable declarations to relay to TypeScript that a variable is indeed assigned for all intents
 and purposes, even if TypeScript’s analyses cannot detect so. */
 
-export class Todo {
+export class ToDoTask {
 
     private todoId!: number;
 

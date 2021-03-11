@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Todo } from '../../model/to-do';
+import { ToDoTask } from '../../model/to-do-task';
 
 @Component({
     selector: 'app-to-do-box',
@@ -8,7 +8,7 @@ import { Todo } from '../../model/to-do';
 })
 export class ToDoBoxComponent implements OnInit {
 
-    @Input() unitTodo: Todo = new Todo();
+    @Input() unitTodo: ToDoTask = new ToDoTask();
 
     constructor() { }
 

@@ -49,22 +49,19 @@ const routes: Routes = [
         component: DashboardComponent,
         children: [
             {
-                path: 'todo', component: ToDoComponent, pathMatch: 'full',
+                path: 'todo', component: ToDoComponent,
                 children: [
                     {
-                        path: 'list/all', component: ToDoListComponent, pathMatch: 'full',
-                    },
-                    {
-                        path: 'list/done', component: ToDoListComponent, pathMatch: 'full',
-                    },
-                    {
-                        path: 'list/pending', component: ToDoListComponent, pathMatch: 'full',
+                        path: 'list/:listType', component: ToDoListComponent, pathMatch: 'full',
                     },
                     {
                         path: 'add', component: CreateToDoComponent, pathMatch: 'full',
                     },
                     {
-                        path: 'detail', component: ToDoDetailComponent, pathMatch: 'full',
+                        path: 'detail/:id', component: ToDoDetailComponent, pathMatch: 'full',
+                    },
+                    {
+                        path: 'detail/edit/:id', component: ToDoDetailComponent, pathMatch: 'full'
                     }
                 ]
             },
