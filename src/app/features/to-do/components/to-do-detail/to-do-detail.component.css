@@ -40,3 +40,40 @@
 .lead {
     font-size: 1rem;
 }
+
+.haveCustomContentEditableChild {
+    border: 0px;
+}
+
+.haveCustomContentEditableChild p {
+    background-color: #f4f4f5;
+    transition: all 0.3s ease;
+    border: 0px;
+    outline: 0px solid transparent;
+}
+
+/* [contenteditable]:active {
+    outline: 0px solid transparent;
+    box-shadow: 0px 0px 25px 1px #0d6efd;
+
+} */
+
+.haveCustomContentEditableChild p:active {
+    box-shadow: 0px 0px 25px 1px #0d6efd;
+}
+
+.haveCustomContentEditableChild p:focus {
+    box-shadow: 0px 0px 25px 1px #0d6efd;
+}
+
+.haveCustomContentEditableChild p:hover {
+    /* box-shadow: 0px 0px 5px 1px #0d6efd; */
+}
+
+.detailWrapper h6, .detailWrapper p {
+    padding: 0rem 0.8rem;
+}
+
+.haveCustomContentEditableChild p {
+    padding: 0.2rem 0.8rem;
+}

@@ -3,9 +3,13 @@
 
     <div class="contentWrapper pb-3">
         <div class="udButtonWrapper mx-4 py-3">
-            <div class="btn btn-primary px-3 py-1 me-auto" (click)="goBack()">Back</div>
-            <div class="btn btn-primary px-3 py-1 me-3" (click)="onTaskEdit()">Edit</div>
-            <div class="udButton btn btn-danger px-3 py-1">Delete</div>
+            <div *ngIf="!editMode" class="btn btn-primary px-3 py-1 me-auto" (click)="goBack()">Back</div>
+            <div *ngIf="editMode" class=" btn btn-danger px-3 py-1 me-auto" (click)="cancelEdit()" >Cancel</div>
+
+            <div *ngIf="!editMode" class="btn btn-danger px-3 py-1 me-3" >Delete</div>
+            <div *ngIf="!editMode" class="udButton btn btn-primary px-3 py-1"(click)="onTaskEdit()">Edit</div>
+            <div *ngIf="editMode" class="btn btn-primary px-3 py-1 me-3" (click)="onUpdate()">Update</div>
+
         </div>
 
        <div class="detailWrapper rounded mx-4 px-3">
@@ -13,17 +17,19 @@
                 <h6>ToDoTask Id</h6>
                 <p class="lead">todoId of task</p>
             </div>
-            <div class="individualField my-3">
-                <h6 >Task Title</h6>
-                <p class="lead"> Title of task</p>
+            <div [ngClass]="{'haveCustomContentEditableChild': this.editMode}" class="individualField my-3">
+                <h6  >Task Title</h6>
+                <!-- // example of attribute directive, basically we enclose a native html attribute in square bracket and
+                // then it becomes a directive and now we can control the attribute based on our logics  -->
+                <p #taskTitle [contentEditable]="this.editMode" class="lead"> Title of task</p>
             </div>
-            <!-- g-0 equivalent to no-gutter, gutter is used for maintaing spacing between col of the rows -->
-            <div class="individualField my-3">
+            <!-- g-0 equivalent to no-gutter, gutter is used for maintaining spacing between col of the rows -->
+            <div [ngClass]="{'haveCustomContentEditableChild': this.editMode}"  class="individualField my-3">
                 <h6><span>Task Detail</span></h6>
-                <p class="lead">Detail of task-Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard
+                <p #taskDetail  [contentEditable]="this.editMode" class="lead">Detail of task-Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard
                 dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen
                 book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially
-                unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more
+                unchanged. It was popularized in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more
                 recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
             </div>
             <div class="individualField my-3">
@@ -41,9 +47,8 @@
 
        </div>
 
-    <div class="text-center pt-3">
+    <div *ngIf="!editMode" class="text-center pt-3">
         <div class="btn btn-success px-3 py-1 me-3">Mark as Done</div>
-    </div>
     </div>
 </div>
 
