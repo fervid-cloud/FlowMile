@@ -2,6 +2,8 @@ import { animate, keyframes, sequence, state, style, transition, trigger } from 
 import { isEmptyExpression } from '@angular/compiler';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { AbstractControl, FormControl, NgForm } from '@angular/forms';
+import { ToDoTask } from '../../model/to-do-task';
+import { ToDoManagementService } from '../../service/to-do-management/to-do-management.service';
 
 @Component({
     selector: 'app-create-to-do',
@@ -39,7 +41,10 @@ export class CreateToDoComponent implements OnInit {
 
     successMessages: string[] = [];
 
-    constructor() { }
+
+
+
+    constructor(private toDoManagementService: ToDoManagementService) { }
 
     ngOnInit(): void {
         // if we have to use viewChild decorated object here, decllare it like this
@@ -89,6 +94,13 @@ export class CreateToDoComponent implements OnInit {
             const successMessage = "Details Submitted Successfully"
             this.successMessages.push(successMessage);
             this.disableForm();
+
+            const todo: ToDoTask = new ToDoTask();
+            todo.setTitle(controls.titleName.value);
+            todo.setTextContent(controls.taskDetail.value);
+            todo.setTaskStatus(false);
+            this.toDoManagementService.createTask(todo);
+
             setTimeout(() => {
                 this.validSubmitClickIndicator = false;
             }, 500);

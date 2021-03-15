@@ -41,6 +41,16 @@ export class ToDoManagementService {
     }
 
 
+    createTask(todo: ToDoTask) {
+        todo.setCreationTime(new Date());
+        todo.setModifiedTime(new Date());
+        todo.setTodoId(this.toDoTasks.length);
+        this.toDoTasks.push(todo);
+        this._toDoTasks.next(this.toDoTasks);
+        console.log("task successfully made");
+    }
+
+
     findByTaskId(providedTaskId: number): ToDoTask | undefined {
         return this.toDoTasks.find(toDoTask => toDoTask.getTodoId() == providedTaskId);
     }
