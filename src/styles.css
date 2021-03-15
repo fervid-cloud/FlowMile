@@ -40,6 +40,10 @@ body {
     background-color: #e4e5e6;
 }
 
+.modal-open {
+    padding-right: 0px !important;
+}
+
 .app, app-dashboard, app-root, app-not-found, app-internal-server-error {
     display: flex;
     flex-direction: column;

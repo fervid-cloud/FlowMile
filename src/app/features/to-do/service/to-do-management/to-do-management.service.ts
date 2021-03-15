@@ -45,5 +45,10 @@ export class ToDoManagementService {
         return this.toDoTasks.find(toDoTask => toDoTask.getTodoId() == providedTaskId);
     }
 
+    deleteTaskById(providedTaskId: number) {
+        this.toDoTasks = this.toDoTasks.filter(task => task.getTodoId() !== providedTaskId);
+        this._toDoTasks.next(this.toDoTasks);
+    }
+
 
 }

@@ -4,6 +4,8 @@ import { ActivatedRoute, NavigationEnd, Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ToDoTask } from '../../model/to-do-task';
 import { ToDoManagementService } from '../../service/to-do-management/to-do-management.service';
+import * as bootstrap from 'bootstrap';
+
 
 @Component({
     selector: 'app-to-do-detail',
@@ -18,7 +20,6 @@ export class ToDoDetailComponent implements OnInit {
 
     private history: string[] = []
     private routerEventSubscription: Subscription;
-
 
 
     //for editing
@@ -38,11 +39,12 @@ export class ToDoDetailComponent implements OnInit {
     // taskDetail.nativeElement.value
 
     /* below way was too much manual work for this use case, so delegated the work to attribute directive in the template */
-/*     @ViewChild('taskDetail') taskDetail!: ElementRef;
+    /*     @ViewChild('taskDetail') taskDetail!: ElementRef;
 
-    @ViewChild('taskTitle') taskTitle!: ElementRef; */
+        @ViewChild('taskTitle') taskTitle!: ElementRef; */
 
     editMode: boolean = false;
+    deleteConfirmationDialogModal!: bootstrap.Modal;
 
     constructor(private activatedRoute: ActivatedRoute,
         private router: Router,
@@ -53,11 +55,21 @@ export class ToDoDetailComponent implements OnInit {
         //our choice where we want to subscribe if the observable/subject we are subscribing to exist at
         // the time of subscribing
 
-        this.routerEventSubscription = this.router.events.subscribe((event) => {
-            if (event instanceof NavigationEnd) {
-                this.history.push(event.urlAfterRedirects)
+        const observer = {
+            next: (routerEvent: any) => {
+                if (routerEvent instanceof NavigationEnd) {
+                    this.history.push(routerEvent.urlAfterRedirects)
+                }
+            },
+            error: (routerError: any) => {
+                console.log("error event sent by router");
+            },
+            Complete: (completeEvent: any) => {
+                console.log("completed");
             }
-        });
+        }
+
+        this.routerEventSubscription = this.router.events.subscribe(observer);
     }
 
     ngOnInit(): void {
@@ -65,6 +77,19 @@ export class ToDoDetailComponent implements OnInit {
             const providedTaskId = updatedParams['taskId'];
             console.log("Provided taskId is : ", providedTaskId);
             this.currentToDoTask = this.taskManagementService.findByTaskId(providedTaskId);
+        });
+
+    }
+
+    ngAfterViewInit() {
+        //was put here as not this life cycle hook runs when all the dom element are made(except external api call eg. http);
+        const myModalEl = <HTMLElement>document.getElementById('myModal');
+        console.log(myModalEl);
+        console.log("myModelEl is : ", myModalEl);
+        this.deleteConfirmationDialogModal = new bootstrap.Modal(myModalEl, {
+            backdrop: 'static',
+            keyboard: false,
+            focus: true
         });
     }
 
@@ -79,19 +104,37 @@ export class ToDoDetailComponent implements OnInit {
         // as by default this is from root so we have to mention full path here
         // this.router.navigate(["dashboard", "todo", "edit", this.currentToDoTask?.getTodoId()]);
 
-       /*  console.log(this.taskDetail);
-        console.log(this.taskDetail.nativeElement.textContent);
-        this.taskDetail.nativeElement.contentEditable = true;
-        // this.taskDetail.nativeElement.style.borderLeft = "1px solid blue";
-        // this.taskDetail.nativeElement.style.borderRight = "1px solid blue";
-        this.taskDetail.nativeElement.backgroundColor = ""
-        // this.taskDetail.nativeElement.textContent = "";
-        console.log(this.taskTitle);
-        console.log(this.taskTitle.nativeElement.textContent);
-        this.taskTitle.nativeElement.contentEditable = true;
-        this.taskTitle.nativeElement.style.borderLeft = "1px solid blue";
-        this.taskTitle.nativeElement.style.borderRight = "1px solid blue"; */
+        /*  console.log(this.taskDetail);
+         console.log(this.taskDetail.nativeElement.textContent);
+         this.taskDetail.nativeElement.contentEditable = true;
+         // this.taskDetail.nativeElement.style.borderLeft = "1px solid blue";
+         // this.taskDetail.nativeElement.style.borderRight = "1px solid blue";
+         this.taskDetail.nativeElement.backgroundColor = ""
+         // this.taskDetail.nativeElement.textContent = "";
+         console.log(this.taskTitle);
+         console.log(this.taskTitle.nativeElement.textContent);
+         this.taskTitle.nativeElement.contentEditable = true;
+         this.taskTitle.nativeElement.style.borderLeft = "1px solid blue";
+         this.taskTitle.nativeElement.style.borderRight = "1px solid blue"; */
     }
+
+
+    onTaskDelete() {
+        this.deleteConfirmationDialogModal.show();
+    }
+
+    confirmTaskDeletion() {
+        if (this.currentToDoTask) {
+            this.taskManagementService.deleteTaskById(this.currentToDoTask.getTodoId());
+            this.currentToDoTask = undefined;
+        }
+        this.deleteConfirmationDialogModal.hide();
+    }
+
+    removeModal() {
+        this.deleteConfirmationDialogModal.hide();
+    }
+
 
     onUpdate() {
         this.editMode = false;
@@ -100,6 +143,8 @@ export class ToDoDetailComponent implements OnInit {
     cancelEdit() {
         this.editMode = false;
     }
+
+
 
 
     goBack() {

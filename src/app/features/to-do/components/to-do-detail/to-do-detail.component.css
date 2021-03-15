@@ -1,7 +1,5 @@
 .udButton {}
 
-.wholeWrapper {}
-
 .createTaskHeader {
     background-color: #2880ff;
 }
@@ -76,4 +74,42 @@
 
 .haveCustomContentEditableChild p {
     padding: 0.2rem 0.8rem;
+}
+
+/* doesn't work through here because this class is not in this component, need to apply on global css because this is added to body element */
+.modal-open {
+    padding-right: 0px !important;
+}
+
+
+.deletedIndicator {
+    position: relative;
+    height: 70vh;
+    background-image: url('/assets/images/to-do/deletedbackground.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+/* way to center a absoluted position element
+.deletedIndicator p {
+     position: absolute;
+    left: 50%;
+    bottom: 50%;
+     // move 50% horizontal to left by it's own width and down vertically by it's own height
+    transform: translateX(-50%) translateY(50%);
+} */
+.deletedIndicator p {
+    position: absolute;
+    top: 20%;
+    left : 50%;
+    transform: translateX(-50%);
+}
+
+.deletedIndicator img {
+    height: 100%;
+    object-fit: contain;
+    width: 100%;
+    max-height: 100%;
+    max-width: 100%;
 }
