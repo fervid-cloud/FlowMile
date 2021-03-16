@@ -14,11 +14,18 @@ import { UtilService } from 'src/app/shared/utility/util-service/util.service';
 })
 export class ToDoDetailComponent implements OnInit {
 
+
+    @ViewChild('todoDeleteModelDialog')
+    toDoDeleteModelDialogTemplateRef!: ElementRef;
+
+    private deleteConfirmationModalDialog!: Modal;
+
+
     currentToDoTask: ToDoTask | null | undefined = undefined;
 
-    private activatedRouteSubscription!: Subscription;
-
     private history: string[] = []
+
+    private activatedRouteSubscription!: Subscription;
     private routerEventSubscription: Subscription;
 
 
@@ -44,7 +51,7 @@ export class ToDoDetailComponent implements OnInit {
         @ViewChild('taskTitle') taskTitle!: ElementRef; */
 
     editMode: boolean = false;
-    deleteConfirmationDialogModal!: Modal;
+
 
     constructor(private activatedRoute: ActivatedRoute,
         private router: Router,
@@ -89,20 +96,33 @@ export class ToDoDetailComponent implements OnInit {
 
 
     ngAfterViewInit() {
+
         //was put here as not this life cycle hook runs when all the dom element are made(except external api call eg. http);
-        const myModalEl = <HTMLElement>document.getElementById('myModal');
-        console.log(myModalEl);
-        console.log("myModelEl is : ", myModalEl);
-        this.deleteConfirmationDialogModal = new Modal(myModalEl, {
-            backdrop: 'static',
+        this.initializeDeleteConfirmationModelDialog();
+
+
+    }
+
+
+    initializeDeleteConfirmationModelDialog() {
+        // const myModalEl = <HTMLElement>document.getElementById('myModal');
+        const myModalEl = this.toDoDeleteModelDialogTemplateRef.nativeElement;
+        console.log("to-do detail myModelEl is : ", myModalEl);
+        this.deleteConfirmationModalDialog = new Modal(myModalEl, {
+            backdrop: 'static', // means the modal will not close when clicking outside it.
             keyboard: false,
             focus: true
         });
     }
 
+
+
+
     ngOnDestroy() {
         this.activatedRouteSubscription.unsubscribe();
         this.routerEventSubscription.unsubscribe();
+        console.log("+++++++++++++++++++++++++++++destroying to-do detail component");
+        this.deleteConfirmationModalDialog.dispose();
     }
 
     onTaskEdit() {
@@ -127,7 +147,7 @@ export class ToDoDetailComponent implements OnInit {
 
 
     onTaskDelete() {
-        this.deleteConfirmationDialogModal.show();
+        this.deleteConfirmationModalDialog.show();
     }
 
     confirmTaskDeletion() {
@@ -135,11 +155,11 @@ export class ToDoDetailComponent implements OnInit {
             this.taskManagementService.deleteTaskById(this.currentToDoTask.getTaskCategoryId(), this.currentToDoTask.getTodoId());
             this.currentToDoTask = undefined;
         }
-        this.deleteConfirmationDialogModal.hide();
+        this.deleteConfirmationModalDialog.hide();
     }
 
     removeModal() {
-        this.deleteConfirmationDialogModal.hide();
+        this.deleteConfirmationModalDialog.hide();
     }
 
 
@@ -153,7 +173,6 @@ export class ToDoDetailComponent implements OnInit {
 
 
 
-
     goBack() {
         this.back();
     }
@@ -161,6 +180,9 @@ export class ToDoDetailComponent implements OnInit {
     private back(): void {
         console.debug("The history is : ", this.history);
         if (this.history.length > 0) {
+            //doesn't matter both are equivalent, it's just that this.localation.back has history of same route that
+            // we want to go back to through this.router.navigate(['../'], { relativeTo: this.activatedRoute });
+            // this.router.navigate(['../'], { relativeTo: this.activatedRoute });
             this.location.back()
         } else {
             // in case we opened the browser directly with this link, or new tab with this link, then try to go back

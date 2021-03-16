@@ -67,7 +67,8 @@
 </div>
 
 <!-- Modal -->
-<div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="myModal" aria-hidden="true">
+<!-- adding a template reference of this element to avoid some global mis-happening related to model dialog-->
+<div #todoDeleteModelDialog class="modal fade tododetail" id="myModal" tabindex="-1" aria-labelledby="myModal-detail"  aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">

@@ -87,7 +87,7 @@ export class ToDoManagementService {
 
 
     deleteTaskById(providedCategoryId: number, providedTaskId: number) : void {
-        this.categoryTaskMapping[providedCategoryId].filter(task => task.getTodoId() != providedTaskId);
+        this.categoryTaskMapping[providedCategoryId] =  this.categoryTaskMapping[providedCategoryId].filter(task => task.getTodoId() != providedTaskId);
         this._categoryTaskMapping.next(this.categoryTaskMapping);
     }
 

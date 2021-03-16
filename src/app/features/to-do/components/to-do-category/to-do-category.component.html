@@ -1,8 +1,61 @@
-<div class="container-fluid my-3">
-    <p class="createTaskHeader text-center bg-primary text-white py-2">Task Categories</p>
-    <div class="row">
-        <div *ngFor="let cur of taskCategories" class="col-sm-6 col-md-4 col-lg-3 mt-2">
-            <app-category-box [currentTaskCategory]="cur" (viewEventNotifier)="onChoosingViewDetail($event)"></app-category-box>
+<nav>
+    <div class="nav nav-tabs bg-light" id="nav-tab" role="tablist">
+        <!-- routerLink can be attached to a tag, button tag, div tag fine, not tested for others  -->
+        <button routerLinkActive="active" routerLink="/dashboard/todo" class="nav-link categoryTitle" type="button"
+            role="tab">
+            Task Categories
+        </button>
+
+
+        <!-- was sometime not working 10-20% time due to some problem in bootstrap 5 alpha 2 as bootstrap used to use jquery before bootstrap 5, but below is how we initialize for tooltip -->
+<!--         <div class="ms-auto d-flex">
+            <button class="nav-link me-2 addIconWrap" type="button" data-bs-toggle="tooltip"
+                title="Add Category" data-bs-original-title="Add Category" (click)="addTaskCategory()">
+                <i class="iconStyle fas fa-plus" data-bs-toggle="tooltip"
+                    data-bs-original-title="Add Category"></i>
+            </button>
+        </div> -->
+
+        <div class="ms-auto d-flex">
+            <button class="nav-link me-2 addIconWrap"
+                title="Add Category"  (click)="addTaskCategory()">
+                <i class="iconStyle fas fa-plus" data-bs-toggle="tooltip"
+                    data-bs-original-title="Add Category"></i>
+            </button>
+        </div>
+    </div>
+</nav>
+
+
+<div class="row">
+    <div *ngFor="let cur of taskCategories" class="col-sm-6 col-md-4 col-lg-3 mt-2">
+        <app-category-box [currentTaskCategory]="cur" (viewEventNotifier)="onChoosingViewDetail($event)">
+        </app-category-box>
+    </div>
+</div>
+
+
+
+
+
+<!-- Modal -->
+<!-- adding a template reference of this element to avoid some global mis-happening related to model dialog -->
+<div #addCategoryModelDialog class="modal fade" id="myModal" tabindex="-1" aria-labelledby="myModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Add Task Category</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" (click)="cancelAddTaskCategory()"
+                    aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Add Task </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary me-auto customButton" data-bs-dismiss="modal"
+                    (click)="cancelAddTaskCategory()">Cancel</button>
+                <button type="button" class="btn btn-primary customButton" (click)="addTaskCategorySubmit()">Add</button>
+            </div>
         </div>
     </div>
 </div>
