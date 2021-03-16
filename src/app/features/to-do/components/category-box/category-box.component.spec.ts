@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { EditToDoComponent } from './edit-to-do.component';
+import { CategoryBoxComponent } from './category-box.component';
 
-describe('EditToDoComponent', () => {
-  let component: EditToDoComponent;
-  let fixture: ComponentFixture<EditToDoComponent>;
+describe('CategoryBoxComponent', () => {
+  let component: CategoryBoxComponent;
+  let fixture: ComponentFixture<CategoryBoxComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ EditToDoComponent ]
+      declarations: [ CategoryBoxComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(EditToDoComponent);
+    fixture = TestBed.createComponent(CategoryBoxComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

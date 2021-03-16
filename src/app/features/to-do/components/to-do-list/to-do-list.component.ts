@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ActivatedRoute, Params, Router } from '@angular/router';
+import { ActivatedRoute, ActivatedRouteSnapshot, Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { UtilService } from 'src/app/shared/utility/util-service/util.service';
 import { ToDoTask } from '../../model/to-do-task';
 import { ToDoManagementService } from '../../service/to-do-management/to-do-management.service';
 
@@ -11,6 +12,8 @@ import { ToDoManagementService } from '../../service/to-do-management/to-do-mana
 })
 export class ToDoListComponent implements OnInit {
 
+    taskCategoryId: number = 0;
+
     toDoTasks: ToDoTask[] = [];
 
     listType: string = "all";
@@ -19,9 +22,15 @@ export class ToDoListComponent implements OnInit {
     private toDoTaskSubscription!: Subscription;
     private activatedRouteSubscription!: Subscription;
 
-    constructor(private todoManagementService: ToDoManagementService, private router : Router, private activatedRoute: ActivatedRoute) {
+    constructor(
+        private todoManagementService: ToDoManagementService,
+        private router: Router,
+        private activatedRoute: ActivatedRoute,
+        private utilService: UtilService
+    ) {
 
     }
+
 
     ngOnInit(): void {
         console.log("reached ngOnInit of list component here");
@@ -30,14 +39,18 @@ export class ToDoListComponent implements OnInit {
 
 
     private initializeSubscriptions() {
-        this.subscribeToTaskManagement();
         this.subscribeToActivatedRoute();
+        this.subscribeToTaskManagement();
     }
 
 
     subscribeToActivatedRoute() {
         this.activatedRouteSubscription = this.activatedRoute.params.subscribe((updatedParams: Params) => {
-            const value = updatedParams['listType'];
+            console.log("The activated routes params is : ", updatedParams);
+            const allParams: Params = this.utilService.getAllRouteParams1(this.activatedRoute);
+            console.log("all params are : ", allParams);
+            this.taskCategoryId = allParams['categoryId'];
+            const value = allParams['listType'];
             if (value == "done" || value == "pending") {
                 this.listType = value;
                 console.log("activated route params is : ", updatedParams);
@@ -45,13 +58,16 @@ export class ToDoListComponent implements OnInit {
                 return;
             }
             this.listType = "all";
+
+
         });
     }
 
 
     private subscribeToTaskManagement() {
-        this.toDoTaskSubscription = this.todoManagementService.toDoTasks$.subscribe((updatedTaskList) => {
-            this.toDoTasks = updatedTaskList;
+        this.toDoTaskSubscription = this.todoManagementService.categoryTaskMapping$.subscribe((updatedCategoryMapping) => {
+            this.toDoTasks = updatedCategoryMapping[this.taskCategoryId];
+            console.log("The tasks are : ", this.toDoTasks);
         });
     }
 

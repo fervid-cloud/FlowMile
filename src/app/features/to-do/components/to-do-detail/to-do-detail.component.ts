@@ -1,10 +1,11 @@
 import { Location } from '@angular/common';
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, NavigationEnd, Params, Router } from '@angular/router';
+import { Component, ElementRef, OnInit, ViewChild, ɵCodegenComponentFactoryResolver } from '@angular/core';
+import { ActivatedRoute, ActivatedRouteSnapshot, NavigationEnd, Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ToDoTask } from '../../model/to-do-task';
 import { ToDoManagementService } from '../../service/to-do-management/to-do-management.service';
 import Modal from 'bootstrap/js/dist/modal';
+import { UtilService } from 'src/app/shared/utility/util-service/util.service';
 
 @Component({
     selector: 'app-to-do-detail',
@@ -25,7 +26,7 @@ export class ToDoDetailComponent implements OnInit {
     // for getting access to dom element, template,
     //note that we can edit the value of element here also but there are differences between ngModel and ViewChild
 
-    // NgModel is used for inputs and is used within forms whereas a Viewchild can be used to point to a component / directive you have on your page.
+    // NgModel is used for inputs and is used within forms whereas a ViewChild can be used to point to a component / directive you have on your page.
 
     // NgModel will give you values for a given form field
 
@@ -48,7 +49,8 @@ export class ToDoDetailComponent implements OnInit {
     constructor(private activatedRoute: ActivatedRoute,
         private router: Router,
         private location: Location,
-        private taskManagementService: ToDoManagementService
+        private taskManagementService: ToDoManagementService,
+        private utilService: UtilService
     ) {
 
         //our choice where we want to subscribe if the observable/subject we are subscribing to exist at
@@ -73,12 +75,18 @@ export class ToDoDetailComponent implements OnInit {
 
     ngOnInit(): void {
         this.activatedRouteSubscription = this.activatedRoute.params.subscribe((updatedParams: Params) => {
-            const providedTaskId = updatedParams['taskId'];
+            const allParams: Params = this.utilService.getAllRouteParams1(this.activatedRoute);
+            console.log("all params are :", allParams);
+            const categoryId = allParams['categoryId'];
+            const providedTaskId = allParams['taskId'];
+
             console.log("Provided taskId is : ", providedTaskId);
-            this.currentToDoTask = this.taskManagementService.findByTaskId(providedTaskId);
+            this.currentToDoTask = this.taskManagementService.findByTaskId(categoryId, providedTaskId);
         });
 
     }
+
+
 
     ngAfterViewInit() {
         //was put here as not this life cycle hook runs when all the dom element are made(except external api call eg. http);
@@ -124,7 +132,7 @@ export class ToDoDetailComponent implements OnInit {
 
     confirmTaskDeletion() {
         if (this.currentToDoTask) {
-            this.taskManagementService.deleteTaskById(this.currentToDoTask.getTodoId());
+            this.taskManagementService.deleteTaskById(this.currentToDoTask.getTaskCategoryId(), this.currentToDoTask.getTodoId());
             this.currentToDoTask = undefined;
         }
         this.deleteConfirmationDialogModal.hide();

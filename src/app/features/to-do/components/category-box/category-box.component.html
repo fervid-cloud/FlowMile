@@ -1,0 +1,16 @@
+<div class="card text-center" style="max-width: 100%; height: 100%">
+    <div class="card-header">
+        <p>Task Count - {{ currentTaskCategory.getTaskCount() }}</p>
+        <p>Last Modified - {{ currentTaskCategory.getModifiedTime() }}</p>
+    </div>
+    <div class="card-body">
+        <h5 class="card-title"> Category Title - {{ currentTaskCategory.getCategoryTitle() }} </h5>
+        <p class="card-text custom-text-truncate">
+            Category Description - {{ currentTaskCategory.getCategoryDescription() }}
+        </p>
+    </div>
+    <a  class="btn btn-primary m-auto mb-3" (click)="onViewClick()">View Tasks</a>
+    <div class="card-footer text-muted">
+        Task Created Info - {{ currentTaskCategory.getCreationTime() }}
+    </div>
+</div>

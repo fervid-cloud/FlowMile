@@ -1,0 +1,8 @@
+<div class="container-fluid my-3">
+    <p class="createTaskHeader text-center bg-primary text-white py-2">Task Categories</p>
+    <div class="row">
+        <div *ngFor="let cur of taskCategories" class="col-sm-6 col-md-4 col-lg-3 mt-2">
+            <app-category-box [currentTaskCategory]="cur" (viewEventNotifier)="onChoosingViewDetail($event)"></app-category-box>
+        </div>
+    </div>
+</div>

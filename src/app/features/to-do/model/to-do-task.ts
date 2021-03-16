@@ -41,14 +41,18 @@ export class ToDoTask {
 
     private taskStatus: boolean;
 
+    private taskCategoryId: number;
+
     constructor() {
-        this.creationTime = new Date();
-        this.taskStatus = false;
-        this.modifiedTime = new Date();
-        this.title = "";
-        this.taskStatus = false;
+
         this.todoId = 0;
+        this.title = "";
         this.textContent = "";
+        this.creationTime = new Date();
+        this.modifiedTime = new Date();
+        this.taskStatus = false;
+        this.taskCategoryId = 0;
+
     }
 
     public getTodoId(): number {
@@ -99,6 +103,12 @@ export class ToDoTask {
         this.taskStatus = taskStatus;
     }
 
+    public getTaskCategoryId(): number {
+        return this.taskCategoryId;
+    }
 
+    public setTaskCategoryId(taskCategoryId: number): void {
+        this.taskCategoryId = taskCategoryId;
+    }
 
 }

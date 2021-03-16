@@ -18,7 +18,8 @@ import { ToDoBoxComponent } from './features/to-do/components/to-do-box/to-do-bo
 import { CreateToDoComponent } from './features/to-do/components/create-to-do/create-to-do.component';
 import { ToDoDetailComponent } from './features/to-do/components/to-do-detail/to-do-detail.component';
 import { ToDoListComponent } from './features/to-do/components/to-do-list/to-do-list.component';
-import { EditToDoComponent } from './features/to-do/components/edit-to-do/edit-to-do.component';
+import { ToDoCategoryComponent } from './features/to-do/components/to-do-category/to-do-category.component';
+import { CategoryBoxComponent } from './features/to-do/components/category-box/category-box.component';
 
 
 @NgModule({
@@ -37,7 +38,8 @@ import { EditToDoComponent } from './features/to-do/components/edit-to-do/edit-t
         CreateToDoComponent,
         ToDoDetailComponent,
         ToDoListComponent,
-        EditToDoComponent
+        ToDoCategoryComponent,
+        CategoryBoxComponent
     ],
     imports: [
         BrowserModule,

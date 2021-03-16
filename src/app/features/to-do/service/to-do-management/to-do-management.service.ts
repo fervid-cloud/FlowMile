@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { TaskCategory } from '../../model/task-category';
 import { ToDoTask } from '../../model/to-do-task';
 
 @Injectable({
@@ -7,27 +8,51 @@ import { ToDoTask } from '../../model/to-do-task';
 })
 export class ToDoManagementService {
 
+    private taskCategories: TaskCategory[] = [];
 
-    private toDoTasks: ToDoTask[] = [];
+    private _taskCategories: BehaviorSubject<TaskCategory[]> = new BehaviorSubject<TaskCategory[]>([]);
 
-    private _toDoTasks: BehaviorSubject<ToDoTask[]> = new BehaviorSubject<ToDoTask[]>([]);
+    public taskCategories$: Observable<TaskCategory[]>;
 
-    public toDoTasks$ : Observable<ToDoTask[]>;
+    private categoryTaskMapping: { [key: number]: ToDoTask [] } = {};
+
+    private _categoryTaskMapping: BehaviorSubject<{ [key: number]: ToDoTask[] }> = new BehaviorSubject<{ [key: number]: ToDoTask[] }>({});
+
+    public categoryTaskMapping$: Observable<{ [key: number]: ToDoTask[] }>;
 
     constructor() {
-        this.toDoTasks$ = this._toDoTasks.asObservable();
+        this.taskCategories$ = this._taskCategories.asObservable();
+        this.categoryTaskMapping$ = this._categoryTaskMapping.asObservable();
         this.initializeTasks();
-        this._toDoTasks.next(this.toDoTasks);
     }
 
     initializeTasks() {
-        this.createSampleTasks("TaskTitle", "Word of the task Word of the task Word of the task Word of the task", true, 1);
-        this.createSampleTasks("TaskTitle", "Word of the task 2", false, 6);
-        this.toDoTasks[0].setTextContent("Detail of task - Lorem Ipsum is simply dummy text of the printing and typesetting industry.Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.");
-
+        this.createSampleTaskCategories("CategoryTitle", "This category is for the tasks that are");
     }
 
-    createSampleTasks(title: string, textContent: string, taskStatus: boolean, start: number) {
+    createSampleTaskCategories(categoryTitle: string, categoryDescription: string) {
+        let taskId = 1;
+        for (let i = 0; i < 10; ++i) {
+            const taskCategory: TaskCategory = new TaskCategory();
+            taskCategory.setCategoryId(i + 1);
+            taskCategory.setCategoryTitle(categoryTitle);
+            taskCategory.setCategoryDescription(categoryDescription);
+            taskCategory.setCreationTime(new Date());
+            taskCategory.setModifiedTime(new Date());
+            this.createSampleTasks("TaskTitle", "Word of the task Word of the task Word of the task Word of the task", true, taskId, taskCategory.getCategoryId());
+            taskId += 5;
+            this.createSampleTasks("TaskTitle", "Word of the task Word of the task Word of the task Word of the task", false, taskId, taskCategory.getCategoryId());
+            taskId += 5;
+            this.taskCategories.push(taskCategory);
+        }
+        this._taskCategories.next(this.taskCategories);
+        this._categoryTaskMapping.next(this.categoryTaskMapping);
+    }
+
+    createSampleTasks(title: string, textContent: string, taskStatus: boolean, start: number, taskCategoryId: number) {
+        if (!this.categoryTaskMapping[taskCategoryId]) {
+            this.categoryTaskMapping[taskCategoryId] = [];
+        }
         for (let i = start; i < start + 5; ++i) {
             const currentToDo: ToDoTask = new ToDoTask();
             currentToDo.setTodoId(i);
@@ -36,7 +61,8 @@ export class ToDoManagementService {
             currentToDo.setTaskStatus(taskStatus);
             currentToDo.setCreationTime(new Date());
             currentToDo.setModifiedTime(new Date());
-            this.toDoTasks.push(currentToDo);
+            currentToDo.setTaskCategoryId(taskCategoryId);
+            this.categoryTaskMapping[taskCategoryId].push(currentToDo);
         }
     }
 
@@ -44,20 +70,25 @@ export class ToDoManagementService {
     createTask(todo: ToDoTask) {
         todo.setCreationTime(new Date());
         todo.setModifiedTime(new Date());
-        todo.setTodoId(this.toDoTasks.length);
-        this.toDoTasks.push(todo);
-        this._toDoTasks.next(this.toDoTasks);
+        todo.setTodoId(this.categoryTaskMapping[todo.getTaskCategoryId()].length);
+        if (!this.categoryTaskMapping[todo.getTaskCategoryId()]) {
+            this.categoryTaskMapping[todo.getTaskCategoryId()] = [];
+        }
+        this.categoryTaskMapping[todo.getTaskCategoryId()].push(todo);
+        this._categoryTaskMapping.next(this.categoryTaskMapping);
         console.log("task successfully made");
     }
 
 
-    findByTaskId(providedTaskId: number): ToDoTask | undefined {
-        return this.toDoTasks.find(toDoTask => toDoTask.getTodoId() == providedTaskId);
+    findByTaskId(providedCategoryId: number, providedTaskId: number): ToDoTask | undefined {
+        console.log(this.categoryTaskMapping);
+        return this.categoryTaskMapping[providedCategoryId].find(toDoTask => toDoTask.getTodoId() == providedTaskId);
     }
 
-    deleteTaskById(providedTaskId: number) {
-        this.toDoTasks = this.toDoTasks.filter(task => task.getTodoId() !== providedTaskId);
-        this._toDoTasks.next(this.toDoTasks);
+
+    deleteTaskById(providedCategoryId: number, providedTaskId: number) : void {
+        this.categoryTaskMapping[providedCategoryId].filter(task => task.getTodoId() != providedTaskId);
+        this._categoryTaskMapping.next(this.categoryTaskMapping);
     }
 
 

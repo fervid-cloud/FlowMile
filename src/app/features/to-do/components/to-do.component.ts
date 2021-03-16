@@ -16,9 +16,9 @@ export class ToDoComponent implements OnInit {
 
     ngOnInit(): void {
         // by default angular nagivates relative to root route
-        this.router.navigate(["list", "all"], {
-            relativeTo: this.activatedRoute
-        });
+        // this.router.navigate(["list", "all"], {
+        //     relativeTo: this.activatedRoute
+        // });
     }
 
 }

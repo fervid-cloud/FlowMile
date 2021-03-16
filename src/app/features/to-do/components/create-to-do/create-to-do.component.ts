@@ -2,6 +2,8 @@ import { animate, keyframes, sequence, state, style, transition, trigger } from 
 import { isEmptyExpression } from '@angular/compiler';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { AbstractControl, FormControl, NgForm } from '@angular/forms';
+import { ActivatedRoute, Params } from '@angular/router';
+import { UtilService } from 'src/app/shared/utility/util-service/util.service';
 import { ToDoTask } from '../../model/to-do-task';
 import { ToDoManagementService } from '../../service/to-do-management/to-do-management.service';
 
@@ -32,6 +34,8 @@ import { ToDoManagementService } from '../../service/to-do-management/to-do-mana
 })
 export class CreateToDoComponent implements OnInit {
 
+    taskCategoryId!: number;
+
     @ViewChild('myCustomFormLocalReference')
     formObject!: NgForm;
 
@@ -41,10 +45,19 @@ export class CreateToDoComponent implements OnInit {
 
     successMessages: string[] = [];
 
+    private activatedRoutedSubscription;
 
+    constructor(
+        private toDoManagementService: ToDoManagementService,
+        private activatedRoute: ActivatedRoute,
+        private utilService: UtilService
+    ) {
 
-
-    constructor(private toDoManagementService: ToDoManagementService) { }
+        this.activatedRoutedSubscription = this.activatedRoute.params.subscribe((params: Params) => {
+            const allParams : Params = this.utilService.getAllRouteParams1(this.activatedRoute);
+            this.taskCategoryId = allParams['categoryId'];
+        });
+     }
 
     ngOnInit(): void {
         // if we have to use viewChild decorated object here, decllare it like this
@@ -57,6 +70,10 @@ export class CreateToDoComponent implements OnInit {
 
     ngAfterViewInit() {
         console.log(this.formObject)
+    }
+
+    ngOnDestroy() {
+        this.activatedRoutedSubscription.unsubscribe();
     }
 
     onSubmit() {
@@ -99,6 +116,7 @@ export class CreateToDoComponent implements OnInit {
             todo.setTitle(controls.titleName.value);
             todo.setTextContent(controls.taskDetail.value);
             todo.setTaskStatus(false);
+            todo.setTaskCategoryId(this.taskCategoryId);
             this.toDoManagementService.createTask(todo);
 
             setTimeout(() => {
