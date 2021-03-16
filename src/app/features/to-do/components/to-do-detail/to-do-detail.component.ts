@@ -4,8 +4,7 @@ import { ActivatedRoute, NavigationEnd, Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ToDoTask } from '../../model/to-do-task';
 import { ToDoManagementService } from '../../service/to-do-management/to-do-management.service';
-import * as bootstrap from 'bootstrap';
-
+import Modal from 'bootstrap/js/dist/modal';
 
 @Component({
     selector: 'app-to-do-detail',
@@ -44,7 +43,7 @@ export class ToDoDetailComponent implements OnInit {
         @ViewChild('taskTitle') taskTitle!: ElementRef; */
 
     editMode: boolean = false;
-    deleteConfirmationDialogModal!: bootstrap.Modal;
+    deleteConfirmationDialogModal!: Modal;
 
     constructor(private activatedRoute: ActivatedRoute,
         private router: Router,
@@ -86,7 +85,7 @@ export class ToDoDetailComponent implements OnInit {
         const myModalEl = <HTMLElement>document.getElementById('myModal');
         console.log(myModalEl);
         console.log("myModelEl is : ", myModalEl);
-        this.deleteConfirmationDialogModal = new bootstrap.Modal(myModalEl, {
+        this.deleteConfirmationDialogModal = new Modal(myModalEl, {
             backdrop: 'static',
             keyboard: false,
             focus: true
