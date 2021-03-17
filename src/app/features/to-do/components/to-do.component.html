@@ -29,14 +29,17 @@
 <nav>
     <div class="nav nav-tabs bg-light" id="nav-tab" role="tablist">
         <!-- routerLink can be attached to a tag, button tag, div tag fine, not tested for others  -->
-        <button routerLinkActive="active" routerLink="list/all" class="nav-link" title="view all tasks" type="button" role="tab" >
+        <button routerLinkActive="active" routerLink="list/all" class="nav-link" title="view all tasks" type="button"
+            role="tab">
             All
         </button>
 
-        <button routerLink="list/done" routerLinkActive="active" class="nav-link" title="view done tasks" type="button" role="tab">
+        <button routerLink="list/done" routerLinkActive="active" class="nav-link" title="view done tasks" type="button"
+            role="tab">
             Done
         </button>
-        <button routerLink="list/pending" routerLinkActive="active" class="nav-link" title="view pending tasks" type="button" role="tab">
+        <button routerLink="list/pending" routerLinkActive="active" class="nav-link" title="view pending tasks"
+            type="button" role="tab">
             Pending
         </button>
         <!-- routerLink starting with '/' means relative to root path i.e '', otherwise from current activated route path -->
@@ -49,7 +52,8 @@
                 <i class=" infoIcon fas fa-info-circle"></i>
 
             </button>
-            <button routerLink="/dashboard/todo" class="nav-link me-2" type="button" title="go back to categories" role="tab">
+            <button routerLink="/dashboard/todo" class="nav-link me-2" type="button" title="back to all categories"
+                role="tab">
                 <i class="fas fa-arrow-left"></i>
             </button>
 
@@ -57,4 +61,6 @@
     </div>
 </nav>
 
-<router-outlet></router-outlet>
+<div class="container-fluid px-1 mt-2 customContainer">
+    <router-outlet></router-outlet>
+</div>

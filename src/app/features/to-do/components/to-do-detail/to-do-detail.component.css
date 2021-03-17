@@ -77,18 +77,21 @@
 }
 
 /* doesn't work through here because this class is not in this component, need to apply on global css because this is added to body element */
+
 .modal-open {
     padding-right: 0px !important;
 }
 
-
 .deletedIndicator {
     position: relative;
-    height: 70vh;
+    height: 80vh;
     background-image: url('/assets/images/to-do/deletedbackground.jpg');
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
+
+    /* hack to remove the space created by image below parent div */
+    overflow: hidden;
 }
 
 /* way to center a absoluted position element
@@ -99,10 +102,11 @@
      // move 50% horizontal to left by it's own width and down vertically by it's own height
     transform: translateX(-50%) translateY(50%);
 } */
+
 .deletedIndicator p {
     position: absolute;
     top: 20%;
-    left : 50%;
+    left: 50%;
     transform: translateX(-50%);
 }
 

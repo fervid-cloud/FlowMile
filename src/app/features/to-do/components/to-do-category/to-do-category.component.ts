@@ -66,7 +66,6 @@ export class ToDoCategoryComponent implements OnInit {
             backdrop: 'static', // means the modal will not close when clicking outside it.
             keyboard: false,
             focus: true,
-
         });
     }
 

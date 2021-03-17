@@ -10,7 +10,13 @@ app-to-do-box {
     width: 100%;
 }
 
-
 .infoIcon {
     color: blue;
+}
+
+.customContainer {
+    overflow-y: auto;
+    max-height: 80vh;
+    overflow-x: hidden;
+    min-height: 70vh;
 }

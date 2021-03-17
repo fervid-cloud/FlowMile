@@ -43,6 +43,7 @@ export class ToDoManagementService {
             taskId += 5;
             this.createSampleTasks("TaskTitle", "Word of the task Word of the task Word of the task Word of the task", false, taskId, taskCategory.getCategoryId());
             taskId += 5;
+            taskCategory.setTaskCount(10);
             this.taskCategories.push(taskCategory);
         }
         this._taskCategories.next(this.taskCategories);

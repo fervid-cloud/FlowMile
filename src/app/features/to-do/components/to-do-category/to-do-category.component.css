@@ -2,6 +2,7 @@
     border: 0;
     background-color: #f8f9fa!important;
     height: 100%;
+    cursor: default;
 }
 
 .addIconWrap {

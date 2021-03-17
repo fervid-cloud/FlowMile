@@ -1,7 +1,6 @@
 <div class="card text-center" style="max-width: 100%; height: 100%">
     <div class="card-header">
-        <p>Task Count - {{ currentTaskCategory.getTaskCount() }}</p>
-        <p>Last Modified - {{ currentTaskCategory.getModifiedTime() }}</p>
+        <p>{{ currentTaskCategory.getTaskCount() > 0 ? "Task Count - " + currentTaskCategory.getTaskCount() : "No-Tasks" }}</p>
     </div>
     <div class="card-body">
         <h5 class="card-title"> Category Title - {{ currentTaskCategory.getCategoryTitle() }} </h5>
@@ -9,8 +8,8 @@
             Category Description - {{ currentTaskCategory.getCategoryDescription() }}
         </p>
     </div>
-    <a  class="btn btn-primary m-auto mb-3" (click)="onViewClick()">View Tasks</a>
-    <div class="card-footer text-muted">
+    <a  class="btn btn-primary m-auto mb-3" (click)="onViewClick()">View more</a>
+<!--     <div class="card-footer text-muted">
         Task Created Info - {{ currentTaskCategory.getCreationTime() }}
-    </div>
+    </div> -->
 </div>
