@@ -44,7 +44,7 @@ body {
     padding-right: 0px !important;
 }
 
-.app, app-dashboard, app-root, app-not-found, app-internal-server-error {
+.app, app-dashboard, app-root, app-login, app-not-found, app-internal-server-error {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
@@ -95,6 +95,9 @@ body {
     background-color: #e4e5e6;
 }
 
+app-footer {
+    margin-top: auto;
+}
 .app-footer {
     margin-top: auto;
 }

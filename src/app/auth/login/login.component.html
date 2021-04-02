@@ -1,0 +1,41 @@
+<div class="loginHeader navbar navbar-light abs text-white">
+    <div class="homeLink py-2 ms-3">
+        <div class="logoWrapper">
+            <img src="/assets/images/logo/logo.svg" alt="Home">
+        </div>
+    </div>
+    <div class="joinLink btn py-1 px-4 me-3 text-white">Join</div>
+</div>
+<div class="login-body">
+    <div class="backGroundImage"><img src="/assets/images/login/login6.jpg"></div>
+    <div class="loginPaddingWrapper d-flex p-3">
+
+        <div class="login-box">
+            <div class="login text-center h5">
+                Login
+            </div>
+            <div *ngIf="invalidCredentialStatus"
+                class="invalidCredentialNotification my-3 text-center btn btn-danger d-block">
+                <p>Wrong email or password.</p>
+            </div>
+            <form>
+                <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">Email address</label>
+                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                        required>
+                    <div id="emailHelp" class="form-text">Your email is your username</div>
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputPassword1" class="form-label">Password</label>
+                    <input type="password" class="form-control" id="exampleInputPassword1" required>
+                </div>
+                <div type="submit" class="btn  customButton btn-primary d-block">Log In ></div>
+                <div class="forgotPassword pt-3 text-center">
+                    <p>Don't remember your password?</p>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
+<app-footer class="loginFooter text-white"></app-footer>

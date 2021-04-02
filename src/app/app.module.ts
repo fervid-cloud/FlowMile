@@ -20,6 +20,7 @@ import { ToDoDetailComponent } from './features/to-do/components/to-do-detail/to
 import { ToDoListComponent } from './features/to-do/components/to-do-list/to-do-list.component';
 import { ToDoCategoryComponent } from './features/to-do/components/to-do-category/to-do-category.component';
 import { CategoryBoxComponent } from './features/to-do/components/category-box/category-box.component';
+import { LoginComponent } from './auth/login/login.component';
 
 
 @NgModule({
@@ -39,7 +40,8 @@ import { CategoryBoxComponent } from './features/to-do/components/category-box/c
         ToDoDetailComponent,
         ToDoListComponent,
         ToDoCategoryComponent,
-        CategoryBoxComponent
+        CategoryBoxComponent,
+        LoginComponent
     ],
     imports: [
         BrowserModule,

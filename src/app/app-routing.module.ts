@@ -8,6 +8,7 @@ import { ToDoListComponent } from './features/to-do/components/to-do-list/to-do-
 import { CreateToDoComponent } from './features/to-do/components/create-to-do/create-to-do.component';
 import { ToDoDetailComponent } from './features/to-do/components/to-do-detail/to-do-detail.component';
 import { ToDoCategoryComponent } from './features/to-do/components/to-do-category/to-do-category.component';
+import { LoginComponent } from './auth/login/login.component';
 
 /* What about path: '**' ?
     path : '**' will match absolutely anything(af / frewf / 321532152 / fsa is a match) with or without a pathMatch: 'full'.
@@ -44,6 +45,11 @@ route, the application automatically displays your NotFoundComponent component.
 */
 
 const routes: Routes = [
+    {
+        path: 'login',
+        component: LoginComponent,
+        pathMatch: 'full'
+    },
     {
         path: 'dashboard',
         // pathMatch: 'full',
