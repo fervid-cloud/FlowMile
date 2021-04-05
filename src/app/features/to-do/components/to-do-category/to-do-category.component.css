@@ -27,3 +27,10 @@
     color: #fff;
     background-color: #2a1ab9;
 }
+
+@media (min-width: 576px)  {
+     .modal-dialog {
+         max-width: 350px;
+     }
+
+}

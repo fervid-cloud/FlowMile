@@ -5,6 +5,7 @@ import { ToDoManagementService } from '../../service/to-do-management/to-do-mana
 // import Tooltip from 'bootstrap/js/dist/tooltip';
 import Modal from 'bootstrap/js/dist/modal';
 import { Subscription } from 'rxjs';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
     selector: 'app-to-do-category',
@@ -23,6 +24,8 @@ export class ToDoCategoryComponent implements OnInit {
 
     private taskCategorySubscription!: Subscription;
 
+    newCategoryForm! : FormGroup;
+
     constructor(
         private todoManagementService: ToDoManagementService,
         private router: Router,
@@ -31,6 +34,10 @@ export class ToDoCategoryComponent implements OnInit {
 
     ngOnInit(): void {
         this.initializeSubscriptions();
+        this.newCategoryForm = new FormGroup({
+            'name': new FormControl(null, [Validators.required, ]),
+            'description': new FormControl(null, Validators.required)
+        });
     }
 
 
@@ -98,11 +105,12 @@ export class ToDoCategoryComponent implements OnInit {
 
 
     addTaskCategory() {
-        const myModalEl = <HTMLElement>document.querySelector('#myModal');
+/*         const myModalEl = <HTMLElement>document.querySelector('#myModal');
         console.log("my category modal is : ", myModalEl);
         console.log(this.addTaskModelDialog);
         const modal = document.querySelectorAll(".modal");
-        console.log(modal);
+        console.log(modal); */
+
         this.addTaskModelDialog.show();
 
 
@@ -112,9 +120,21 @@ export class ToDoCategoryComponent implements OnInit {
         this.addTaskModelDialog.hide();
     }
 
-    addTaskCategorySubmit() {
+    addTaskCategorySubmit(event: Event) {
+        const submitButton: HTMLButtonElement = event.target as HTMLButtonElement;
+        submitButton.disabled = true;
+        setTimeout(() => {
+            submitButton.disabled = false;
+
+        }, 2000);
+
+        const newTaskCategory: TaskCategory = new TaskCategory();
+        // newTaskCategory.set
+        console.log(this.newCategoryForm);
         this.addTaskModelDialog.hide();
     }
+
+
 
     ngOnDestroy() {
         this.addTaskModelDialog.dispose();

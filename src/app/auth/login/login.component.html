@@ -11,6 +11,7 @@
     <div class="loginPaddingWrapper d-flex p-3">
 
         <div class="login-box">
+            <div class="loadingIndicator to do"></div>
             <div class="login text-center h5">
                 Login
             </div>
@@ -18,20 +19,37 @@
                 class="invalidCredentialNotification my-3 text-center btn btn-danger d-block">
                 <p>Wrong email or password.</p>
             </div>
-            <form>
+            <!-- Note that there is no relation of [formGroup] with form type element, we can use it for even normal div also -->
+            <form [formGroup]="signInForm">
                 <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label">Email address</label>
-                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-                        required>
-                    <div id="emailHelp" class="form-text">Your email is your username</div>
+                    <input [formControlName]="'email'" type="email" class="form-control" id="exampleInputEmail1"
+                        aria-describedby="emailHelp" required>
+                    <!-- <div id="emailHelp" class="form-text">Your email is your username</div> -->
+                    <span class="text-danger" *ngIf="invalidFormSubmission">
+                        <span *ngIf="signInForm.get('email')?.errors?.required" class=" help-block">
+                            Username is required
+                        </span>
+                        <span class="help-block" *ngIf="signInForm.get('email')?.errors?.email">
+                            Invalid username
+                        </span>
+                    </span>
                 </div>
                 <div class="mb-3">
                     <label for="exampleInputPassword1" class="form-label">Password</label>
-                    <input type="password" class="form-control" id="exampleInputPassword1" required>
+                    <input [formControlName]="'password'" type="password" class="form-control"
+                        id="exampleInputPassword1" required>
+                    <span class="text-danger" *ngIf="invalidFormSubmission">
+                        <span class="help-block" *ngIf="signInForm.get('password')?.errors?.required">
+                            Password is required
+                        </span>
+                    </span>
                 </div>
-                <div type="submit" class="btn  customButton btn-primary d-block">Log In ></div>
+                <div type="submit" class="btn customButton btn-primary d-block" (click)="onLoginAttempt($event)">Log In
+                    ></div>
                 <div class="forgotPassword pt-3 text-center">
                     <p>Don't remember your password?</p>
+
                 </div>
             </form>
         </div>

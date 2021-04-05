@@ -111,3 +111,17 @@
 .loginFooter {
     /* background-color: #071b4d; */
 }
+
+/* for making disabled look not grey while disabling all the inputs of form */
+
+input:disabled {
+    color: black;
+    background-color: transparent;
+}
+
+/* custom disabling, just for learning purpose */
+
+.disabled {
+    pointer-events: none;
+    opacity: 0.4;
+}
