@@ -13,7 +13,7 @@
         </div>
 
         <div class="row customField">
-            <label for="taskDetail" class="col-sm-2 col-form-label">Task Detail</label>
+            <label for="taskDetail" class="col-sm-4 col-form-label d-block">Task Detail</label>
             <div class="col-sm-12">
                 <textarea type="textarea" maxlength="500" class="form-control" id="taskDetail" required ngModel name="taskDetail" [attr.data-viewName]="'Task Detail'"> </textarea>
             </div>
@@ -29,6 +29,6 @@
 
     </form>
     <div  *ngFor="let messages of successMessages; let i = index">
-       <div [ngClass]="{'customAnimation': validSubmitClickIndicator}" class="alert alert-success py-2 text-center" role="alert"> {{messages}} </div>
+       <div  [ngClass]="taskAlreadyAddedTracker > 1 ? 'alert-warning': 'alert-success'" class="alert customAnimation messageIndicator py-2 text-center" role="alert"> {{messages}} </div>
     </div>
 </div>

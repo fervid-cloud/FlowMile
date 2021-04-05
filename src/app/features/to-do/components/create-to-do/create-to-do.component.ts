@@ -46,6 +46,7 @@ export class CreateToDoComponent implements OnInit {
     successMessages: string[] = [];
 
     private activatedRoutedSubscription;
+    taskAlreadyAddedTracker: number = 0;
 
     constructor(
         private toDoManagementService: ToDoManagementService,
@@ -77,6 +78,13 @@ export class CreateToDoComponent implements OnInit {
     }
 
     onSubmit() {
+        if (this.taskAlreadyAddedTracker > 0) {
+            console.log("task already has been added");
+            ++this.taskAlreadyAddedTracker;
+            this.notifyForAlreadyAddedTask();
+            return;
+        }
+
         console.log("updated form is : ");
         console.log(this.formObject);
         const controls = this.formObject.form.controls;
@@ -108,7 +116,8 @@ export class CreateToDoComponent implements OnInit {
         if (this.validSubmitClickIndicator) {
             this.invalidityReasons = [];
             this.successMessages = [];
-            const successMessage = "Details Submitted Successfully"
+            ++this.taskAlreadyAddedTracker;
+            const successMessage = "Task Created Successfully"
             this.successMessages.push(successMessage);
             this.disableForm();
 
@@ -118,16 +127,23 @@ export class CreateToDoComponent implements OnInit {
             todo.setTaskStatus(false);
             todo.setTaskCategoryId(this.taskCategoryId);
             this.toDoManagementService.createTask(todo);
-
             setTimeout(() => {
                 this.validSubmitClickIndicator = false;
+
             }, 500);
         }
 
     }
 
+    notifyForAlreadyAddedTask() {
+        this.successMessages = [];
+        const successMessage = "Task has already been added"
+        this.successMessages.push(successMessage);
+    }
+
 
     onReset() {
+        this.taskAlreadyAddedTracker = 0;
         this.successMessages = [];
         this.enableForm();
         this.formObject.resetForm();

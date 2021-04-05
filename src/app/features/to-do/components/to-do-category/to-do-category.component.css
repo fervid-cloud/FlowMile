@@ -28,9 +28,15 @@
     background-color: #2a1ab9;
 }
 
-@media (min-width: 576px)  {
-     .modal-dialog {
-         max-width: 350px;
-     }
+@media (min-width: 576px) {
+    .modal-dialog {
+        max-width: 350px;
+    }
+}
 
+/* for making disabled look not grey while disabling all the inputs of form */
+
+input:disabled {
+    color: black;
+    background-color: transparent;
 }

@@ -5,7 +5,7 @@ import { ToDoManagementService } from '../../service/to-do-management/to-do-mana
 // import Tooltip from 'bootstrap/js/dist/tooltip';
 import Modal from 'bootstrap/js/dist/modal';
 import { Subscription } from 'rxjs';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import {FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
     selector: 'app-to-do-category',
@@ -24,7 +24,11 @@ export class ToDoCategoryComponent implements OnInit {
 
     private taskCategorySubscription!: Subscription;
 
-    newCategoryForm! : FormGroup;
+    newCategoryForm!: FormGroup;
+
+    invalidCategoryCreationAttempt: boolean = false;
+
+    creatingCategoryState: boolean = false;
 
     constructor(
         private todoManagementService: ToDoManagementService,
@@ -35,9 +39,29 @@ export class ToDoCategoryComponent implements OnInit {
     ngOnInit(): void {
         this.initializeSubscriptions();
         this.newCategoryForm = new FormGroup({
-            'name': new FormControl(null, [Validators.required, ]),
+            'name': new FormControl(null, [Validators.required, this.isStringValidator.bind(this)]),
             'description': new FormControl(null, Validators.required)
         });
+    }
+
+    isStringValidator(currentFormControl: FormControl): { [key: string]: boolean } | null {
+        if (currentFormControl.value == null) {
+            // at the start of the our reactive form initialization, it's get called and at that time
+            //our value is null so we are not looking for that case, so avoiding it
+            return null;
+        }
+        const categoryName = currentFormControl.value;
+        console.log(currentFormControl);
+
+        const n = categoryName.length;
+
+        for (let i = 0; i < n; ++i) {
+            if (!((categoryName[i] >= 'a' && categoryName[i] <= 'z') || (categoryName[i] >= 'A' && categoryName[i] <= 'Z'))) {
+                return { 'invalidName': true };
+            }
+        }
+
+        return null;
     }
 
 
@@ -120,17 +144,36 @@ export class ToDoCategoryComponent implements OnInit {
         this.addTaskModelDialog.hide();
     }
 
-    addTaskCategorySubmit(event: Event) {
-        const submitButton: HTMLButtonElement = event.target as HTMLButtonElement;
-        submitButton.disabled = true;
-        setTimeout(() => {
-            submitButton.disabled = false;
+    async addTaskCategorySubmit(event: Event) {
 
-        }, 2000);
+        // const submitButton: HTMLButtonElement = event.target as HTMLButtonElement;
+
+        this.invalidCategoryCreationAttempt = false;
+        if (!this.newCategoryForm.valid) {
+            this.invalidCategoryCreationAttempt = true;
+
+            return;
+        }
+        this.creatingCategoryState = true;
+        this.newCategoryForm.disable();
+        await new Promise((resolve, reject) => {
+            setTimeout(() => {
+                this.newCategoryForm.enable();
+                this.creatingCategoryState = false;
+                resolve(true);
+            }, 2000)
+        });
+
 
         const newTaskCategory: TaskCategory = new TaskCategory();
-        // newTaskCategory.set
+        let categoryTitle = this.newCategoryForm.get("name")!.value; // telling the compiler that value wil always exist
+        let categoryDescription = this.newCategoryForm.get("description")?.value; // another trick using optional chaining
+        newTaskCategory.setCategoryTitle(categoryTitle);
+        newTaskCategory.setCategoryDescription(categoryDescription);
+        newTaskCategory.setTaskCount(0);
+        this.todoManagementService.createNewCategory(newTaskCategory);
         console.log(this.newCategoryForm);
+        this.newCategoryForm.reset();
         this.addTaskModelDialog.hide();
     }
 

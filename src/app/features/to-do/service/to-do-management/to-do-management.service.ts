@@ -8,6 +8,7 @@ import { ToDoTask } from '../../model/to-do-task';
 })
 export class ToDoManagementService {
 
+
     private taskCategories: TaskCategory[] = [];
 
     private _taskCategories: BehaviorSubject<TaskCategory[]> = new BehaviorSubject<TaskCategory[]>([]);
@@ -69,12 +70,17 @@ export class ToDoManagementService {
 
 
     createTask(todo: ToDoTask) {
+        console.log(todo);
         todo.setCreationTime(new Date());
         todo.setModifiedTime(new Date());
-        todo.setTodoId(this.categoryTaskMapping[todo.getTaskCategoryId()].length);
         if (!this.categoryTaskMapping[todo.getTaskCategoryId()]) {
-            this.categoryTaskMapping[todo.getTaskCategoryId()] = [];
+            // this.categoryTaskMapping[todo.getTaskCategoryId()] = [];
+            throw new Error("No such category exists");
         }
+
+        todo.setTodoId(this.categoryTaskMapping[todo.getTaskCategoryId()].length);
+
+
         this.categoryTaskMapping[todo.getTaskCategoryId()].push(todo);
         this._categoryTaskMapping.next(this.categoryTaskMapping);
         console.log("task successfully made");
@@ -89,6 +95,15 @@ export class ToDoManagementService {
 
     deleteTaskById(providedCategoryId: number, providedTaskId: number) : void {
         this.categoryTaskMapping[providedCategoryId] =  this.categoryTaskMapping[providedCategoryId].filter(task => task.getTodoId() != providedTaskId);
+        this._categoryTaskMapping.next(this.categoryTaskMapping);
+    }
+
+    createNewCategory(newTaskCategory: TaskCategory) {
+        // api request to save the category
+        newTaskCategory.setCategoryId(Object.keys(this.categoryTaskMapping).length + 1);
+        this.taskCategories.push(newTaskCategory);
+        this.categoryTaskMapping[newTaskCategory.getCategoryId()] = [];
+        this._taskCategories.next(this.taskCategories);
         this._categoryTaskMapping.next(this.categoryTaskMapping);
     }
 

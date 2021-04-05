@@ -50,21 +50,35 @@
                 <div [formGroup]="newCategoryForm">
                     <div class="mb-3">
                         <label for="formGroupExampleInput" class="form-label">Name</label>
-                        <input [formControlName]="'name'" type="text" class="form-control" id="formGroupExampleInput" placeholder="Category Name">
+                        <input [formControlName]="'name'" type="text" class="form-control" id="formGroupExampleInput"
+                            placeholder="Category Name">
+                        <span class="text-danger" *ngIf="invalidCategoryCreationAttempt">
+                            <span *ngIf="newCategoryForm.get('name')?.errors?.required" class=" help-block">
+                                Name is required
+                            </span>
+                            <span *ngIf="newCategoryForm.get('name')?.errors?.invalidName" class=" help-block">
+                                Invalid Name! avoid number or symbol
+                            </span>
+                        </span>
                     </div>
 
                     <div class="mb-3">
                         <label for="formGroupExampleInput2" class="form-label">Description</label>
-                        <input [formControlName] = "'description'" type="text" class="form-control" id="formGroupExampleInput2"
-                            placeholder="Category Description">
+                        <input [formControlName]="'description'" type="text" class="form-control"
+                            id="formGroupExampleInput2" placeholder="Category Description">
+                        <span class="text-danger" *ngIf="invalidCategoryCreationAttempt">
+                            <span class="help-block" *ngIf="newCategoryForm.get('description')?.errors?.required">
+                                Description is required
+                            </span>
+                        </span>
                     </div>
                 </div>
 
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary me-auto customButton" data-bs-dismiss="modal"
+                <button *ngIf="!creatingCategoryState" type="button" class="btn btn-secondary me-auto customButton" data-bs-dismiss="modal"
                     (click)="cancelAddTaskCategory()">Cancel</button>
-                <button type="button" class="btn btn-primary customButton"
+                <button [disabled]="creatingCategoryState" type="button" class="btn btn-primary customButton"
                     (click)="addTaskCategorySubmit($event)">Add</button>
             </div>
         </div>
