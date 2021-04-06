@@ -1,0 +1,67 @@
+.nav-link.active {
+    /* background-color: rgb(0, 123, 255); */
+    background-color: rgb(40, 167, 69);
+    color: white;
+}
+
+app-to-do-box {
+    display: block;
+    height: 100%;
+    width: 100%;
+}
+
+.infoIcon {
+    color: blue;
+}
+
+.filterIcon {
+    color: blueviolet;
+}
+
+.customContainer {
+    overflow-y: auto;
+    max-height: 80vh;
+    overflow-x: hidden;
+    min-height: 70vh;
+}
+
+/* .dropdown-menu {
+    position: absolute;
+    padding: 0;
+    font-size: .875rem;
+}
+
+.dropdown-menu-lg {
+    width: 250px;
+} */
+
+.dropdown-header {
+    background: #e4e7ea;
+    border-bottom: 1px solid #c8ced3;
+    line-height: 1.5;
+    font-size: .765625rem;
+}
+
+.dropdown-item {
+    font-size: .875rem;
+}
+
+.searchContainer {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #c8ced3;
+    justify-content: flex-end;
+    padding: .40rem 1rem;
+}
+
+.searchIcon {
+    color: lightgray;
+}
+
+.searchIcon:hover {
+    color: gray;
+}
+.searchContainer input {
+    border: none;
+    outline: none;
+}

@@ -1,9 +1,12 @@
 .custom-text-truncate {
-    -webkit-line-clamp: 3;
+    /* -webkit-line-clamp: 3; */
+    -webkit-line-clamp: 2;
     white-space: normal;
     -webkit-box-orient: vertical;
     display: -webkit-box;
     overflow: hidden;
+    max-width: 80%;
+    margin: auto;
     /*( for hiding text more than 3 lines */
 }
 

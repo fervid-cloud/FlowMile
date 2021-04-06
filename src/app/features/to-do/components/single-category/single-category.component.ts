@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { ToDoTask } from '../model/to-do-task';
-import { ToDoManagementService } from '../service/to-do-management/to-do-management.service';
+import { ToDoTask } from '../../model/to-do-task';
+import { ToDoManagementService } from '../../service/to-do-management/to-do-management.service';
 
 @Component({
     selector: 'app-to-do',
-    templateUrl: './to-do.component.html',
-    styleUrls: ['./to-do.component.css']
+    templateUrl: './single-category.component.html',
+    styleUrls: ['./single-category.comonent.css']
 
 })
-export class ToDoComponent implements OnInit {
+export class SingleCategoryComponent implements OnInit {
 
     constructor(private router : Router, private activatedRoute : ActivatedRoute) { }
 

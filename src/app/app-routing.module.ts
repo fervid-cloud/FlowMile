@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { DashboardComponent } from './shared/components/dashboard/dashboard.component';
 import { InternalServerErrorComponent } from './shared/components/error-handling/internal-server-error/internal-server-error.component';
 import { NotFoundComponent } from './shared/components/error-handling/not-found/not-found.component';
-import { ToDoComponent } from './features/to-do/components/to-do.component';
+import { SingleCategoryComponent } from './features/to-do/components/single-category/single-category.component';
 import { ToDoListComponent } from './features/to-do/components/to-do-list/to-do-list.component';
 import { CreateToDoComponent } from './features/to-do/components/create-to-do/create-to-do.component';
 import { ToDoDetailComponent } from './features/to-do/components/to-do-detail/to-do-detail.component';
@@ -60,7 +60,7 @@ const routes: Routes = [
             },
 
             {
-                path: 'todo/:categoryId', component: ToDoComponent,
+                path: 'todo/:categoryId', component: SingleCategoryComponent,
                 children: [
                     {
                         path: 'list/:listType', component: ToDoListComponent, pathMatch: 'full',

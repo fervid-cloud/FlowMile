@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ToDoComponent } from './to-do.component';
+import { SingleCategoryComponent } from './single-category.component';
 
 describe('ToDoComponent', () => {
-  let component: ToDoComponent;
-  let fixture: ComponentFixture<ToDoComponent>;
+  let component: SingleCategoryComponent;
+  let fixture: ComponentFixture<SingleCategoryComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ToDoComponent ]
+      declarations: [ SingleCategoryComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ToDoComponent);
+    fixture = TestBed.createComponent(SingleCategoryComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

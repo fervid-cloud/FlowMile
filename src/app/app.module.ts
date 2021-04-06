@@ -13,7 +13,7 @@ import { SidebarComponent } from './shared/components/sidebar/sidebar.component'
 import { MainContentComponent } from './shared/components/main-content/main-content.component';
 import { NotFoundComponent } from './shared/components/error-handling/not-found/not-found.component';
 import { InternalServerErrorComponent } from './shared/components/error-handling/internal-server-error/internal-server-error.component';
-import { ToDoComponent } from './features/to-do/components/to-do.component';
+import { SingleCategoryComponent } from './features/to-do/components/single-category/single-category.component';
 import { ToDoBoxComponent } from './features/to-do/components/to-do-box/to-do-box.component';
 import { CreateToDoComponent } from './features/to-do/components/create-to-do/create-to-do.component';
 import { ToDoDetailComponent } from './features/to-do/components/to-do-detail/to-do-detail.component';
@@ -34,7 +34,7 @@ import { LoginComponent } from './auth/login/login.component';
         MainContentComponent,
         NotFoundComponent,
         InternalServerErrorComponent,
-        ToDoComponent,
+        SingleCategoryComponent,
         ToDoBoxComponent,
         CreateToDoComponent,
         ToDoDetailComponent,
