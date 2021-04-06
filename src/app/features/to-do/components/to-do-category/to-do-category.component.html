@@ -23,11 +23,12 @@
     </div>
 </nav>
 
-
-<div class="row">
-    <div *ngFor="let cur of taskCategories" class="col-sm-6 col-md-4 col-lg-3 mt-2">
-        <app-category-box [currentTaskCategory]="cur" (viewEventNotifier)="onChoosingViewDetail($event)">
-        </app-category-box>
+<div class="container-fluid px-1 mt-2 customContainer">
+    <div class="row">
+        <div *ngFor="let cur of taskCategories" class="col-sm-6 col-md-4 col-lg-3 mb-2">
+            <app-category-box [currentTaskCategory]="cur" (viewEventNotifier)="onChoosingViewDetail($event)">
+            </app-category-box>
+        </div>
     </div>
 </div>
 
@@ -76,8 +77,8 @@
 
             </div>
             <div class="modal-footer">
-                <button *ngIf="!creatingCategoryState" type="button" class="btn btn-secondary me-auto customButton" data-bs-dismiss="modal"
-                    (click)="cancelAddTaskCategory()">Cancel</button>
+                <button *ngIf="!creatingCategoryState" type="button" class="btn btn-secondary me-auto customButton"
+                    data-bs-dismiss="modal" (click)="cancelAddTaskCategory()">Cancel</button>
                 <button [disabled]="creatingCategoryState" type="button" class="btn btn-primary customButton"
                     (click)="addTaskCategorySubmit($event)">Add</button>
             </div>
