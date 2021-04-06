@@ -1,0 +1,206 @@
+:root {
+    --headerHeight: 60px;
+}
+
+.loginHeader {
+
+    position: fixed;
+    /* flex-direction: row; */
+    /*navbar already gives flex display */
+    height: 60px;
+    padding: 0;
+    margin: 0;
+    background-color: #232a34;
+    width: 100%;
+    z-index: 20;
+    /* border-bottom: 1px solid #c8ced3; */
+}
+
+.joinLink {
+    background-color: #05a081;
+}
+
+.joinLink:hover {
+    background-color: #096e5a;
+}
+
+.homeLink {
+    height: 100%;
+    width: 5rem;
+}
+
+.logoWrapper {
+    height: 90%;
+    width: 80%
+}
+
+.homeLink img {
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    max-height: 100%;
+    cursor: pointer;
+}
+
+.login-body {
+    /* background-color: #f5f8fb; */
+    flex-grow: 1;
+    display: flex;
+    position: relative;
+    margin-top: 60px;
+    overflow: hidden;
+    /* overflow:hidden; */
+}
+
+.loginPaddingWrapper {
+    flex-grow: 1;
+}
+
+.backGroundImage {
+    position: absolute;
+    /* filter: blur(2px); */
+    /* -webkit-filter: blur(2px); */
+    flex-grow: 1;
+    /* does not work for absolute position as it is out of flow of normal document flow, now only relative to first positioned ancestor */
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+.backGroundImage img {
+    max-height: 100%;
+    max-width: 100%;
+    height: 100%;
+    width: 100%;
+    display: block;
+    object-fit: cover;
+}
+
+.login-box {
+    color: #052a4d;
+    transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+    background-color: #fff;
+    border: 1px solid #e4e8ef;
+    padding: 1.5rem;
+    border-radius: .45em;
+    margin: auto;
+}
+
+@media (min-width: 576px) {
+    .login-box {
+        width: 25rem;
+    }
+}
+
+/*
+even though it was necessary, dit it because bootstrap padding units were not enough to do the padding
+Granularly, so did it myself through here */
+@media (max-width: 576px) {
+    .loginPaddingWrapper {
+        padding: 2rem !important;
+    }
+}
+
+/*
+// X-Small devices (portrait phones, less than 576px)
+// No media query for `xs` since this is the default in Bootstrap
+// Small devices (landscape phones, 576px and up)
+@media (min-width: 576px) {
+
+}
+
+// Medium devices (tablets, 768px and up)
+@media (min-width: 768px) {
+
+}
+
+// Large devices (desktops, 992px and up)
+@media (min-width: 992px) {
+
+}
+
+// X-Large devices (large desktops, 1200px and up)
+@media (min-width: 1200px) {
+
+}
+
+// XX-Large devices (larger desktops, 1400px and up)
+@media (min-width: 1400px) {
+
+}
+ */
+
+.signUp {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.login-box-content {
+    font-family: "Proxima Nova", sans-serif !important;
+}
+
+.invalidCredentialNotification {
+    pointer-events: none;
+    border-radius: 0.4rem;
+    background-color: #ff6b6b !important;
+    border: none;
+    font-size: 0.9rem;
+}
+
+.customButton {
+    background-color: rgb(14, 160, 236);
+    border: none;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.customButton:hover {
+    background-color: rgb(32, 146, 207);
+}
+
+/* .forgotPassword p {
+    cursor: pointer;
+    display: inline-block;
+} */
+
+/* .forgotPassword p a:hover {
+    border-bottom: 1px solid black;
+} */
+
+.loginLink {
+    cursor: pointer;
+    color: rgb(151, 33, 230);
+}
+
+/* for making disabled look not grey while disabling all the inputs of form */
+
+input:disabled {
+    color: black;
+    background-color: transparent;
+}
+
+/* custom disabling, just for learning purpose */
+
+.disabled {
+    pointer-events: none;
+    opacity: 0.4;
+}
+
+.customInput {
+    flex-grow: 1;
+}
+
+.customFormControl {
+    display: block;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #212529;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border-radius: .25rem;
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}

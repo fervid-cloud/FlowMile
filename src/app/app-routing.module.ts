@@ -9,6 +9,7 @@ import { CreateToDoComponent } from './features/to-do/components/create-to-do/cr
 import { ToDoDetailComponent } from './features/to-do/components/to-do-detail/to-do-detail.component';
 import { ToDoCategoryComponent } from './features/to-do/components/to-do-category/to-do-category.component';
 import { LoginComponent } from './auth/login/login.component';
+import { SignupComponent } from './auth/signup/signup.component';
 
 /* What about path: '**' ?
     path : '**' will match absolutely anything(af / frewf / 321532152 / fsa is a match) with or without a pathMatch: 'full'.
@@ -48,6 +49,11 @@ const routes: Routes = [
     {
         path: 'login',
         component: LoginComponent,
+        pathMatch: 'full'
+    },
+    {
+        path: 'signup',
+        component: SignupComponent,
         pathMatch: 'full'
     },
     {

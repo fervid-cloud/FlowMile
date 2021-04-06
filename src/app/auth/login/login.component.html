@@ -4,10 +4,10 @@
             <img src="/assets/images/logo/logo.svg" alt="Home">
         </div>
     </div>
-    <div class="joinLink btn py-1 px-4 me-3 text-white">Join</div>
+    <div  routerLink="/signup" class="joinLink btn py-1 px-4 me-3 text-white">Join</div>
 </div>
 <div class="login-body">
-    <div class="backGroundImage"><img src="/assets/images/login/login6.jpg"></div>
+    <div class="backGroundImage"><img src="/assets/images/login/loginCompressed.jpg"></div>
     <div class="loginPaddingWrapper d-flex p-3">
 
         <div class="login-box">
@@ -24,7 +24,7 @@
                 <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label">Email address</label>
                     <input [formControlName]="'email'" type="email" class="form-control" id="exampleInputEmail1"
-                        aria-describedby="emailHelp" required>
+                        aria-describedby="emailHelp"  autocomplete="on" required>
                     <!-- <div id="emailHelp" class="form-text">Your email is your username</div> -->
                     <span class="text-danger" *ngIf="invalidFormSubmission">
                         <span *ngIf="signInForm.get('email')?.errors?.required" class=" help-block">
@@ -37,8 +37,10 @@
                 </div>
                 <div class="mb-3">
                     <label for="exampleInputPassword1" class="form-label">Password</label>
+
                     <input [formControlName]="'password'" type="password" class="form-control"
-                        id="exampleInputPassword1" required>
+                        id="exampleInputPassword1" autocomplete="on" required>
+
                     <span class="text-danger" *ngIf="invalidFormSubmission">
                         <span class="help-block" *ngIf="signInForm.get('password')?.errors?.required">
                             Password is required
