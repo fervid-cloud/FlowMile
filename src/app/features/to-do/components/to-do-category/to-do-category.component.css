@@ -5,6 +5,12 @@
     cursor: default;
 }
 
+.row  {
+
+    max-width: 100vw;
+
+}
+
 .addIconWrap {
     border: none;
 }

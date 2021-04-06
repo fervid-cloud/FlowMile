@@ -3,7 +3,8 @@
     white-space: normal;
     -webkit-box-orient: vertical;
     display: -webkit-box;
-    overflow: hidden;/*( for hiding text more than 3 lines */
+    overflow: hidden;
+    /*( for hiding text more than 3 lines */
 }
 
 .done {
@@ -12,4 +13,24 @@
 
 .pending {
     background-color: rgb(223, 111, 111);
+}
+
+.categoryBody .imageWrapper {
+    /* height: 0%; */
+    width: 65%;
+    /*     You can set the margin property to auto to horizontally center the element within its container.
+    The element will then take up the specified width, and the remaining space will be split equally
+    between the left and right margins.
+    note: this is for if parent element doesn't have display of flex
+     */
+    margin: auto;
+}
+
+.categoryBody img {
+    height: 100%;
+    width: 100%;
+    max-height: 100%;
+    max-width: 100%;
+    display: block;
+    object-fit: contain;
 }

@@ -2,11 +2,15 @@
     <div class="card-header" [ngClass]="unitTodo.getTaskStatus() ? 'done' : 'pending'">
         {{ unitTodo.getTaskStatus() == true ? "Done" : "Pending" }}
     </div>
-    <div class="card-body">
+    <div class="card-body categoryBody">
         <h5 class="card-title">{{ unitTodo.getTitle() }} </h5>
-        <p class="card-text custom-text-truncate">
+        <div class="imageWrapper">
+            <img *ngIf="unitTodo.getTaskStatus()" src="/assets/images/to-do/completed-task/1.png">
+            <img *ngIf="!unitTodo.getTaskStatus()" src="/assets/images/to-do/incomplete-task/3.png">
+        </div>
+        <!-- <p class="card-text custom-text-truncate">
             {{ unitTodo.getTextContent() }}
-        </p>
+        </p> -->
     </div>
     <a (click)="onViewClick()" class="btn btn-primary m-auto mb-3">View Detail</a>
     <div class="card-footer text-muted">
