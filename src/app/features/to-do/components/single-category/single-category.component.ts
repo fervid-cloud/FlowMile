@@ -5,12 +5,13 @@ import { ToDoTask } from '../../model/to-do-task';
 import { ToDoManagementService } from '../../service/to-do-management/to-do-management.service';
 
 @Component({
-    selector: 'app-to-do',
+    selector: 'app-single-category',
     templateUrl: './single-category.component.html',
     styleUrls: ['./single-category.comonent.css']
 
 })
 export class SingleCategoryComponent implements OnInit {
+
 
     constructor(private router : Router, private activatedRoute : ActivatedRoute) { }
 

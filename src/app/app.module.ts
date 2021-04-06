@@ -22,6 +22,7 @@ import { ToDoCategoryComponent } from './features/to-do/components/to-do-categor
 import { CategoryBoxComponent } from './features/to-do/components/category-box/category-box.component';
 import { LoginComponent } from './auth/login/login.component';
 import { SignupComponent } from './auth/signup/signup.component';
+import { CategoryDetailComponent } from './features/to-do/components/category-detail/category-detail.component';
 
 
 @NgModule({
@@ -43,7 +44,8 @@ import { SignupComponent } from './auth/signup/signup.component';
         ToDoCategoryComponent,
         CategoryBoxComponent,
         LoginComponent,
-        SignupComponent
+        SignupComponent,
+        CategoryDetailComponent
     ],
     imports: [
         BrowserModule,

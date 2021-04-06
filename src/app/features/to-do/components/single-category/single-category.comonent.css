@@ -1,3 +1,7 @@
+:host {
+    display: block;
+}
+
 .nav-link.active {
     /* background-color: rgb(0, 123, 255); */
     background-color: rgb(40, 167, 69);
