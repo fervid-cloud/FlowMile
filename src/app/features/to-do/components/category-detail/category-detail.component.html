@@ -14,34 +14,34 @@
     <div class="col-sm-6">
         <div class="categoryDetails p-3">
             <div>
-                <h2 class="categoryTitle">Category Title Here</h2>
-                <h6>Created on Some Date</h6>
+                <h2 class="categoryTitle">{{ currentCategory.getCategoryTitle() }}</h2>
+                <h6>Created on {{ currentCategory.getCreationTime() }}</h6>
             </div>
 
             <div class="individualField  my-3">
                 <h6>Category Id</h6>
-                <p>some Id</p>
+                <p>{{ currentCategory.getCategoryId() }}</p>
             </div>
 
             <div class="individualField  mb-3">
                 <h6>Category Description</h6>
-                <p>description of task</p>
+                <p>{{ currentCategory.getCategoryDescription() }}</p>
             </div>
 
 
             <div class="individualField  mb-3">
                 <h6>taskCount</h6>
-                <p>taskCount</p>
+                <p>{{ currentCategory.getTaskCount() }}</p>
             </div>
 
             <div class="individualField  mb-3">
                 <h6>creationTime</h6>
-                <p>creationTime</p>
+                <p>{{ currentCategory.getCreationTime() }}</p>
             </div>
 
             <div class="individualField  mb-3">
                 <h6>modifiedTime</h6>
-                <p>modifiedTime</p>
+                <p>{{ currentCategory.getModifiedTime() }}</p>
             </div>
 
 

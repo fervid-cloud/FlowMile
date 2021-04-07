@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { UtilService } from 'src/app/shared/utility/util-service/util.service';
+import { TaskCategory } from '../../model/task-category';
 import { ToDoTask } from '../../model/to-do-task';
 import { ToDoManagementService } from '../../service/to-do-management/to-do-management.service';
 
@@ -13,13 +15,58 @@ import { ToDoManagementService } from '../../service/to-do-management/to-do-mana
 export class SingleCategoryComponent implements OnInit {
 
 
-    constructor(private router : Router, private activatedRoute : ActivatedRoute) { }
+    currentCategory!: TaskCategory;
+
+    private activatedRouteSubscription!: Subscription;
+
+    constructor(
+        private todoManagementService: ToDoManagementService,
+        private router: Router,
+        private activatedRoute: ActivatedRoute,
+        private utilService: UtilService
+    ) { }
 
     ngOnInit(): void {
         // by default angular nagivates relative to root route
         // this.router.navigate(["list", "all"], {
         //     relativeTo: this.activatedRoute
         // });
+        this.subscribeToActivatedRoute();
+
+
     }
 
+    ngOnDestroy() {
+        this.activatedRouteSubscription.unsubscribe();
+    }
+
+
+    subscribeToActivatedRoute() {
+        this.activatedRouteSubscription = this.activatedRoute.params.subscribe((updatedParams: Params) => {
+            console.log("The activated routes params is : ", updatedParams);
+            const allParams: Params = this.utilService.getAllRouteParams1(this.activatedRoute);
+            console.log("all params are : ", allParams);
+            const currentTaskCategoryId = allParams['categoryId'];
+
+
+            this.updateCurrentCategory(currentTaskCategoryId);
+        });
+    }
+
+
+    updateCurrentCategory(currentTaskCategoryId : number) {
+        const targetCategory = this.todoManagementService.findByCategoryId(currentTaskCategoryId)
+        if (!targetCategory) {
+
+            console.log("current category doesn't exists");
+            this.router.navigate(['..'], {
+                relativeTo: this.activatedRoute
+            });
+
+            return;
+            // throw new Error("task category not found, there is some inconsistency in the data");
+        }
+        console.log(targetCategory);
+        this.currentCategory = targetCategory;
+    }
 }

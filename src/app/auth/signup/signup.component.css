@@ -89,6 +89,7 @@
 @media (min-width: 576px) {
     .login-box {
         width: 25rem;
+        margin: 5.2rem auto;
     }
 }
 

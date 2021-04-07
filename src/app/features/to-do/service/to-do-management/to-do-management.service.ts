@@ -9,6 +9,7 @@ import { ToDoTask } from '../../model/to-do-task';
 export class ToDoManagementService {
 
 
+
     private taskCategories: TaskCategory[] = [];
 
     private _taskCategories: BehaviorSubject<TaskCategory[]> = new BehaviorSubject<TaskCategory[]>([]);
@@ -105,6 +106,10 @@ export class ToDoManagementService {
         this.categoryTaskMapping[newTaskCategory.getCategoryId()] = [];
         this._taskCategories.next(this.taskCategories);
         this._categoryTaskMapping.next(this.categoryTaskMapping);
+    }
+
+    findByCategoryId(currentTaskCategoryId: number): TaskCategory | undefined{
+        return this.taskCategories.find(category => category.getCategoryId() == currentTaskCategoryId);
     }
 
 
