@@ -39,7 +39,7 @@ img {
 }
 
 .categoryDetails {
-/*     Margin collapsing is a feature of a block formatting context.
+    /*     Margin collapsing is a feature of a block formatting context.
     There is no margin collapsing in a flex formatting context. display: flex; */
     display: flex;
     flex-direction: column;
@@ -47,4 +47,20 @@ img {
 
 .interactiveIndicator {
     cursor: pointer;
+}
+
+.editField {
+    margin-top: 0.35rem;
+}
+
+.customSpinner {
+    position: fixed;
+    height: 100vh;
+    width: 100vw;
+    top: 0;
+    left: 0;
+    background-color: whitesmoke;
+    opacity: 0.5;
+    display: flex;
+    z-index: 2000;
 }

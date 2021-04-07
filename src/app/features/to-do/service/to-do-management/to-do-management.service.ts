@@ -10,6 +10,7 @@ export class ToDoManagementService {
 
 
 
+
     private taskCategories: TaskCategory[] = [];
 
     private _taskCategories: BehaviorSubject<TaskCategory[]> = new BehaviorSubject<TaskCategory[]>([]);
@@ -48,8 +49,7 @@ export class ToDoManagementService {
             taskCategory.setTaskCount(10);
             this.taskCategories.push(taskCategory);
         }
-        this._taskCategories.next(this.taskCategories);
-        this._categoryTaskMapping.next(this.categoryTaskMapping);
+        this.updateDataForObservers();
     }
 
     createSampleTasks(title: string, textContent: string, taskStatus: boolean, start: number, taskCategoryId: number) {
@@ -104,12 +104,50 @@ export class ToDoManagementService {
         newTaskCategory.setCategoryId(Object.keys(this.categoryTaskMapping).length + 1);
         this.taskCategories.push(newTaskCategory);
         this.categoryTaskMapping[newTaskCategory.getCategoryId()] = [];
-        this._taskCategories.next(this.taskCategories);
-        this._categoryTaskMapping.next(this.categoryTaskMapping);
+        this.updateDataForObservers();
     }
 
     findByCategoryId(currentTaskCategoryId: number): TaskCategory | undefined{
         return this.taskCategories.find(category => category.getCategoryId() == currentTaskCategoryId);
+    }
+
+
+    async deleteCategoryById(categoryId: number) {
+        await this.requestMockUp();
+        this.taskCategories = this.taskCategories.filter(category => category.getCategoryId() != categoryId);
+        delete this.categoryTaskMapping[categoryId];
+        this.updateDataForObservers();
+    }
+
+
+    async editCategoryById(editedCategory: TaskCategory) {
+        await this.requestMockUp();
+        const n = this.taskCategories.length;
+
+        for (let i = 0; i < n; ++i) {
+            if (this.taskCategories[i].getCategoryId() == editedCategory.getCategoryId()) {
+                this.taskCategories[i] = editedCategory;
+            }
+        }
+
+        this.categoryTaskMapping[editedCategory.getCategoryId()]
+        this.updateDataForObservers();
+
+    }
+
+
+    updateDataForObservers() {
+        this._taskCategories.next(this.taskCategories);
+        this._categoryTaskMapping.next(this.categoryTaskMapping);
+    }
+
+
+    requestMockUp() : Promise<boolean> {
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve(true);
+            }, 2000);
+        });
     }
 
 

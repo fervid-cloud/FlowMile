@@ -119,9 +119,24 @@ input:disabled {
     background-color: transparent;
 }
 
+input {
+    font-size: 14px;
+}
+
 /* custom disabling, just for learning purpose */
 
 .disabled {
     pointer-events: none;
     opacity: 0.4;
+}
+
+.errorInfo {
+    display: flex;
+    align-items: center;
+    font-size: 12px;
+    margin-top: .20rem!important;
+}
+
+.errorIcon {
+    margin-right: .45rem!important;
 }

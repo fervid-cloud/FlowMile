@@ -1,11 +1,11 @@
-<div class="loginHeader navbar navbar-light abs text-white">
+<!-- <div class="loginHeader navbar navbar-light abs text-white">
     <div class="homeLink py-2 ms-3">
         <div class="logoWrapper">
             <img src="/assets/images/logo/logo.svg" alt="Home">
         </div>
     </div>
     <div routerLink="/login" class="joinLink btn py-1 px-4 me-3 text-white">Login</div>
-</div>
+</div> -->
 <div class="login-body">
     <div class="backGroundImage"><img src="/assets/images/signup/signUpCompressed.jpg"></div>
     <div class="loginPaddingWrapper d-flex p-4">
@@ -23,19 +23,21 @@
             <form [formGroup]="signInForm">
 
                 <div class="row">
-<!--                     dividing the row into two parts of column through col-sm-6 staring from small device see css for more info about breakpoints
+                    <!--                     dividing the row into two parts of column through col-sm-6 staring from small device see css for more info about breakpoints
                     so for extra small device it will automatically be stacked applied by bootstrap for rol and col -->
                     <div class="col-sm-6 mb-3">
                         <div class="form-group">
                             <label for="exampleInputEmail1" class="form-label">First Name</label>
-                            <input autocomplete="on" type="text" class="form-control" placeholder="First Name" aria-label="Server">
+                            <input autocomplete="on" type="text" class="form-control" placeholder="First Name"
+                                aria-label="Server">
                         </div>
                     </div>
 
                     <div class="col-sm-6 mb-3">
                         <div class="form-group">
                             <label for="exampleInputEmail1" class="form-label">Last Name</label>
-                            <input autocomplete="on" type="text" class="form-control" placeholder="Last Name" aria-label="Server">
+                            <input autocomplete="on" type="text" class="form-control" placeholder="Last Name"
+                                aria-label="Server">
                         </div>
                     </div>
 
@@ -69,32 +71,50 @@
 
                 </div>
 
+                <div class="row">
+                    <!--                     dividing the row into two parts of column through col-sm-6 staring from small device see css for more info about breakpoints
+                                    so for extra small device it will automatically be stacked applied by bootstrap for rol and col -->
+                    <div class="col-sm-6 mb-3">
+                        <div class="form-group">
+                            <label for="exampleInputPassword1" class="form-label">Password</label>
 
-                <div class="mb-3">
-                    <label for="exampleInputPassword1" class="form-label">Password</label>
+                            <input [formControlName]="'password'" type="password" placeholder="Password"
+                                class="form-control" autocomplete="off" required>
 
-                    <input [formControlName]="'password'" type="password" placeholder="Password" class="form-control" autocomplete="off" required>
+                            <span class="text-danger" *ngIf="invalidFormSubmission">
+                                <span class="help-block" *ngIf="signInForm.get('password')?.errors?.required">
+                                    Password is required
+                                </span>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6 mb-3">
+                        <div class="form-group">
+                            <label for="exampleInputPassword1" class="form-label">Confirm Password</label>
+
+                            <input [formControlName]="'password'" type="password" placeholder="Password" class="form-control" autocomplete="off"
+                                required>
+
+                            <span class="text-danger" *ngIf="invalidFormSubmission">
+                                <span class="help-block" *ngIf="signInForm.get('password')?.errors?.required">
+                                    Password is required
+                                </span>
+                            </span>
+                        </div>
+                    </div>
 
                     <span class="text-danger" *ngIf="invalidFormSubmission">
-                        <span class="help-block" *ngIf="signInForm.get('password')?.errors?.required">
-                            Password is required
+                        <span *ngIf="signInForm.get('email')?.errors?.required" class=" help-block">
+                            Username is required
+                        </span>
+                        <span class="help-block" *ngIf="signInForm.get('email')?.errors?.email">
+                            Invalid username
                         </span>
                     </span>
+
                 </div>
 
-
-                <div class="mb-3">
-                    <label for="exampleInputPassword1" class="form-label">Confirm Password</label>
-
-                    <input [formControlName]="'password'" type="password" placeholder="Password" class="form-control"
-                         autocomplete="off" required>
-
-                    <span class="text-danger" *ngIf="invalidFormSubmission">
-                        <span class="help-block" *ngIf="signInForm.get('password')?.errors?.required">
-                            Password is required
-                        </span>
-                    </span>
-                </div>
                 <div type="submit" class="btn customButton btn-primary d-block" (click)="onLoginAttempt($event)">Sign Up
                     ></div>
                 <div class="forgotPassword pt-3 text-center">
@@ -106,4 +126,4 @@
     </div>
 
 </div>
-<app-footer class="loginFooter text-white"></app-footer>
+<!-- <app-footer class="loginFooter text-white"></app-footer> -->

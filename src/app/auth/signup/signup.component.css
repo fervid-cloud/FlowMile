@@ -47,7 +47,7 @@
     flex-grow: 1;
     display: flex;
     position: relative;
-    margin-top: 60px;
+    /* margin-top: 60px; */
     overflow: hidden;
     /* overflow:hidden; */
 }
@@ -89,7 +89,7 @@
 @media (min-width: 576px) {
     .login-box {
         width: 25rem;
-        margin: 5.2rem auto;
+        /* margin: 5.2rem auto; */
     }
 }
 
