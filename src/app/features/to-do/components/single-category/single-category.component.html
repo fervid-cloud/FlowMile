@@ -29,7 +29,7 @@
 <nav>
     <div class="nav nav-tabs bg-light" id="nav-tab" role="tablist">
         <!-- routerLink can be attached to a tag, button tag, div tag fine, not tested for others  -->
-        <button routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" [routerLink]="['/dashboard', 'todo', currentCategory.getCategoryId()]" class="nav-link" title="view all tasks" type="button"
+        <button routerLinkActive="active"  [routerLinkActiveOptions]="{exact: true}" #rla="routerLinkActive" [routerLink]="['/dashboard', 'todo', currentCategory.getCategoryId()]" class="nav-link" title="view all tasks" type="button"
             role="tab">
             Detail
         </button>
@@ -73,5 +73,7 @@
 </nav>
 
 <div class="container-fluid px-1 mt-2 customContainer">
-    <router-outlet></router-outlet>
+    <!-- https://angular.io/api/router/RouterLinkActive -->
+    <router-outlet *ngIf="!rla.isActive"></router-outlet>
+    <app-category-detail [currentCategoryDetail]="currentCategory"  *ngIf="rla.isActive"></app-category-detail>
 </div>

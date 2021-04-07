@@ -77,10 +77,11 @@ const routes: Routes = [
                     },
                     {
                         path: 'list/:listType/:taskId', component: ToDoDetailComponent, pathMatch: 'full',
-                    },
+                    }
+                   /*  ,
                     {
                         path: '', component: CategoryDetailComponent, pathMatch: 'full'
-                    }
+                    } */
                 ]
             }
 
