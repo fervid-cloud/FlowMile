@@ -58,6 +58,41 @@ export class CategoryDetailComponent implements OnInit {
             'categoryTitle': new FormControl(this.currentCategory.getCategoryTitle(), [Validators.required]),
             'categoryDescription': new FormControl(this.currentCategory.getCategoryDescription(), [Validators.required])
         });
+        this.categoryEditForm.valueChanges.subscribe(values => {
+            this.areSomeEquivalent(this.currentCategory, values);
+        });
+
+    }
+
+    areAllPropertyEquivalent(a: any, b: any) {
+        let aProps = Object.getOwnPropertyNames(a);
+        let bProps = Object.getOwnPropertyNames(b);
+
+        for (var i = 0; i < aProps.length; i++) {
+            let propName = aProps[i];
+
+            if (a[propName] !== b[propName]) {
+                this.categoryEditForm.markAsDirty();
+                return;
+            }
+        }
+        this.categoryEditForm.markAsPristine();
+    }
+
+
+    areSomeEquivalent(a: any, b: any) {
+        const parameters : string [] = ['categoryTitle', 'categoryDescription'];
+        const n = parameters.length;
+
+        for (let i = 0; i < n; ++i) {
+            const propName = parameters[i];
+            if (a[propName] !== b[propName]) {
+                this.categoryEditForm.markAsDirty();
+                return;
+            }
+        }
+
+        this.categoryEditForm.markAsPristine();
 
     }
 
@@ -128,6 +163,7 @@ export class CategoryDetailComponent implements OnInit {
         this.toggleSpinnerStatus();
         this.currentCategory.setCategoryTitle(this.categoryEditForm.get('categoryTitle')?.value);
         this.currentCategory.setCategoryDescription(this.categoryEditForm.get("categoryDescription")?.value);
+        this.currentCategory.setModifiedTime(new Date());
         await this.todoManagementService.editCategoryById(this.currentCategory);
         this.categoryEditMode = false;
         this.toggleSpinnerStatus();

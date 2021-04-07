@@ -29,22 +29,24 @@
 <nav>
     <div class="nav nav-tabs bg-light" id="nav-tab" role="tablist">
         <!-- routerLink can be attached to a tag, button tag, div tag fine, not tested for others  -->
-        <button routerLinkActive="active"  [routerLinkActiveOptions]="{exact: true}" #rla="routerLinkActive" [routerLink]="['/dashboard', 'todo', currentCategory.getCategoryId()]" class="nav-link" title="view all tasks" type="button"
-            role="tab">
+        <!-- routerLinkActive="class_Name" here class name of active is decorated by bootstrap that is why it is used here, we can use our own custom class also and decorate the element according to that class -->
+        <button routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" #rla="routerLinkActive"
+            [routerLink]="['/dashboard', 'todo', currentCategory.getCategoryId()]" class="nav-link"
+            title="view all tasks" type="button" role="tab">
             Detail
         </button>
 
-        <button routerLinkActive="active" routerLink="list/all" class="nav-link" title="view all tasks" type="button"
-            role="tab">
+        <button routerLinkActive="active" routerLink="list/all" class="nav-link"
+            title="view all tasks" type="button" role="tab">
             All
         </button>
 
-        <button routerLink="list/done" routerLinkActive="active" class="nav-link" title="view done tasks" type="button"
-            role="tab">
+        <button routerLink="list/done" routerLinkActive="active" class="nav-link"
+            title="view done tasks" type="button" role="tab">
             Done
         </button>
-        <button routerLink="list/pending" routerLinkActive="active" class="nav-link" title="view pending tasks"
-            type="button" role="tab">
+        <button routerLink="list/pending" routerLinkActive="active" class="nav-link"
+            title="view pending tasks" type="button" role="tab">
             Pending
         </button>
         <!-- routerLink starting with '/' means relative to root path i.e '', otherwise from current activated route path -->
@@ -53,12 +55,29 @@
         </button>
 
         <div class="ms-auto d-flex">
-<!--
+            <!--
             <button routerLink="/todo" class="nav-link " type="button" title="filter" role="tab">
                 <i class=" infoIcon fas fa-info-circle"></i>
             </button> -->
 
-            <button class="nav-link " type="button" title="filter" role="tab">
+            <!--
+Tracks whether the linked route of an element is currently active, and allows you to specify one or more CSS classes to
+add to the element when the linked route is active. -->
+            <!-- below if any of the child link is currently active link, then our routerLinkActive directive will do it's work -->
+            <!-- //note that below is a kind of hack to show the sort icon, same thing could have been done though
+                activated route in ts file and doing the comparison and marking some variable as a indicator
+                to show the sort button but that felt like hardcoded to me, since hardcoded was the only way
+                template file is even better place to do the things hardcoded way
+             -->
+            <div #requiredRoute="routerLinkActive" [routerLinkActiveOptions]="{exact: true}"
+                routerLinkActive="['inValidDummyClass1', 'invalidDummyClass2']"
+                style="pointer-events: none; height: 0px; width: 0px;">
+                <div routerLink="list/all"></div>
+                <div routerLink="list/done"></div>
+                <div routerLink="list/pending"></div>
+            </div>
+
+            <button *ngIf="requiredRoute.isActive" class="nav-link " type="button" title="filter" role="tab">
                 <!-- <i class=" infoIcon fas fa-info-circle"></i> -->
                 <i class="filterIcon fas fa-sort"></i>
             </button>
@@ -75,5 +94,5 @@
 <div class="container-fluid px-1 mt-2 customContainer">
     <!-- https://angular.io/api/router/RouterLinkActive -->
     <router-outlet *ngIf="!rla.isActive"></router-outlet>
-    <app-category-detail [currentCategoryDetail]="currentCategory"  *ngIf="rla.isActive"></app-category-detail>
+    <app-category-detail [currentCategoryDetail]="currentCategory" *ngIf="rla.isActive"></app-category-detail>
 </div>
