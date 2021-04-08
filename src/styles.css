@@ -40,7 +40,7 @@ body {
     background-color: #e4e5e6;
 }
 
-.modal-open {
+.modal-open, .modal.show {
     padding-right: 0px !important;
 }
 

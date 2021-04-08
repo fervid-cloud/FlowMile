@@ -1,10 +1,9 @@
 import { Location } from '@angular/common';
-import { Component, ElementRef, OnInit, ViewChild, ɵCodegenComponentFactoryResolver } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, ActivatedRouteSnapshot, NavigationEnd, Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ToDoTask } from '../../model/to-do-task';
 import { ToDoManagementService } from '../../service/to-do-management/to-do-management.service';
-import Modal from 'bootstrap/js/dist/modal';
 import { UtilService } from 'src/app/shared/utility/util-service/util.service';
 import { GenericDialogModelComponent } from 'src/app/shared/utility/components/generic-dialog-model/generic-dialog-model.component';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
@@ -35,6 +34,8 @@ export class ToDoDetailComponent implements OnInit {
     taskEditForm!: FormGroup;
 
     taskEditValueChangeSubscription!: Subscription;
+
+    showSpinner: boolean = false;
 
     //for editing
     // for getting access to dom element, template,
@@ -123,8 +124,8 @@ export class ToDoDetailComponent implements OnInit {
 
     initializeTaskEditForm() {
         this.taskEditForm = new FormGroup({
-            'taskTitle': new FormControl(this.currentToDoTask?.getTitle(), [Validators.required]),
-            'taskContent': new FormControl(this.currentToDoTask?.getTextContent(), Validators.required),
+            'title': new FormControl(this.currentToDoTask?.getTitle(), [Validators.required]),
+            'textContent': new FormControl(this.currentToDoTask?.getTextContent(), Validators.required),
         });
 
         this.taskEditValueChangeSubscription = this.taskEditForm.valueChanges.subscribe(values => {
@@ -134,12 +135,15 @@ export class ToDoDetailComponent implements OnInit {
 
 
     areSomeEquivalent(a: any, b: any) {
-        const parameters: string[] = ['taskTitle', 'taskContent'];
+        const parameters: string[] = ['title', 'textContent'];
         const n = parameters.length;
-
+        console.log("first ne is ", a);
+        console.log("second ne is ",b);
         for (let i = 0; i < n; ++i) {
             const propName = parameters[i];
             if (a[propName] !== b[propName]) {
+                console.log("first ne is " ,a[propName]);
+                console.log(b[propName]);
                 this.taskEditForm.markAsDirty();
                 return;
             }
@@ -176,12 +180,95 @@ export class ToDoDetailComponent implements OnInit {
             this.confirmSaveTask();
         });
 
+    }
 
+
+    onTaskEditAction() {
+        this.editMode = true;
+    }
+
+
+    onTaskSaveAction() {
+        if (!this.taskEditForm.dirty) {
+            this.editMode = false;
+            return;
+        }
+
+        console.log(this.taskEditForm);
+        this.saveConfirmationGenericModelDialog.show();
+    }
+
+
+    onTaskDeleteAction() {
+        this.deleteConfirmationGenericModelDialog.show();
+    }
+
+
+    async confirmDeleteTask() {
+        this.deleteConfirmationGenericModelDialog.hide();
+
+        if (this.currentToDoTask) {
+            this.toggleSpinnerStatus();
+            await this.taskManagementService.deleteTaskById(this.currentToDoTask.getTaskCategoryId(), this.currentToDoTask.getTodoId());
+            this.currentToDoTask = undefined;
+            this.toggleSpinnerStatus();
+        }
 
     }
 
 
-    onTaskEdit() {
+    async confirmSaveTask() {
+        this.saveConfirmationGenericModelDialog.hide();
+        if (this.taskEditForm.invalid) {
+            return;
+        }
+
+        this.toggleSpinnerStatus();
+        this.currentToDoTask?.setTitle(this.taskEditForm.get("title")?.value);
+        this.currentToDoTask?.setTextContent(this.taskEditForm.get('textContent')?.value);
+        await this.taskManagementService.editProvidedTask(this.currentToDoTask);
+        this.editMode = false;
+        this.toggleSpinnerStatus();
+
+    }
+
+
+    cancelEditAction() {
+        this.editMode = false;
+    }
+
+
+    goBack() {
+        this.back();
+    }
+
+    private back(): void {
+        console.debug("The history is : ", this.history);
+        if (this.history.length > 0) {
+            //doesn't matter both are equivalent, it's just that this.location.back has history of same route that
+            // we want to go back to through this.router.navigate(['../'], { relativeTo: this.activatedRoute });
+            // this.router.navigate(['../'], { relativeTo: this.activatedRoute });
+            this.location.back()
+        } else {
+            // in case we opened the browser directly with this link, or new tab with this link, then try to go back
+            console.debug("going back through backup as no history is there-----------------");
+            this.router.navigateByUrl('/')
+        }
+    }
+
+    toggleSpinnerStatus() {
+        console.log("old spinner status ", this.showSpinner);
+        this.showSpinner = !this.showSpinner;
+        console.log("new spinner status ", this.showSpinner);
+    }
+
+
+
+
+    /**
+     * @deprecated
+     */
+    taskEditNotInUser() {
         this.editMode = true;
         /* below way was too much manual work for this use case, so delegated the work to attribute directive in the template */
         // as by default this is from root so we have to mention full path here
@@ -199,65 +286,5 @@ export class ToDoDetailComponent implements OnInit {
          this.taskTitle.nativeElement.contentEditable = true;
          this.taskTitle.nativeElement.style.borderLeft = "1px solid blue";
          this.taskTitle.nativeElement.style.borderRight = "1px solid blue"; */
-    }
-
-
-    onTaskSaveAction() {
-        console.log(this.taskEditForm);
-        this.saveConfirmationGenericModelDialog.show();
-    }
-
-    onTaskDeleteAction() {
-        // this.deleteConfirmationModalDialog.show();
-        this.deleteConfirmationGenericModelDialog.show();
-    }
-
-
-    confirmDeleteTask() {
-
-        console.log("confirm delete called");
-        console.log("hi there deleting the task");
-        console.log("this is : ", this);
-        if (this.currentToDoTask) {
-            this.taskManagementService.deleteTaskById(this.currentToDoTask.getTaskCategoryId(), this.currentToDoTask.getTodoId());
-            this.currentToDoTask = undefined;
-        }
-        this.deleteConfirmationGenericModelDialog.hide();
-    }
-
-    confirmSaveTask() {
-        this.onUpdate();
-        this.saveConfirmationGenericModelDialog.hide();
-    }
-
-
-    onUpdate() {
-        this.editMode = false;
-    }
-
-    cancelEdit() {
-        this.editMode = false;
-    }
-
-
-
-
-
-    goBack() {
-        this.back();
-    }
-
-    private back(): void {
-        console.debug("The history is : ", this.history);
-        if (this.history.length > 0) {
-            //doesn't matter both are equivalent, it's just that this.localation.back has history of same route that
-            // we want to go back to through this.router.navigate(['../'], { relativeTo: this.activatedRoute });
-            // this.router.navigate(['../'], { relativeTo: this.activatedRoute });
-            this.location.back()
-        } else {
-            // in case we opened the browser directly with this link, or new tab with this link, then try to go back
-            console.debug("going back through backup as no history is there-----------------");
-            this.router.navigateByUrl('/')
-        }
     }
 }

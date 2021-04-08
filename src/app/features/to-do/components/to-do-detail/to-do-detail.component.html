@@ -10,7 +10,7 @@
             </button>
 
             <!-- <div *ngIf="editMode" class=" btn btn-danger px-3 py-1 me-auto" (click)="cancelEdit()">Cancel</div> -->
-            <button *ngIf="editMode" (click)="cancelEdit()" class="px-3 py-1 text-primary me-auto border-0 bg-transparent">
+            <button *ngIf="editMode" (click)="cancelEditAction()" class="px-3 py-1 text-primary me-auto border-0 bg-transparent">
                 <i class="far fa-window-close fa-lg"></i>
             </button>
 
@@ -21,7 +21,7 @@
                 <i class="fas fa-trash-alt fa-lg"></i>
             </button>
             <!-- <div *ngIf="!editMode" class="udButton btn btn-primary px-3 py-1" (click)="onTaskEdit()">Edit</div> -->
-            <button *ngIf="!editMode" (click)="onTaskEdit()" class="px-3 py-1 text-primary border-0 bg-transparent">
+            <button *ngIf="!editMode" (click)="onTaskEditAction()" class="px-3 py-1 text-primary border-0 bg-transparent">
                 <i class="far fa-edit fa-lg"></i>
             </button>
 
@@ -42,24 +42,17 @@
                 <!-- // example of attribute directive, basically we enclose a native html attribute in square bracket and
                 // then it becomes a directive and now we can control the attribute based on our logics  -->
                 <!-- <p #taskTitle  [contentEditable]="this.editMode" class="lead"> Title of task</p> -->
-                <p #taskTitle  *ngIf="!editMode" class="lead"> Title of task</p>
-                <input *ngIf="editMode" type="text" [formControlName]="'taskTitle'">
+                <p #taskTitle  *ngIf="!editMode" class="lead"> {{currentToDoTask.getTitle()}}</p>
+                <input class="editInput lead" *ngIf="editMode" type="text" [formControlName]="'title'">
             </div>
             <!-- g-0 equivalent to no-gutter, gutter is used for maintaining spacing between col of the rows -->
             <div [ngClass]="{'haveCustomContentEditableChild': this.editMode}" class="individualField my-3">
                 <h6><span>Task Detail</span></h6>
-                <p #taskDetail *ngIf="!editMode" class="lead">Detail of task-Lorem Ipsum is simply dummy
-                    text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard
-                    dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to
-                    make a type specimen
-                    book. It has survived not only five centuries, but also the leap into electronic typesetting,
-                    remaining essentially
-                    unchanged. It was popularized in the 1960s with the release of Letraset sheets containing Lorem
-                    Ipsum passages, and more
-                    recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                <p #taskDetail *ngIf="!editMode" class="lead">
+                    {{ currentToDoTask.getTextContent() }}
                 </p>
 
-                <input *ngIf="editMode" type="text" [formControlName]="'taskContent'">
+                <textarea rows=6 *ngIf="editMode"class="editInput lead" type="text" [formControlName]="'textContent'"></textarea>
             </div>
             <div class="individualField my-3">
                 <h6>Creation Time</h6>
@@ -115,3 +108,11 @@
     [position]="'center'"
 >
 </app-generic-dialog-model>
+
+
+<div *ngIf="showSpinner" class="position-fixed top-0 start-0 h-100 w-100 d-flex"
+    style="z-index: 2000; opacity:0.5; background-color: whitesmoke">
+    <div class="spinner-grow m-auto" style="width: 4rem; height: 4rem; color: blue" role="status">
+        <span class="visually-hidden">Loading...</span>
+    </div>
+</div>

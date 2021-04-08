@@ -107,11 +107,7 @@ export class GenericDialogModelComponent implements OnInit {
     }
 
     onConfirmClick() {
-        debugger;
-        console.log("confirm clicked -------------");
-        console.log(this.confirmCallback);
         this.confirmCallback();
-        // this.hide();
     }
 
 

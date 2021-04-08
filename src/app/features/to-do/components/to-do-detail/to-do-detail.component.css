@@ -1,5 +1,3 @@
-
-
 .createTaskHeader {
     background-color: #2880ff;
 }
@@ -43,7 +41,7 @@
     border: 0px;
 }
 
-.haveCustomContentEditableChild p {
+.haveCustomContentEditableChild .editInput {
     background-color: #f4f4f5;
     transition: all 0.3s ease;
     border: 0px;
@@ -56,11 +54,11 @@
 
 } */
 
-.haveCustomContentEditableChild p:active {
+.haveCustomContentEditableChild .editInput:active {
     box-shadow: 0px 0px 25px 1px #0d6efd;
 }
 
-.haveCustomContentEditableChild p:focus {
+.haveCustomContentEditableChild .editInput:focus {
     box-shadow: 0px 0px 25px 1px #0d6efd;
 }
 
@@ -72,7 +70,7 @@
     padding: 0rem 0.8rem;
 }
 
-.haveCustomContentEditableChild p {
+.haveCustomContentEditableChild .editInput {
     padding: 0.2rem 0.8rem;
 }
 
@@ -89,7 +87,6 @@
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
-
     /* hack to remove the space created by image below parent div */
     overflow: hidden;
 }
@@ -116,4 +113,10 @@
     width: 100%;
     max-height: 100%;
     max-width: 100%;
+}
+
+.editInput {
+    width: 100%;
+    display: inline-block;
+    height: min-content;
 }

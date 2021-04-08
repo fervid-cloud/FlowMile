@@ -30,6 +30,8 @@ export class ToDoCategoryComponent implements OnInit {
 
     creatingCategoryState: boolean = false;
 
+    showSpinner: boolean = false;
+
     constructor(
         private todoManagementService: ToDoManagementService,
         private router: Router,
@@ -156,25 +158,26 @@ export class ToDoCategoryComponent implements OnInit {
         }
         this.creatingCategoryState = true;
         this.newCategoryForm.disable();
-        await new Promise((resolve, reject) => {
-            setTimeout(() => {
-                this.newCategoryForm.enable();
-                this.creatingCategoryState = false;
-                resolve(true);
-            }, 2000)
-        });
-
+        this.addTaskModelDialog.hide();
 
         const newTaskCategory: TaskCategory = new TaskCategory();
+
         let categoryTitle = this.newCategoryForm.get("name")!.value; // telling the compiler that value wil always exist
         let categoryDescription = this.newCategoryForm.get("description")?.value; // another trick using optional chaining
+
+        this.toggleSpinnerStatus();
+
         newTaskCategory.setCategoryTitle(categoryTitle);
         newTaskCategory.setCategoryDescription(categoryDescription);
         newTaskCategory.setTaskCount(0);
-        this.todoManagementService.createNewCategory(newTaskCategory);
-        console.log(this.newCategoryForm);
+        await this.todoManagementService.createNewCategory(newTaskCategory);
+
+        this.creatingCategoryState = false;
+        this.newCategoryForm.enable();
         this.newCategoryForm.reset();
-        this.addTaskModelDialog.hide();
+
+        this.toggleSpinnerStatus();
+
     }
 
 
@@ -184,6 +187,12 @@ export class ToDoCategoryComponent implements OnInit {
         this.taskCategorySubscription.unsubscribe();
     }
 
+
+    toggleSpinnerStatus() {
+        console.log("old spinner status ", this.showSpinner);
+        this.showSpinner = !this.showSpinner;
+        console.log("new spinner status ", this.showSpinner);
+    }
 
 
 

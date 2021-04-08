@@ -4,6 +4,11 @@
             <div *ngFor="let cur of toDoTasks" class="col-sm-6 col-md-4 col-lg-3 mb-2">
                 <app-to-do-box [unitTodo]="cur" (viewEventNotifier)="onChoosingViewDetail($event)" ></app-to-do-box>
             </div>
+
+
+            <div class="emptyTaskList" *ngIf="toDoTasks.length == 0">
+                <img src="assets/images/to-do/empty-category/1.jpg" alt="no tasks of this type">
+            </div>
         </div>
     </div>
 </div>
@@ -13,6 +18,10 @@
         <div class="row">
             <div *ngFor="let cur of getDoneTask()" class="col-sm-6 col-md-4 col-lg-3 mb-2">
                 <app-to-do-box [unitTodo]="cur" (viewEventNotifier)="onChoosingViewDetail($event)" ></app-to-do-box>
+            </div>
+
+            <div class="emptyTaskList" *ngIf="getDoneTask().length == 0">
+                <img src="assets/images/to-do/empty-category/1.jpg" alt="no tasks of this type">
             </div>
         </div>
     </div>
@@ -24,6 +33,12 @@
             <div *ngFor="let cur of getPendingTask()" class="col-sm-6 col-md-4 col-lg-3 mb-2">
                 <app-to-do-box (viewEventNotifier)="onChoosingViewDetail($event)" [unitTodo]="cur"></app-to-do-box>
             </div>
+
+
+            <div class="emptyTaskList" *ngIf="getPendingTask().length == 0">
+               <img src="assets/images/to-do/empty-category/1.jpg" alt="no tasks of this type">
+            </div>
+
         </div>
     </div>
 </div>

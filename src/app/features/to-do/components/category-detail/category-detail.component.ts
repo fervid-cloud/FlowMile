@@ -171,7 +171,7 @@ export class CategoryDetailComponent implements OnInit {
         this.currentCategory.setCategoryTitle(this.categoryEditForm.get('categoryTitle')?.value);
         this.currentCategory.setCategoryDescription(this.categoryEditForm.get("categoryDescription")?.value);
         this.currentCategory.setModifiedTime(new Date());
-        await this.todoManagementService.editCategoryById(this.currentCategory);
+        await this.todoManagementService.editProvidedCategory(this.currentCategory);
         this.categoryEditMode = false;
         this.toggleSpinnerStatus();
     }
