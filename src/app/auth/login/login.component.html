@@ -13,7 +13,14 @@
         <div class="login-box">
             <div class="loadingIndicator to do"></div>
             <div class="login text-center h5">
-                Login
+                Log In
+            </div>
+            <div class="text-center">
+                <div class="websiteNameWrapper">
+
+                    <span data-bn-type="text" class="urlDecoration">https://</span>
+                    mss.com
+                </div>
             </div>
             <div *ngIf="invalidCredentialStatus"
                 class="invalidCredentialNotification my-3 text-center btn btn-danger d-block">
@@ -22,7 +29,7 @@
             <!-- Note that there is no relation of [formGroup] with form type element, we can use it for even normal div also -->
             <form [formGroup]="signInForm">
                 <div class="mb-3">
-                    <label for="exampleInputEmail1" class="form-label">Email address</label>
+                    <label for="exampleInputEmail1" class="form-label">Email</label>
                     <input [formControlName]="'email'" type="email" class="form-control" id="exampleInputEmail1"
                         aria-describedby="emailHelp" placeholder="Email" autocomplete="on" required>
                     <!-- <div id="emailHelp" class="form-text">Your email is your username</div> -->
@@ -43,7 +50,7 @@
                     <label for="exampleInputPassword1" class="form-label">Password</label>
 
                     <input [formControlName]="'password'" type="password" class="form-control"
-                        id="exampleInputPassword1" placeholder="Password"  autocomplete="on" required>
+                        id="exampleInputPassword1" placeholder="Password" autocomplete="on" required>
 
                     <span class="text-danger errorInfo" *ngIf="invalidFormSubmission">
 
@@ -54,7 +61,7 @@
                         </span>
                     </span>
                 </div>
-                <div type="submit" class="btn customButton btn-primary d-block" (click)="onLoginAttempt($event)">Log In
+                <div type="submit" class="btn customButton  d-block" (click)="onLoginAttempt($event)">Log In
                     ></div>
                 <div class="forgotPassword pt-3 text-center">
                     <p>Don't remember your password?</p>
@@ -65,4 +72,6 @@
     </div>
 
 </div>
-<app-footer class="loginFooter text-white"></app-footer>
+<!-- <app-footer class="loginFooter text-white"></app-footer> -->
+
+<div data-bn-type="text" class="customLoginFooter">© 2021 - 2021 mss.com. All rights reserved</div>

@@ -6,8 +6,9 @@
             </div>
 
 
-            <div class="emptyTaskList" *ngIf="toDoTasks.length == 0">
-                <img src="assets/images/to-do/empty-category/1.jpg" alt="no tasks of this type">
+            <div class="emptyTaskList  d-flex" *ngIf="toDoTasks.length == 0">
+                <!-- <img src="assets/images/to-do/empty-category/1.jpg" alt="no tasks of this type"> -->
+                <h2 class="m-auto text-center">Wow, such empty</h2>
             </div>
         </div>
     </div>
@@ -20,8 +21,9 @@
                 <app-to-do-box [unitTodo]="cur" (viewEventNotifier)="onChoosingViewDetail($event)" ></app-to-do-box>
             </div>
 
-            <div class="emptyTaskList" *ngIf="getDoneTask().length == 0">
-                <img src="assets/images/to-do/empty-category/1.jpg" alt="no tasks of this type">
+            <div class="emptyTaskList d-flex" *ngIf="getDoneTask().length == 0">
+                <!-- <img src="assets/images/to-do/empty-category/1.jpg" alt="no tasks of this type"> -->
+                <h2 class="m-auto text-center">Wow, such empty</h2>
             </div>
         </div>
     </div>
@@ -35,8 +37,9 @@
             </div>
 
 
-            <div class="emptyTaskList" *ngIf="getPendingTask().length == 0">
-               <img src="assets/images/to-do/empty-category/1.jpg" alt="no tasks of this type">
+            <div class="emptyTaskList d-flex" *ngIf="getPendingTask().length == 0">
+                <h2 class="m-auto text-center">Wow, such empty</h2>
+               <!-- <img src="assets/images/to-do/empty-category/2.png" alt="no tasks of this type"> -->
             </div>
 
         </div>
