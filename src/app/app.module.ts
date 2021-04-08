@@ -23,6 +23,7 @@ import { CategoryBoxComponent } from './features/to-do/components/category-box/c
 import { LoginComponent } from './auth/login/login.component';
 import { SignupComponent } from './auth/signup/signup.component';
 import { CategoryDetailComponent } from './features/to-do/components/category-detail/category-detail.component';
+import { GenericDialogModelComponent } from './shared/utility/components/generic-dialog-model/generic-dialog-model.component';
 
 
 @NgModule({
@@ -45,7 +46,8 @@ import { CategoryDetailComponent } from './features/to-do/components/category-de
         CategoryBoxComponent,
         LoginComponent,
         SignupComponent,
-        CategoryDetailComponent
+        CategoryDetailComponent,
+        GenericDialogModelComponent
     ],
     imports: [
         BrowserModule,

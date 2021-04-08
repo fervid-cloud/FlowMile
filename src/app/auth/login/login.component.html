@@ -29,11 +29,11 @@
                     <span class="errorInfo text-danger" *ngIf="invalidFormSubmission">
 
                         <span *ngIf="signInForm.get('email')?.errors?.required" class=" help-block">
-                            <i class="errorIcon fas fa-info-circle fa-sm"></i>
+                            <i class="errorIcon fas fa-info-circle  me-1"></i>
                             <span>Username is required</span>
                         </span>
                         <span class="help-block" *ngIf="signInForm.get('email')?.errors?.email">
-                            <i class="errorIcon fas fa-info-circle fa-sm"></i>
+                            <i class="errorIcon fas fa-info-circle  me-1"></i>
                             <span>Invalid username</span>
 
                         </span>

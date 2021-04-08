@@ -6,6 +6,7 @@ import { ToDoTask } from '../../model/to-do-task';
 import { ToDoManagementService } from '../../service/to-do-management/to-do-management.service';
 import Modal from 'bootstrap/js/dist/modal';
 import { UtilService } from 'src/app/shared/utility/util-service/util.service';
+import { GenericDialogModelComponent } from 'src/app/shared/utility/components/generic-dialog-model/generic-dialog-model.component';
 
 @Component({
     selector: 'app-to-do-detail',
@@ -14,11 +15,11 @@ import { UtilService } from 'src/app/shared/utility/util-service/util.service';
 })
 export class ToDoDetailComponent implements OnInit {
 
+    @ViewChild('deleteConfirmationDialog')
+    deleteConfirmationGenericModelDialog!: GenericDialogModelComponent;
 
-    @ViewChild('todoDeleteModelDialog')
-    toDoDeleteModelDialogTemplateRef!: ElementRef;
-
-    private deleteConfirmationModalDialog!: Modal;
+    @ViewChild('saveConfirmationDialog')
+    saveConfirmationGenericModelDialog!: GenericDialogModelComponent;
 
 
     currentToDoTask: ToDoTask | null | undefined = undefined;
@@ -98,21 +99,32 @@ export class ToDoDetailComponent implements OnInit {
     ngAfterViewInit() {
 
         //was put here as not this life cycle hook runs when all the dom element are made(except external api call eg. http);
-        this.initializeDeleteConfirmationModelDialog();
+        // this.initializeDeleteConfirmationModelDialog();
 
 
-    }
-
-
-    initializeDeleteConfirmationModelDialog() {
-        // const myModalEl = <HTMLElement>document.getElementById('myModal');
-        const myModalEl = this.toDoDeleteModelDialogTemplateRef.nativeElement;
-        console.log("to-do detail myModelEl is : ", myModalEl);
-        this.deleteConfirmationModalDialog = new Modal(myModalEl, {
-            backdrop: 'static', // means the modal will not close when clicking outside it.
-            keyboard: false,
-            focus: true
+        this.deleteConfirmationGenericModelDialog.subscribe(() => {
+            this.confirmDeleteTask();
+/*
+            Arrow functions do not bind their own this, instead, they inherit the
+            one from the parent scope, which is called "lexical scoping".
+            With normal functions the scoped is bound to the global one by default,
+            arrows functions, as I said before, do not have their own this but they inherit
+            it from the parent scope, doesn't matter if we use strict,
+            so what is happening is that since here this is of our main class scope, so when confirmDeleteTask is
+            called here this represent the current class object and when later this arrow function is passed as callback,
+                it runs normally, .Without arrow function we would have to use bind with the normal function as our normal
+            function will not be passed with this, so when it will be called later as a callback, at that time, it will use this
+            of that time, so then we can pass this normal function as an argument after binding it with current class this like
+            FunctionCall(this.confirmDeleteTask.bind(this));
+            or we can just use this trick, same trick is used with subsribing the observables or subjects */
         });
+
+        this.saveConfirmationGenericModelDialog.subscribe(() => {
+            this.confirmSaveTask();
+        });
+
+
+
     }
 
 
@@ -122,7 +134,7 @@ export class ToDoDetailComponent implements OnInit {
         this.activatedRouteSubscription.unsubscribe();
         this.routerEventSubscription.unsubscribe();
         console.log("+++++++++++++++++++++++++++++destroying to-do detail component");
-        this.deleteConfirmationModalDialog.dispose();
+        // this.deleteConfirmationModalDialog.dispose();
     }
 
     onTaskEdit() {
@@ -146,20 +158,31 @@ export class ToDoDetailComponent implements OnInit {
     }
 
 
-    onTaskDelete() {
-        this.deleteConfirmationModalDialog.show();
+    onTaskSaveAction() {
+        this.saveConfirmationGenericModelDialog.show();
     }
 
-    confirmTaskDeletion() {
+    onTaskDeleteAction() {
+        // this.deleteConfirmationModalDialog.show();
+        this.deleteConfirmationGenericModelDialog.show();
+    }
+
+
+    confirmDeleteTask() {
+
+        console.log("confirm delete called");
+        console.log("hi there deleting the task");
+        console.log("this is : ", this);
         if (this.currentToDoTask) {
             this.taskManagementService.deleteTaskById(this.currentToDoTask.getTaskCategoryId(), this.currentToDoTask.getTodoId());
             this.currentToDoTask = undefined;
         }
-        this.deleteConfirmationModalDialog.hide();
+        this.deleteConfirmationGenericModelDialog.hide();
     }
 
-    removeModal() {
-        this.deleteConfirmationModalDialog.hide();
+    confirmSaveTask() {
+        this.onUpdate();
+        this.saveConfirmationGenericModelDialog.hide();
     }
 
 
@@ -170,6 +193,8 @@ export class ToDoDetailComponent implements OnInit {
     cancelEdit() {
         this.editMode = false;
     }
+
+
 
 
 

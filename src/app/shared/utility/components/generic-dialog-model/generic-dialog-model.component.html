@@ -1,0 +1,23 @@
+
+<div #modelDialogueTemplateRef class="modal fade" id="confirmationModel - {{ confirmButtonName + '-' + uniqueModelDialogueId }} " tabindex="-1"
+    aria-labelledby="myModal-detail" aria-hidden="true">
+    <div #dialogCenterTracker class="modal-dialog" [ngClass]="positionMapping[position]">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"> {{ title }} </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" (click)="onTopCancelClick()"
+                    aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>{{ content }} </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary me-auto" data-bs-dismiss="modal"
+                    (click)="onCancelClick()"> {{ cancelButtonName}} </button>
+                <button type="button" class="btn btn-primary" (click)="onConfirmClick()">
+                    {{ confirmButtonName }}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

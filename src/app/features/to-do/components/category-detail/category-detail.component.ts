@@ -33,6 +33,7 @@ export class CategoryDetailComponent implements OnInit {
     categoryEditForm!: FormGroup;
 
     showSpinner: boolean = false;
+    editFormSubscription!: Subscription;
 
     constructor(
         private todoManagementService: ToDoManagementService,
@@ -42,7 +43,7 @@ export class CategoryDetailComponent implements OnInit {
     ) { }
 
     ngOnInit(): void {
-        this.initializeCategoryEditForm();
+        this.initializeAndSubscribeCategoryEditForm();
 
     }
 
@@ -52,13 +53,19 @@ export class CategoryDetailComponent implements OnInit {
 
     }
 
-    initializeCategoryEditForm() {
+    ngOnDestroy() {
+        if (this.editFormSubscription && !this.editFormSubscription.closed) {
+            this.editFormSubscription.unsubscribe();
+        }
+    }
+
+    initializeAndSubscribeCategoryEditForm() {
 
         this.categoryEditForm = new FormGroup({
             'categoryTitle': new FormControl(this.currentCategory.getCategoryTitle(), [Validators.required]),
             'categoryDescription': new FormControl(this.currentCategory.getCategoryDescription(), [Validators.required])
         });
-        this.categoryEditForm.valueChanges.subscribe(values => {
+        this.editFormSubscription = this.categoryEditForm.valueChanges.subscribe(values => {
             this.areSomeEquivalent(this.currentCategory, values);
         });
 

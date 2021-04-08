@@ -3,12 +3,32 @@
 
     <div *ngIf="currentToDoTask" class="contentWrapper pb-3">
         <div class="udButtonWrapper mx-4 py-3">
-            <div *ngIf="!editMode" class="btn btn-primary px-3 py-1 me-auto" (click)="goBack()">Back</div>
-            <div *ngIf="editMode" class=" btn btn-danger px-3 py-1 me-auto" (click)="cancelEdit()">Cancel</div>
+            <!-- <div *ngIf="!editMode" class="btn btn-primary px-3 py-1 me-auto" (click)="goBack()">Back</div> -->
+            <button *ngIf="!editMode" [routerLink]="['..']" class="px-3 py-1 me-auto text-primary border-0 bg-transparent"
+                type="button" title="back to all tasks">
+                <i class="fas fa-arrow-left"></i>
+            </button>
 
-            <div *ngIf="!editMode" class="btn btn-danger px-3 py-1 me-2" (click)="onTaskDelete()">Delete</div>
-            <div *ngIf="!editMode" class="udButton btn btn-primary px-3 py-1" (click)="onTaskEdit()">Edit</div>
-            <div *ngIf="editMode" class="btn btn-primary px-3 py-1 me-3" (click)="onUpdate()">Update</div>
+            <!-- <div *ngIf="editMode" class=" btn btn-danger px-3 py-1 me-auto" (click)="cancelEdit()">Cancel</div> -->
+            <button *ngIf="editMode" (click)="cancelEdit()" class="px-3 py-1 text-primary me-auto border-0 bg-transparent">
+                <i class="far fa-window-close fa-lg"></i>
+            </button>
+
+
+            <!-- <div *ngIf="!editMode" class="btn btn-danger px-3 py-1 me-2" (click)="onTaskDelete()">Delete</div> -->
+            <button *ngIf="!editMode" (click)="onTaskDeleteAction()"
+                class="px-3 py-1 me-2 text-danger border-0 bg-transparent">
+                <i class="fas fa-trash-alt fa-lg"></i>
+            </button>
+            <!-- <div *ngIf="!editMode" class="udButton btn btn-primary px-3 py-1" (click)="onTaskEdit()">Edit</div> -->
+            <button *ngIf="!editMode" (click)="onTaskEdit()" class="px-3 py-1 text-primary border-0 bg-transparent">
+                <i class="far fa-edit fa-lg"></i>
+            </button>
+
+            <!-- <div *ngIf="editMode" class="btn btn-primary px-3 py-1 me-3" (click)="onUpdate()">Update</div> -->
+            <button *ngIf="editMode" (click)="onTaskSaveAction()" class="px-3 py-1 me-3 text-success border-0 bg-transparent">
+                <i class="far fa-save  fa-lg"></i>
+            </button>
 
         </div>
 
@@ -60,7 +80,11 @@
 
     <!-- //local reference kind of like pointer to the element or we can treat the div like a variable through this -->
     <div *ngIf="!currentToDoTask" #errorElement class="deletedIndicator">
-        <div *ngIf="!editMode" class="btn btn-primary px-3 py-1 mt-3 ms-4" (click)="goBack()">Back</div>
+        <!-- <div *ngIf="!editMode" class="btn btn-primary px-3 py-1 mt-3 ms-4" (click)="goBack()">Back</div> -->
+        <button *ngIf="!editMode" [routerLink]="['..']" class="px-3 py-1 mt-3 ms-4 border-0" type="button"
+            title="back to all tasks">
+            <i class="fas fa-arrow-left"></i>
+        </button>
         <img src="assets/images/to-do/deleted.png">
         <p class="lead text-center"><b>Task doesn't exist</b> </p>
     </div>
@@ -69,24 +93,21 @@
 
 <!-- Modal -->
 <!-- adding a template reference of this element to avoid some global mis-happening related to model dialog-->
-<div #todoDeleteModelDialog class="modal fade tododetail" id="myModal" tabindex="-1" aria-labelledby="myModal-detail"
-    aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Delete Task</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" (click)="removeModal()"
-                    aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <p>are you sure you want to delete the task? </p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary me-auto" data-bs-dismiss="modal"
-                    (click)="removeModal()">Cancel</button>
-                <button type="button" class="btn btn-primary" (click)="confirmTaskDeletion()">Confirm
-                    Delete</button>
-            </div>
-        </div>
-    </div>
-</div>
+<app-generic-dialog-model
+    #deleteConfirmationDialog
+    [title]="'Delete Confirmation'"
+    [content]="'are you sure you want to delete this category?'"
+    [cancelButtonName]="'Cancel'"
+    [confirmButtonName]="'Delete'"
+>
+</app-generic-dialog-model>
+
+<app-generic-dialog-model
+    #saveConfirmationDialog
+    [title]="'Update Confirmation'"
+    [content]="'are you sure you want to save the updated task?'"
+    [cancelButtonName]="'Cancel'"
+    [confirmButtonName]="'Update'"
+    [position]="'center'"
+>
+</app-generic-dialog-model>
