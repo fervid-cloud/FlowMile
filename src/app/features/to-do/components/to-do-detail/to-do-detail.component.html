@@ -32,7 +32,7 @@
 
         </div>
 
-        <div class="detailWrapper rounded mx-4 px-3">
+        <div class="detailWrapper rounded mx-4 px-3" [formGroup]="taskEditForm">
             <div class="individualField my-3">
                 <h6>ToDoTask Id</h6>
                 <p class="lead">todoId of task</p>
@@ -41,12 +41,14 @@
                 <h6>Task Title</h6>
                 <!-- // example of attribute directive, basically we enclose a native html attribute in square bracket and
                 // then it becomes a directive and now we can control the attribute based on our logics  -->
-                <p #taskTitle [contentEditable]="this.editMode" class="lead"> Title of task</p>
+                <!-- <p #taskTitle  [contentEditable]="this.editMode" class="lead"> Title of task</p> -->
+                <p #taskTitle  *ngIf="!editMode" class="lead"> Title of task</p>
+                <input *ngIf="editMode" type="text" [formControlName]="'taskTitle'">
             </div>
             <!-- g-0 equivalent to no-gutter, gutter is used for maintaining spacing between col of the rows -->
             <div [ngClass]="{'haveCustomContentEditableChild': this.editMode}" class="individualField my-3">
                 <h6><span>Task Detail</span></h6>
-                <p #taskDetail [contentEditable]="this.editMode" class="lead">Detail of task-Lorem Ipsum is simply dummy
+                <p #taskDetail *ngIf="!editMode" class="lead">Detail of task-Lorem Ipsum is simply dummy
                     text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard
                     dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to
                     make a type specimen
@@ -56,6 +58,8 @@
                     Ipsum passages, and more
                     recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
                 </p>
+
+                <input *ngIf="editMode" type="text" [formControlName]="'taskContent'">
             </div>
             <div class="individualField my-3">
                 <h6>Creation Time</h6>
@@ -96,7 +100,7 @@
 <app-generic-dialog-model
     #deleteConfirmationDialog
     [title]="'Delete Confirmation'"
-    [content]="'are you sure you want to delete this category?'"
+    [content]="'Are you sure you want to delete this category?'"
     [cancelButtonName]="'Cancel'"
     [confirmButtonName]="'Delete'"
 >
@@ -105,7 +109,7 @@
 <app-generic-dialog-model
     #saveConfirmationDialog
     [title]="'Update Confirmation'"
-    [content]="'are you sure you want to save the updated task?'"
+    [content]="'Are you sure you want to save the updated task?'"
     [cancelButtonName]="'Cancel'"
     [confirmButtonName]="'Update'"
     [position]="'center'"

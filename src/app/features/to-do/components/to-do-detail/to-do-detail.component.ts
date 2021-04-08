@@ -7,6 +7,7 @@ import { ToDoManagementService } from '../../service/to-do-management/to-do-mana
 import Modal from 'bootstrap/js/dist/modal';
 import { UtilService } from 'src/app/shared/utility/util-service/util.service';
 import { GenericDialogModelComponent } from 'src/app/shared/utility/components/generic-dialog-model/generic-dialog-model.component';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
     selector: 'app-to-do-detail',
@@ -27,8 +28,13 @@ export class ToDoDetailComponent implements OnInit {
     private history: string[] = []
 
     private activatedRouteSubscription!: Subscription;
+
     private routerEventSubscription: Subscription;
 
+
+    taskEditForm!: FormGroup;
+
+    taskEditValueChangeSubscription!: Subscription;
 
     //for editing
     // for getting access to dom element, template,
@@ -82,6 +88,21 @@ export class ToDoDetailComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        this.subscribeToActivatedRoute();
+        this.initializeTaskEditForm();
+
+    }
+
+    ngOnDestroy() {
+        this.activatedRouteSubscription.unsubscribe();
+        this.routerEventSubscription.unsubscribe();
+
+        this.taskEditValueChangeSubscription.unsubscribe();
+        console.log("+++++++++++++++++++++++++++++destroying to-do detail component");
+    }
+
+
+    subscribeToActivatedRoute() {
         this.activatedRouteSubscription = this.activatedRoute.params.subscribe((updatedParams: Params) => {
             const allParams: Params = this.utilService.getAllRouteParams1(this.activatedRoute);
             console.log("all params are :", allParams);
@@ -90,8 +111,40 @@ export class ToDoDetailComponent implements OnInit {
 
             console.log("Provided taskId is : ", providedTaskId);
             this.currentToDoTask = this.taskManagementService.findByTaskId(categoryId, providedTaskId);
+
+            if (!this.currentToDoTask) {
+                this.router.navigate(['../'], {
+                    relativeTo: this.activatedRoute
+                });
+            }
+        });
+    }
+
+
+    initializeTaskEditForm() {
+        this.taskEditForm = new FormGroup({
+            'taskTitle': new FormControl(this.currentToDoTask?.getTitle(), [Validators.required]),
+            'taskContent': new FormControl(this.currentToDoTask?.getTextContent(), Validators.required),
         });
 
+        this.taskEditValueChangeSubscription = this.taskEditForm.valueChanges.subscribe(values => {
+            this.areSomeEquivalent(this.currentToDoTask, values);
+        });
+    }
+
+
+    areSomeEquivalent(a: any, b: any) {
+        const parameters: string[] = ['taskTitle', 'taskContent'];
+        const n = parameters.length;
+
+        for (let i = 0; i < n; ++i) {
+            const propName = parameters[i];
+            if (a[propName] !== b[propName]) {
+                this.taskEditForm.markAsDirty();
+                return;
+            }
+        }
+        this.taskEditForm.markAsPristine();
     }
 
 
@@ -104,19 +157,19 @@ export class ToDoDetailComponent implements OnInit {
 
         this.deleteConfirmationGenericModelDialog.subscribe(() => {
             this.confirmDeleteTask();
-/*
-            Arrow functions do not bind their own this, instead, they inherit the
-            one from the parent scope, which is called "lexical scoping".
-            With normal functions the scoped is bound to the global one by default,
-            arrows functions, as I said before, do not have their own this but they inherit
-            it from the parent scope, doesn't matter if we use strict,
-            so what is happening is that since here this is of our main class scope, so when confirmDeleteTask is
-            called here this represent the current class object and when later this arrow function is passed as callback,
-                it runs normally, .Without arrow function we would have to use bind with the normal function as our normal
-            function will not be passed with this, so when it will be called later as a callback, at that time, it will use this
-            of that time, so then we can pass this normal function as an argument after binding it with current class this like
-            FunctionCall(this.confirmDeleteTask.bind(this));
-            or we can just use this trick, same trick is used with subsribing the observables or subjects */
+            /*
+                        Arrow functions do not bind their own this, instead, they inherit the
+                        one from the parent scope, which is called "lexical scoping".
+                        With normal functions the scoped is bound to the global one by default,
+                        arrows functions, as I said before, do not have their own this but they inherit
+                        it from the parent scope, doesn't matter if we use strict,
+                        so what is happening is that since here this is of our main class scope, so when confirmDeleteTask is
+                        called here this represent the current class object and when later this arrow function is passed as callback,
+                            it runs normally, .Without arrow function we would have to use bind with the normal function as our normal
+                        function will not be passed with this, so when it will be called later as a callback, at that time, it will use this
+                        of that time, so then we can pass this normal function as an argument after binding it with current class this like
+                        FunctionCall(this.confirmDeleteTask.bind(this));
+                        or we can just use this trick, same trick is used with subsribing the observables or subjects */
         });
 
         this.saveConfirmationGenericModelDialog.subscribe(() => {
@@ -127,15 +180,6 @@ export class ToDoDetailComponent implements OnInit {
 
     }
 
-
-
-
-    ngOnDestroy() {
-        this.activatedRouteSubscription.unsubscribe();
-        this.routerEventSubscription.unsubscribe();
-        console.log("+++++++++++++++++++++++++++++destroying to-do detail component");
-        // this.deleteConfirmationModalDialog.dispose();
-    }
 
     onTaskEdit() {
         this.editMode = true;
@@ -159,6 +203,7 @@ export class ToDoDetailComponent implements OnInit {
 
 
     onTaskSaveAction() {
+        console.log(this.taskEditForm);
         this.saveConfirmationGenericModelDialog.show();
     }
 
