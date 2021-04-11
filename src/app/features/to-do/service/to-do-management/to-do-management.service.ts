@@ -8,10 +8,6 @@ import { ToDoTask } from '../../model/to-do-task';
 })
 export class ToDoManagementService {
 
-
-
-
-
     private taskCategories: TaskCategory[] = [];
 
     private _taskCategories: BehaviorSubject<TaskCategory[]> = new BehaviorSubject<TaskCategory[]>([]);
@@ -31,51 +27,8 @@ export class ToDoManagementService {
     }
 
     initializeTasks() {
-        this.createSampleTaskCategories("CategoryTitle", "This category is for the tasks that are");
-    }
 
-    createSampleTaskCategories(categoryTitle: string, categoryDescription: string) {
-        const sampleTaskDetail: string = '12 3 Detail of task - Lorem Ipsum is simply dumm text of the printing and typesetting industry.Lorem Ipsum has been the industry'
-        +'s standar dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to'
-        + 'make a type specimen'
-           +'         book.It has survived not only five centuries, but also the leap into electronic typesetting,'
-            +'remaining essentially unchanged.It was popularized in the 1960s with the release of Letraset sheets containing Lorem'
-        +' Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.';
-        let taskId = 1;
-        for (let i = 0; i < 10; ++i) {
-            const taskCategory: TaskCategory = new TaskCategory();
-            taskCategory.setCategoryId(i + 1);
-            taskCategory.setCategoryTitle(categoryTitle);
-            taskCategory.setCategoryDescription(categoryDescription);
-            taskCategory.setCreationTime(new Date());
-            taskCategory.setModifiedTime(new Date());
-            this.createSampleTasks("TaskTitle", sampleTaskDetail, true, taskId, taskCategory.getCategoryId());
-            taskId += 5;
-            this.createSampleTasks("TaskTitle", "Word of the task Word of the task Word of the task Word of the task", false, taskId, taskCategory.getCategoryId());
-            taskId += 5;
-            taskCategory.setTaskCount(10);
-            this.taskCategories.push(taskCategory);
-        }
-        this.updateDataForObservers();
     }
-
-    createSampleTasks(title: string, textContent: string, taskStatus: boolean, start: number, taskCategoryId: number) {
-        if (!this.categoryTaskMapping[taskCategoryId]) {
-            this.categoryTaskMapping[taskCategoryId] = [];
-        }
-        for (let i = start; i < start + 5; ++i) {
-            const currentToDo: ToDoTask = new ToDoTask();
-            currentToDo.setTodoId(i);
-            currentToDo.setTitle(title);
-            currentToDo.setTextContent(textContent);
-            currentToDo.setTaskStatus(taskStatus);
-            currentToDo.setCreationTime(new Date());
-            currentToDo.setModifiedTime(new Date());
-            currentToDo.setTaskCategoryId(taskCategoryId);
-            this.categoryTaskMapping[taskCategoryId].push(currentToDo);
-        }
-    }
-
 
     createTask(todo: ToDoTask) {
         console.log(todo);

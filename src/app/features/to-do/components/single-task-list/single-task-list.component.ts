@@ -19,6 +19,11 @@ export class SingleTaskListComponent implements OnInit {
     ngOnInit(): void {
     }
 
+    ngAfterViewInit() {
+        console.log("the input tasks are : ");
+        console.log(this.tasks);
+    }
+
 
     onChoosingViewDetail(taskId: number) {
         this.router.navigate([taskId], {

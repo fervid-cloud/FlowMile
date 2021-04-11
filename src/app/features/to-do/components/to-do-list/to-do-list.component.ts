@@ -16,7 +16,7 @@ export class ToDoListComponent implements OnInit {
 
     toDoTasks: ToDoTask[] = [];
 
-    currentActiveTask: ToDoTask[] = [];
+    currentActiveTaskList: ToDoTask[] = [];
 
     listType: string = "all";
 
@@ -42,7 +42,7 @@ export class ToDoListComponent implements OnInit {
 
     private initializeSubscriptions() {
         this.subscribeToActivatedRoute();
-        this.subscribeToTaskManagement();
+
     }
 
 
@@ -53,6 +53,8 @@ export class ToDoListComponent implements OnInit {
             console.log("all params are : ", allParams);
             this.taskCategoryId = allParams['categoryId'];
             const value = allParams['listType'];
+            console.log("list type is : ", value);
+            this.subscribeToTaskManagement();
             this.handleTaskType(value);
             // if (value == "done" || value == "pending") {
             //     this.listType = value;
@@ -71,14 +73,14 @@ export class ToDoListComponent implements OnInit {
         switch (taskType) {
 
             case "done":
-                this.currentActiveTask = this.getDoneTask();
+                this.currentActiveTaskList = this.getDoneTask();
                 break;
             case "pending":
                 // this.currentActiveTask = this.getPendingTask();
-                this.currentActiveTask = [];
+                this.currentActiveTaskList = [];
                 break;
             case "all":
-                this.currentActiveTask = this.getAllTask();
+                this.currentActiveTaskList = this.getAllTask();
                 break;
             default:
                 this.invalidRouteDetected();

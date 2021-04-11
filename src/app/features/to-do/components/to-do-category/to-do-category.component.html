@@ -23,18 +23,18 @@
     </div>
 </nav>
 
-<div class="container-fluid px-1 mt-2 customContainer">
+
+<div *ngIf="taskCategories.length > 0 else emptyCategoryTemplateRef" class="container-fluid px-1 mt-2 customContainer">
+
     <div class="row">
         <div *ngFor="let cur of taskCategories" class="col-sm-6 col-md-4 col-lg-3 mb-2">
             <app-category-box [currentTaskCategory]="cur" (viewEventNotifier)="onChoosingViewDetail($event)">
             </app-category-box>
         </div>
     </div>
+
+
 </div>
-
-
-
-
 
 <!-- Modal -->
 <!-- adding a template reference of this element to avoid some global mis-happening related to model dialog -->
@@ -92,3 +92,11 @@
         <span class="visually-hidden">Loading...</span>
     </div>
 </div>
+
+
+<ng-template #emptyCategoryTemplateRef>
+    <div class="emptyTaskList d-flex">
+        <!-- <img src="assets/images/to-do/empty-category/1.jpg" alt="no tasks of this type"> -->
+        <h2 class="m-auto text-center">Wow, such empty</h2>
+    </div>
+</ng-template>
