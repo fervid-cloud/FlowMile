@@ -24,6 +24,8 @@ import { LoginComponent } from './auth/login/login.component';
 import { SignupComponent } from './auth/signup/signup.component';
 import { CategoryDetailComponent } from './features/to-do/components/category-detail/category-detail.component';
 import { GenericDialogModelComponent } from './shared/utility/components/generic-dialog-model/generic-dialog-model.component';
+import { PaginationComponent } from './features/to-do/components/pagination/pagination.component';
+import { SingleTaskListComponent } from './features/to-do/components/single-task-list/single-task-list.component';
 
 
 @NgModule({
@@ -47,7 +49,9 @@ import { GenericDialogModelComponent } from './shared/utility/components/generic
         LoginComponent,
         SignupComponent,
         CategoryDetailComponent,
-        GenericDialogModelComponent
+        GenericDialogModelComponent,
+        PaginationComponent,
+        SingleTaskListComponent
     ],
     imports: [
         BrowserModule,

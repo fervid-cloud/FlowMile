@@ -47,12 +47,12 @@ export class SingleCategoryComponent implements OnInit {
             const allParams: Params = this.utilService.getAllRouteParams1(this.activatedRoute);
             console.log("all params are : ", allParams);
             const currentTaskCategoryId = allParams['categoryId'];
-            this.updateCurrentCategory(currentTaskCategoryId);
+            this.showCurrentCategory(currentTaskCategoryId);
         });
     }
 
 
-    updateCurrentCategory(currentTaskCategoryId : number) {
+    showCurrentCategory(currentTaskCategoryId : number) {
         const targetCategory = this.todoManagementService.findByCategoryId(currentTaskCategoryId)
         if (!targetCategory) {
 

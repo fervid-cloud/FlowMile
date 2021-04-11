@@ -16,6 +16,8 @@ export class ToDoListComponent implements OnInit {
 
     toDoTasks: ToDoTask[] = [];
 
+    currentActiveTask: ToDoTask[] = [];
+
     listType: string = "all";
 
     //subscriptions
@@ -51,15 +53,42 @@ export class ToDoListComponent implements OnInit {
             console.log("all params are : ", allParams);
             this.taskCategoryId = allParams['categoryId'];
             const value = allParams['listType'];
-            if (value == "done" || value == "pending") {
-                this.listType = value;
-                console.log("activated route params is : ", updatedParams);
-                console.log("value is : ", value);
-                return;
-            }
-            this.listType = "all";
+            this.handleTaskType(value);
+            // if (value == "done" || value == "pending") {
+            //     this.listType = value;
+            //     console.log("activated route params is : ", updatedParams);
+            //     console.log("value is : ", value);
+            //     return;
+            // }
+            // this.listType = "all";
+
+        });
+    }
 
 
+    handleTaskType(taskType: string) {
+        console.log(this.toDoTasks);
+        switch (taskType) {
+
+            case "done":
+                this.currentActiveTask = this.getDoneTask();
+                break;
+            case "pending":
+                // this.currentActiveTask = this.getPendingTask();
+                this.currentActiveTask = [];
+                break;
+            case "all":
+                this.currentActiveTask = this.getAllTask();
+                break;
+            default:
+                this.invalidRouteDetected();
+
+        }
+    }
+
+    invalidRouteDetected() {
+        this.router.navigate(["../.."], {
+            relativeTo: this.activatedRoute
         });
     }
 
@@ -83,7 +112,7 @@ export class ToDoListComponent implements OnInit {
     }
 
 
-    getAllTodo(): ToDoTask[] {
+    getAllTask(): ToDoTask[] {
         return this.toDoTasks;
     }
 
@@ -98,10 +127,6 @@ export class ToDoListComponent implements OnInit {
     }
 
 
-    onChoosingViewDetail(taskId : number) {
-        this.router.navigate([taskId], {
-            relativeTo: this.activatedRoute
-        });
-    }
+
 
 }

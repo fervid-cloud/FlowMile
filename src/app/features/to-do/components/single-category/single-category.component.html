@@ -36,19 +36,21 @@
             Detail
         </button>
 
-        <button routerLinkActive="active" routerLink="list/all" class="nav-link"
-            title="view all tasks" type="button" role="tab">
+        <button routerLink="list/pending" routerLinkActive="active" class="nav-link" title="view pending tasks"
+            type="button" role="tab">
+            Pending
+        </button>
+
+        <button routerLinkActive="active" routerLink="list/all" class="nav-link" title="view all tasks" type="button"
+            role="tab">
             All
         </button>
 
-        <button routerLink="list/done" routerLinkActive="active" class="nav-link"
-            title="view done tasks" type="button" role="tab">
+        <button routerLink="list/done" routerLinkActive="active" class="nav-link" title="view done tasks" type="button"
+            role="tab">
             Done
         </button>
-        <button routerLink="list/pending" routerLinkActive="active" class="nav-link"
-            title="view pending tasks" type="button" role="tab">
-            Pending
-        </button>
+
         <!-- routerLink starting with '/' means relative to root path i.e '', otherwise from current activated route path -->
         <button routerLink="add" routerLinkActive="active" class="nav-link" title="add task" type="button" role="tab">
             Add

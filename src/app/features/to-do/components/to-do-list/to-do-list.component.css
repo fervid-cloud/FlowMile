@@ -1,21 +1,4 @@
-.row {
-    max-width: 100vw;
-}
 
-.emptyTaskList {
-    min-height: 80vh;
-    /* background: papayawhip; */
-    /* background: #FFEFBA; */
-
-    /* fallback for old browsers */
-    /* background: -webkit-linear-gradient(to right, #FFFFFF, #FFEFBA); */
-    /* Chrome 10-25, Safari 5.1-6 */
-    /* background: linear-gradient(to right, #FFFFFF, #FFEFBA); */
-    background: -webkit-linear-gradient(to right, #FFEFBA, #FFFFFF);
-    /* Chrome 10-25, Safari 5.1-6 */
-    background: linear-gradient(to right, #FFEFBA, #FFFFFF);
-    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-}
 
 .emptyTaskList img {
     max-width: 100%;
