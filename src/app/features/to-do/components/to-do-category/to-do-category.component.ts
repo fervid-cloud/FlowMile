@@ -6,6 +6,7 @@ import { ToDoManagementService } from '../../service/to-do-management/to-do-mana
 import Modal from 'bootstrap/js/dist/modal';
 import { Subscription } from 'rxjs';
 import {FormControl, FormGroup, Validators } from '@angular/forms';
+import { PaginationWrapperDto } from '../../model/pagination-wrapper-dto';
 
 @Component({
     selector: 'app-to-do-category',
@@ -20,7 +21,7 @@ export class ToDoCategoryComponent implements OnInit {
 
     private addTaskModelDialog!: Modal;
 
-    taskCategories: TaskCategory[] = [];
+    taskCategoriesInfo!: PaginationWrapperDto;
 
     private taskCategorySubscription!: Subscription;
 
@@ -40,6 +41,21 @@ export class ToDoCategoryComponent implements OnInit {
 
     ngOnInit(): void {
         this.initializeSubscriptions();
+        this.categoryCreateFormInitialization();
+        this.fetchRequiredCategoriesData();
+    }
+
+    async fetchRequiredCategoriesData() {
+        this.showSpinner = true;
+        try {
+            await this.todoManagementService.getAllTasksCategories();
+        } finally {
+            this.showSpinner = false;
+        }
+    }
+
+
+    categoryCreateFormInitialization() {
         this.newCategoryForm = new FormGroup({
             'name': new FormControl(null, [Validators.required, this.isStringValidator.bind(this)]),
             'description': new FormControl(null, Validators.required)
@@ -118,8 +134,8 @@ export class ToDoCategoryComponent implements OnInit {
 
 
     private subscribeToTaskCategories() {
-        this.taskCategorySubscription = this.todoManagementService.taskCategories$.subscribe((updatedTaskCategories) => {
-            this.taskCategories = updatedTaskCategories;
+        this.taskCategorySubscription = this.todoManagementService.taskCategoriesInfo$.subscribe((updatedCategoriesInfo) => {
+            this.taskCategoriesInfo = updatedCategoriesInfo;
         });
     }
 

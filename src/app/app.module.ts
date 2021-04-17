@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'; // <-- NgModel lives here
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -13,7 +14,6 @@ import { SidebarComponent } from './shared/components/sidebar/sidebar.component'
 import { MainContentComponent } from './shared/components/main-content/main-content.component';
 import { NotFoundComponent } from './shared/components/error-handling/not-found/not-found.component';
 import { InternalServerErrorComponent } from './shared/components/error-handling/internal-server-error/internal-server-error.component';
-import { SingleCategoryComponent } from './features/to-do/components/single-category/single-category.component';
 import { ToDoBoxComponent } from './features/to-do/components/to-do-box/to-do-box.component';
 import { CreateToDoComponent } from './features/to-do/components/create-to-do/create-to-do.component';
 import { ToDoDetailComponent } from './features/to-do/components/to-do-detail/to-do-detail.component';
@@ -26,6 +26,8 @@ import { CategoryDetailComponent } from './features/to-do/components/category-de
 import { GenericDialogModelComponent } from './shared/utility/components/generic-dialog-model/generic-dialog-model.component';
 import { PaginationComponent } from './features/to-do/components/pagination/pagination.component';
 import { SingleTaskListComponent } from './features/to-do/components/single-task-list/single-task-list.component';
+import { SingleCategoryComponent } from './features/to-do/components/single-category/single-category.component';
+
 
 
 @NgModule({
@@ -58,7 +60,8 @@ import { SingleTaskListComponent } from './features/to-do/components/single-task
         AppRoutingModule,
         BrowserAnimationsModule,
         FormsModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        HttpClientModule
     ],
     providers: [],
     bootstrap: [AppComponent]

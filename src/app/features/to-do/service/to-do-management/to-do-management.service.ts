@@ -1,5 +1,9 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { BackendRestApiService } from 'src/app/shared/utility/backend/backend-rest-api.service';
+import { ResponseModel } from 'src/app/shared/utility/response-model/response-model';
+import { TaskType } from '../../enum/TaskType';
+import { PaginationWrapperDto } from '../../model/pagination-wrapper-dto';
 import { TaskCategory } from '../../model/task-category';
 import { ToDoTask } from '../../model/to-do-task';
 
@@ -8,118 +12,80 @@ import { ToDoTask } from '../../model/to-do-task';
 })
 export class ToDoManagementService {
 
-    private taskCategories: TaskCategory[] = [];
+    private taskCategoriesInfo: PaginationWrapperDto = new PaginationWrapperDto();
+    private allAnyStatusTasksInfo: PaginationWrapperDto = new PaginationWrapperDto();
+    private allPendingStatusTaskInfo: PaginationWrapperDto = new PaginationWrapperDto();
+    private allDoneStatusTaskInfo: PaginationWrapperDto = new PaginationWrapperDto();
 
-    private _taskCategories: BehaviorSubject<TaskCategory[]> = new BehaviorSubject<TaskCategory[]>([]);
 
-    public taskCategories$: Observable<TaskCategory[]>;
+    private _taskCategoriesInfo: BehaviorSubject<PaginationWrapperDto> = new BehaviorSubject<PaginationWrapperDto>(this.taskCategoriesInfo);
+    private _allAnyStatusTasksInfo: BehaviorSubject<PaginationWrapperDto> = new BehaviorSubject<PaginationWrapperDto>(this.allAnyStatusTasksInfo);
+    private _allPendingStatusTaskInfo: BehaviorSubject<PaginationWrapperDto> = new BehaviorSubject<PaginationWrapperDto>(this.allPendingStatusTaskInfo);
+    private _allDoneStatusTaskInfo: BehaviorSubject<PaginationWrapperDto> = new BehaviorSubject<PaginationWrapperDto>(this.allDoneStatusTaskInfo);
 
-    private categoryTaskMapping: { [key: number]: ToDoTask [] } = {};
 
-    private _categoryTaskMapping: BehaviorSubject<{ [key: number]: ToDoTask[] }> = new BehaviorSubject<{ [key: number]: ToDoTask[] }>({});
+    public taskCategoriesInfo$: Observable<PaginationWrapperDto>;
+    public allAnyStatusTasksInfo$: Observable<PaginationWrapperDto>;
+    public allPendingStatusTaskInfo$: Observable<PaginationWrapperDto>;
+    public allDoneStatusTaskInfo$: Observable<PaginationWrapperDto>;
 
-    public categoryTaskMapping$: Observable<{ [key: number]: ToDoTask[] }>;
-
-    constructor() {
-        this.taskCategories$ = this._taskCategories.asObservable();
-        this.categoryTaskMapping$ = this._categoryTaskMapping.asObservable();
+    constructor(private backendRestApiService :BackendRestApiService) {
+        this.taskCategoriesInfo$ = this._taskCategoriesInfo.asObservable();
+        this.allAnyStatusTasksInfo$ = this._allAnyStatusTasksInfo.asObservable();
+        this.allPendingStatusTaskInfo$ = this._allPendingStatusTaskInfo.asObservable();
+        this.allDoneStatusTaskInfo$ = this._allDoneStatusTaskInfo.asObservable();
         this.initializeTasks();
     }
 
     initializeTasks() {
 
-    }
-
-    createTask(todo: ToDoTask) {
-        console.log(todo);
-        todo.setCreationTime(new Date());
-        todo.setModifiedTime(new Date());
-        if (!this.categoryTaskMapping[todo.getTaskCategoryId()]) {
-            // this.categoryTaskMapping[todo.getTaskCategoryId()] = [];
-            throw new Error("No such category exists");
-        }
-
-        todo.setTodoId(this.categoryTaskMapping[todo.getTaskCategoryId()].length);
-
-
-        this.categoryTaskMapping[todo.getTaskCategoryId()].push(todo);
-        this._categoryTaskMapping.next(this.categoryTaskMapping);
-        console.log("task successfully made");
-    }
-
-
-    findByTaskId(providedCategoryId: number, providedTaskId: number): ToDoTask | undefined {
-        console.log(this.categoryTaskMapping);
-        return this.categoryTaskMapping[providedCategoryId].find(toDoTask => toDoTask.getTodoId() == providedTaskId);
-    }
-
-
-    async deleteTaskById(providedCategoryId: number, providedTaskId: number) {
-        await this.requestMockUp();
-        this.categoryTaskMapping[providedCategoryId] =  this.categoryTaskMapping[providedCategoryId].filter(task => task.getTodoId() != providedTaskId);
-        this._categoryTaskMapping.next(this.categoryTaskMapping);
-    }
-
-    async createNewCategory(newTaskCategory: TaskCategory) {
-        await this.requestMockUp();
-        newTaskCategory.setCategoryId(Object.keys(this.categoryTaskMapping).length + 1);
-        this.taskCategories.push(newTaskCategory);
-        this.categoryTaskMapping[newTaskCategory.getCategoryId()] = [];
-        this.updateDataForObservers();
-    }
-
-    findByCategoryId(currentTaskCategoryId: number): TaskCategory | undefined{
-        return this.taskCategories.find(category => category.getCategoryId() == currentTaskCategoryId);
-    }
-
-
-    async deleteCategoryById(categoryId: number) {
-        await this.requestMockUp();
-        this.taskCategories = this.taskCategories.filter(category => category.getCategoryId() != categoryId);
-        delete this.categoryTaskMapping[categoryId];
-        this.updateDataForObservers();
-    }
-
-
-    async editProvidedCategory(editedCategory: TaskCategory) {
-        await this.requestMockUp();
-        const n = this.taskCategories.length;
-
-        for (let i = 0; i < n; ++i) {
-            if (this.taskCategories[i].getCategoryId() == editedCategory.getCategoryId()) {
-                this.taskCategories[i] = editedCategory;
-            }
-        }
-
-        this.categoryTaskMapping[editedCategory.getCategoryId()]
-        this.updateDataForObservers();
-
-    }
-
-    async editProvidedTask(currentToDoTask: ToDoTask | null | undefined) {
-        if (!currentToDoTask) {
-            return;
-        }
-        await this.requestMockUp();
-
-        const tasks = this.categoryTaskMapping[currentToDoTask.getTaskCategoryId()];
-        const n = tasks.length;
-        for (let i = 0; i < n; ++i) {
-            if (tasks[i].getTodoId() == currentToDoTask.getTodoId()) {
-                tasks[i] = currentToDoTask;
-            }
-        }
-
-        this._categoryTaskMapping.next(this.categoryTaskMapping);
+        // this.fetchAndUpdateCategories();
+        // this.fetchAndUpdateAnyStatusTasks();
+        // this.fetchAndUpdatePendingStatusTasks(TaskType.DONE);
+        // this.fetchAndUpdateDoneStatusTasks(TaskType.PENDING);
 
     }
 
 
-    updateDataForObservers() {
-        this._taskCategories.next(this.taskCategories);
-        this._categoryTaskMapping.next(this.categoryTaskMapping);
+    async getAllTasksCategories() {
+        this.taskCategoriesInfo = <PaginationWrapperDto>(await this.backendRestApiService.getAllCategory()).data;
+        this._taskCategoriesInfo.next(this.taskCategoriesInfo);
     }
 
+
+    async getAllAnyStatusTasks(categoryId: number) {
+        this.allAnyStatusTasksInfo = <PaginationWrapperDto>(await this.backendRestApiService.getAllAnyStatusTasks(categoryId)).data;
+        this._allAnyStatusTasksInfo.next(this.allAnyStatusTasksInfo);
+    }
+
+
+    async getAllPendingStatusTasks(categoryId: number) {
+        this.allPendingStatusTaskInfo = <PaginationWrapperDto>(await this.backendRestApiService.getAllPendingStatusTasks(categoryId)).data;
+        this._allPendingStatusTaskInfo.next(this.allPendingStatusTaskInfo);
+    }
+
+
+    async getAlleDoneStatusTasks(categoryId: number) {
+        this.allDoneStatusTaskInfo = <PaginationWrapperDto>(await this.backendRestApiService.getAllDoneStatusTasks(categoryId)).data;
+        this._allDoneStatusTaskInfo.next(this.allDoneStatusTaskInfo);
+    }
+
+
+    async getCategoryDetail(categoryId: number) {
+        const categoryDetailResponse: ResponseModel = await this.backendRestApiService.getCategoryDetail(categoryId);
+        return categoryDetailResponse.data;
+    }
+
+
+    async getTaskDetail(taskId: number) {
+        const taskDetailResponse: ResponseModel = await this.backendRestApiService.getTaskDetail(taskId);
+        return taskDetailResponse.data;
+    }
+
+
+    async createNewCategory(taskCategory: TaskCategory) {
+        console.log("added");
+    }
 
     requestMockUp() : Promise<boolean> {
         return new Promise((resolve, reject) => {

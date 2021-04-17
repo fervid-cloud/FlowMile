@@ -171,7 +171,7 @@ export class CategoryDetailComponent implements OnInit {
         this.currentCategory.setCategoryTitle(this.categoryEditForm.get('categoryTitle')?.value);
         this.currentCategory.setCategoryDescription(this.categoryEditForm.get("categoryDescription")?.value);
         this.currentCategory.setModifiedTime(new Date());
-        await this.todoManagementService.editProvidedCategory(this.currentCategory);
+        // await this.todoManagementService.editProvidedCategory(this.currentCategory);
         this.categoryEditMode = false;
         this.toggleSpinnerStatus();
     }
@@ -187,7 +187,7 @@ export class CategoryDetailComponent implements OnInit {
     async OnDeleteConfirm() {
         this.deleteConfirmationDialogModel.hide();
         this.toggleSpinnerStatus();
-        await this.todoManagementService.deleteCategoryById(this.currentCategory.getCategoryId());
+        // await this.todoManagementService.deleteCategoryById(this.currentCategory.getCategoryId());
         this.toggleSpinnerStatus();
         this.router.navigate(['../'], {
             relativeTo: this.activatedRoute

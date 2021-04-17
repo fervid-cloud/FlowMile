@@ -52,8 +52,8 @@ export class SingleCategoryComponent implements OnInit {
     }
 
 
-    showCurrentCategory(currentTaskCategoryId : number) {
-        const targetCategory = this.todoManagementService.findByCategoryId(currentTaskCategoryId)
+    async showCurrentCategory(currentTaskCategoryId : number) {
+        const targetCategory = await this.todoManagementService.getCategoryDetail(currentTaskCategoryId)
         if (!targetCategory) {
 
             console.log("current category doesn't exists");

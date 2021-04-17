@@ -103,15 +103,15 @@ export class ToDoDetailComponent implements OnInit {
     }
 
 
-    subscribeToActivatedRoute() {
-        this.activatedRouteSubscription = this.activatedRoute.params.subscribe((updatedParams: Params) => {
+     subscribeToActivatedRoute() {
+        this.activatedRouteSubscription = this.activatedRoute.params.subscribe(async (updatedParams: Params) => {
             const allParams: Params = this.utilService.getAllRouteParams1(this.activatedRoute);
             console.log("all params are :", allParams);
             const categoryId = allParams['categoryId'];
             const providedTaskId = allParams['taskId'];
 
             console.log("Provided taskId is : ", providedTaskId);
-            this.currentToDoTask = this.taskManagementService.findByTaskId(categoryId, providedTaskId);
+            this.currentToDoTask = await this.taskManagementService.getTaskDetail( providedTaskId);
 
             if (!this.currentToDoTask) {
                 this.router.navigate(['../'], {
@@ -209,7 +209,7 @@ export class ToDoDetailComponent implements OnInit {
 
         if (this.currentToDoTask) {
             this.toggleSpinnerStatus();
-            await this.taskManagementService.deleteTaskById(this.currentToDoTask.getTaskCategoryId(), this.currentToDoTask.getTodoId());
+            // await this.taskManagementService.deleteTaskById(this.currentToDoTask.getTaskCategoryId(), this.currentToDoTask.getTodoId());
             this.currentToDoTask = undefined;
             this.toggleSpinnerStatus();
         }
@@ -226,7 +226,7 @@ export class ToDoDetailComponent implements OnInit {
         this.toggleSpinnerStatus();
         this.currentToDoTask?.setTitle(this.taskEditForm.get("title")?.value);
         this.currentToDoTask?.setTextContent(this.taskEditForm.get('textContent')?.value);
-        await this.taskManagementService.editProvidedTask(this.currentToDoTask);
+        // await this.taskManagementService.editProvidedTask(this.currentToDoTask);
         this.editMode = false;
         this.toggleSpinnerStatus();
 

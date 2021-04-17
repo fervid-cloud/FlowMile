@@ -54,7 +54,7 @@ export class ToDoListComponent implements OnInit {
             this.taskCategoryId = allParams['categoryId'];
             const value = allParams['listType'];
             console.log("list type is : ", value);
-            this.subscribeToTaskManagement();
+            // this.subscribeToTaskManagement();
             this.handleTaskType(value);
             // if (value == "done" || value == "pending") {
             //     this.listType = value;
@@ -94,13 +94,13 @@ export class ToDoListComponent implements OnInit {
         });
     }
 
-
+/*
     private subscribeToTaskManagement() {
         this.toDoTaskSubscription = this.todoManagementService.categoryTaskMapping$.subscribe((updatedCategoryMapping) => {
             this.toDoTasks = updatedCategoryMapping[this.taskCategoryId];
             console.log("The tasks are : ", this.toDoTasks);
         });
-    }
+    } */
 
 
     ngOnDestroy(): void {
