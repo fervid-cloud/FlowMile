@@ -1,7 +1,7 @@
 <div class="container-fluid mb-3 wholeWrapper">
     <p class="createTaskHeader text-center text-white py-2 mb-0">Task Detail</p>
 
-    <div *ngIf="currentToDoTask" class="contentWrapper pb-3">
+    <div *ngIf="taskNotExistStatus && currentToDoTask" class="contentWrapper pb-3">
         <div class="udButtonWrapper mx-4 py-3">
             <!-- <div *ngIf="!editMode" class="btn btn-primary px-3 py-1 me-auto" (click)="goBack()">Back</div> -->
             <button *ngIf="!editMode" [routerLink]="['..']" class="px-3 py-1 me-auto text-primary border-0 bg-transparent"
@@ -34,37 +34,37 @@
 
         <div class="detailWrapper rounded mx-4 px-3" [formGroup]="taskEditForm">
             <div class="individualField my-3">
-                <h6>ToDoTask Id</h6>
+                <h6>Task Id</h6>
                 <p class="lead">todoId of task</p>
             </div>
             <div [ngClass]="{'haveCustomContentEditableChild': this.editMode}" class="individualField my-3">
-                <h6>Task Title</h6>
+                <h6>Task Name</h6>
                 <!-- // example of attribute directive, basically we enclose a native html attribute in square bracket and
                 // then it becomes a directive and now we can control the attribute based on our logics  -->
                 <!-- <p #taskTitle  [contentEditable]="this.editMode" class="lead"> Title of task</p> -->
-                <p #taskTitle  *ngIf="!editMode" class="lead"> {{currentToDoTask.getTitle()}}</p>
-                <input class="editInput lead" *ngIf="editMode" type="text" [formControlName]="'title'">
+                <p #taskTitle  *ngIf="!editMode" class="lead"> {{currentToDoTask.name}}</p>
+                <input *ngIf="editMode"  class="editInput lead" type="text" [formControlName]="'name'">
             </div>
             <!-- g-0 equivalent to no-gutter, gutter is used for maintaining spacing between col of the rows -->
             <div [ngClass]="{'haveCustomContentEditableChild': this.editMode}" class="individualField my-3">
-                <h6><span>Task Detail</span></h6>
+                <h6><span>Task Description</span></h6>
                 <p #taskDetail *ngIf="!editMode" class="lead">
-                    {{ currentToDoTask.getTextContent() }}
+                    {{ currentToDoTask.description }}
                 </p>
 
-                <textarea rows=6 *ngIf="editMode"class="editInput lead" type="text" [formControlName]="'textContent'"></textarea>
+                <textarea rows=6 *ngIf="editMode"class="editInput lead" type="text" [formControlName]="'description'"></textarea>
             </div>
             <div class="individualField my-3">
                 <h6>Creation Time</h6>
-                <p class="lead">creationTime of task</p>
+                <p class="lead"> {{ currentToDoTask.creationTime }}</p>
             </div>
             <div class="individualField my-3">
-                <h6>Updation Time</h6>
-                <p class="lead">updationTime of task</p>
+                <h6>Modification Time</h6>
+                <p class="lead"> {{ currentToDoTask.modificationTime }}</p>
             </div>
             <div class="individualField  my-3">
                 <h6>Task Status</h6>
-                <p class="lead">taskStatus of task</p>
+                <p class="lead"> {{ currentToDoTask.taskStatus }}</p>
             </div>
 
         </div>
@@ -76,7 +76,7 @@
 
 
     <!-- //local reference kind of like pointer to the element or we can treat the div like a variable through this -->
-    <div *ngIf="!currentToDoTask" #errorElement class="deletedIndicator">
+    <div *ngIf="!taskNotExistStatus" #errorElement class="deletedIndicator">
         <!-- <div *ngIf="!editMode" class="btn btn-primary px-3 py-1 mt-3 ms-4" (click)="goBack()">Back</div> -->
         <button *ngIf="!editMode" [routerLink]="['..']" class="px-3 py-1 mt-3 ms-4 border-0" type="button"
             title="back to all tasks">

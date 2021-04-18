@@ -3,7 +3,7 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { UtilService } from 'src/app/shared/utility/util-service/util.service';
 import { TaskCategory } from '../../model/task-category';
-import { ToDoTask } from '../../model/to-do-task';
+import { Task } from '../../model/task';
 import { TaskManagementService } from '../../service/to-do-management/task-management.service';
 
 @Component({

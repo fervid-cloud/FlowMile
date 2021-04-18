@@ -30,7 +30,7 @@
 
             <div *ngIf="categoryEditMode" class="individualField  mb-3">
                 <h6>Category name</h6>
-                <input type="text" [formControlName]="'categoryTitle'" class="editField form-control">
+                <input type="text" [formControlName]="'name'" class="editField form-control">
             </div>
 
             <div *ngIf="!categoryEditMode" class="individualField  mb-3">
@@ -40,7 +40,7 @@
 
             <div *ngIf="categoryEditMode" class="individualField  mb-3">
                 <h6>Category Description</h6>
-                <input type="text" [formControlName]="'categoryDescription'" class="editField form-control">
+                <input type="text" [formControlName]="'description'" class="editField form-control">
             </div>
 
 

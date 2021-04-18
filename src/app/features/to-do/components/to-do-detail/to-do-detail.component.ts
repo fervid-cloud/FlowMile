@@ -1,8 +1,8 @@
 import { Location } from '@angular/common';
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, ActivatedRouteSnapshot, NavigationEnd, Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { ToDoTask } from '../../model/to-do-task';
+import { Task } from '../../model/task';
 import { TaskManagementService } from '../../service/to-do-management/task-management.service';
 import { UtilService } from 'src/app/shared/utility/util-service/util.service';
 import { GenericDialogModelComponent } from 'src/app/shared/utility/components/generic-dialog-model/generic-dialog-model.component';
@@ -13,7 +13,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
     templateUrl: './to-do-detail.component.html',
     styleUrls: ['./to-do-detail.component.css']
 })
-export class ToDoDetailComponent implements OnInit {
+export class ToDoDetailComponent implements OnInit, OnDestroy, AfterViewInit {
 
     @ViewChild('deleteConfirmationDialog')
     deleteConfirmationGenericModelDialog!: GenericDialogModelComponent;
@@ -21,10 +21,11 @@ export class ToDoDetailComponent implements OnInit {
     @ViewChild('saveConfirmationDialog')
     saveConfirmationGenericModelDialog!: GenericDialogModelComponent;
 
+    currentToDoTask: Task | null | undefined = undefined;
 
-    currentToDoTask: ToDoTask | null | undefined = undefined;
+    taskNotExistStatus: boolean = true;
 
-    private history: string[] = []
+    private history: string[] = [];
 
     private activatedRouteSubscription!: Subscription;
 
@@ -35,11 +36,11 @@ export class ToDoDetailComponent implements OnInit {
 
     taskEditValueChangeSubscription!: Subscription;
 
-    showSpinner: boolean = false;
+    showSpinner = false;
 
-    //for editing
+    // for editing
     // for getting access to dom element, template,
-    //note that we can edit the value of element here also but there are differences between ngModel and ViewChild
+    // note that we can edit the value of element here also but there are differences between ngModel and ViewChild
 
     // NgModel is used for inputs and is used within forms whereas a ViewChild can be used to point to a component / directive you have on your page.
 
@@ -58,74 +59,78 @@ export class ToDoDetailComponent implements OnInit {
 
         @ViewChild('taskTitle') taskTitle!: ElementRef; */
 
-    editMode: boolean = false;
+    editMode = false;
 
 
     constructor(private activatedRoute: ActivatedRoute,
-        private router: Router,
-        private location: Location,
-        private taskManagementService: TaskManagementService,
-        private utilService: UtilService
+                private router: Router,
+                private location: Location,
+                private taskManagementService: TaskManagementService,
+                private utilService: UtilService
     ) {
 
-        //our choice where we want to subscribe if the observable/subject we are subscribing to exist at
+        // our choice where we want to subscribe if the observable/subject we are subscribing to exist at
         // the time of subscribing
 
         const observer = {
             next: (routerEvent: any) => {
                 if (routerEvent instanceof NavigationEnd) {
-                    this.history.push(routerEvent.urlAfterRedirects)
+                    this.history.push(routerEvent.urlAfterRedirects);
                 }
             },
             error: (routerError: any) => {
-                console.log("error event sent by router");
+                console.log('error event sent by router');
             },
             Complete: (completeEvent: any) => {
-                console.log("completed");
+                console.log('completed');
             }
-        }
+        };
 
         this.routerEventSubscription = this.router.events.subscribe(observer);
     }
 
-    ngOnInit(): void {
-        this.subscribeToActivatedRoute();
-        this.initializeTaskEditForm();
-
+    async ngOnInit(): Promise<void> {
+        await this.subscribeToActivatedRoute();
     }
+
 
     ngOnDestroy() {
         this.activatedRouteSubscription.unsubscribe();
         this.routerEventSubscription.unsubscribe();
 
         this.taskEditValueChangeSubscription.unsubscribe();
-        console.log("+++++++++++++++++++++++++++++destroying to-do detail component");
+        console.log('+++++++++++++++++++++++++++++destroying to-do detail component');
     }
 
 
-     subscribeToActivatedRoute() {
+     async subscribeToActivatedRoute(): Promise<void> {
         this.activatedRouteSubscription = this.activatedRoute.params.subscribe(async (updatedParams: Params) => {
             const allParams: Params = this.utilService.getAllRouteParams1(this.activatedRoute);
-            console.log("all params are :", allParams);
-            const categoryId = allParams['categoryId'];
-            const providedTaskId = allParams['taskId'];
+            console.log('all params are :', allParams);
+            const categoryId = allParams.categoryId;
+            const providedTaskId = allParams.taskId;
 
-            console.log("Provided taskId is : ", providedTaskId);
+            console.log('Provided taskId is : ', providedTaskId);
+            await new Promise((resolve, reject) => setTimeout(() => resolve(true), 3000));
+
             this.currentToDoTask = await this.taskManagementService.getTaskDetail( providedTaskId);
-
             if (!this.currentToDoTask) {
-                this.router.navigate(['../'], {
+                await this.router.navigate([ '../' ], {
                     relativeTo: this.activatedRoute
                 });
             }
+
+            this.initializeTaskEditForm();
         });
+
     }
 
 
-    initializeTaskEditForm() {
+    initializeTaskEditForm(): void {
+        console.log("The current Task value is : ", this.currentToDoTask);
         this.taskEditForm = new FormGroup({
-            'title': new FormControl(this.currentToDoTask?.getTitle(), [Validators.required]),
-            'textContent': new FormControl(this.currentToDoTask?.getTextContent(), Validators.required),
+            name: new FormControl(this.currentToDoTask?.name, [Validators.required]),
+            description: new FormControl(this.currentToDoTask?.description, Validators.required),
         });
 
         this.taskEditValueChangeSubscription = this.taskEditForm.valueChanges.subscribe(values => {
@@ -137,12 +142,12 @@ export class ToDoDetailComponent implements OnInit {
     areSomeEquivalent(a: any, b: any) {
         const parameters: string[] = ['title', 'textContent'];
         const n = parameters.length;
-        console.log("first ne is ", a);
-        console.log("second ne is ",b);
+        console.log('first one is ', a);
+        console.log('second one is ', b);
         for (let i = 0; i < n; ++i) {
             const propName = parameters[i];
             if (a[propName] !== b[propName]) {
-                console.log("first ne is " ,a[propName]);
+                console.log('first ne is ' , a[propName]);
                 console.log(b[propName]);
                 this.taskEditForm.markAsDirty();
                 return;
@@ -155,10 +160,10 @@ export class ToDoDetailComponent implements OnInit {
 
     ngAfterViewInit() {
 
-        //was put here as not this life cycle hook runs when all the dom element are made(except external api call eg. http);
+
+
+        // was put here as not this life cycle hook runs when all the dom element are made(except external api call eg. http);
         // this.initializeDeleteConfirmationModelDialog();
-
-
         this.deleteConfirmationGenericModelDialog.subscribe(() => {
             this.confirmDeleteTask();
             /*
@@ -183,12 +188,13 @@ export class ToDoDetailComponent implements OnInit {
     }
 
 
-    onTaskEditAction() {
+    onTaskEditAction(): void {
         this.editMode = true;
+        console.log(this.taskEditForm);
     }
 
 
-    onTaskSaveAction() {
+    onTaskSaveAction(): void {
         if (!this.taskEditForm.dirty) {
             this.editMode = false;
             return;
@@ -199,33 +205,39 @@ export class ToDoDetailComponent implements OnInit {
     }
 
 
-    onTaskDeleteAction() {
+    onTaskDeleteAction(): void {
         this.deleteConfirmationGenericModelDialog.show();
     }
 
 
-    async confirmDeleteTask() {
+    async confirmDeleteTask(): Promise<void> {
         this.deleteConfirmationGenericModelDialog.hide();
 
         if (this.currentToDoTask) {
             this.toggleSpinnerStatus();
             // await this.taskManagementService.deleteTaskById(this.currentToDoTask.getTaskCategoryId(), this.currentToDoTask.getTodoId());
             this.currentToDoTask = undefined;
+            this.taskNotExistStatus = true;
             this.toggleSpinnerStatus();
         }
 
     }
 
 
-    async confirmSaveTask() {
+    async confirmSaveTask(): Promise<void> {
         this.saveConfirmationGenericModelDialog.hide();
         if (this.taskEditForm.invalid) {
             return;
         }
 
+        if (!this.currentToDoTask) {
+            console.log('invalid current Task') ;
+            return;
+        }
+
         this.toggleSpinnerStatus();
-        this.currentToDoTask?.setTitle(this.taskEditForm.get("title")?.value);
-        this.currentToDoTask?.setTextContent(this.taskEditForm.get('textContent')?.value);
+        this.currentToDoTask.name = this.taskEditForm.get('name')?.value;
+        this.currentToDoTask.description = this.taskEditForm.get('description')?.value;
         // await this.taskManagementService.editProvidedTask(this.currentToDoTask);
         this.editMode = false;
         this.toggleSpinnerStatus();
@@ -233,33 +245,33 @@ export class ToDoDetailComponent implements OnInit {
     }
 
 
-    cancelEditAction() {
+    cancelEditAction(): void {
         this.editMode = false;
     }
 
 
-    goBack() {
+    goBack(): void {
         this.back();
     }
 
     private back(): void {
-        console.debug("The history is : ", this.history);
+        console.debug('The history is : ', this.history);
         if (this.history.length > 0) {
-            //doesn't matter both are equivalent, it's just that this.location.back has history of same route that
+            // doesn't matter both are equivalent, it's just that this.location.back has history of same route that
             // we want to go back to through this.router.navigate(['../'], { relativeTo: this.activatedRoute });
             // this.router.navigate(['../'], { relativeTo: this.activatedRoute });
-            this.location.back()
+            this.location.back();
         } else {
             // in case we opened the browser directly with this link, or new tab with this link, then try to go back
-            console.debug("going back through backup as no history is there-----------------");
-            this.router.navigateByUrl('/')
+            console.debug('going back through backup as no history is there-----------------');
+            this.router.navigateByUrl('/');
         }
     }
 
-    toggleSpinnerStatus() {
-        console.log("old spinner status ", this.showSpinner);
+    toggleSpinnerStatus(): void {
+        console.log('old spinner status ', this.showSpinner);
         this.showSpinner = !this.showSpinner;
-        console.log("new spinner status ", this.showSpinner);
+        console.log('new spinner status ', this.showSpinner);
     }
 
 

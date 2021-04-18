@@ -1,12 +1,12 @@
 <div class="card text-center" style="max-width: 100%; height: 100%">
-    <div class="card-header" [ngClass]="unitTodo.getTaskStatus() ? 'done' : 'pending'">
-        {{ unitTodo.getTaskStatus() == true ? "Done" : "Pending" }}
+    <div class="card-header" [ngClass]="unitTodo.taskStatus ? 'done' : 'pending'">
+        {{ unitTodo.taskStatus == 1 ? "Done" : "Pending" }}
     </div>
     <div class="card-body categoryBody">
-        <h6 class="card-title custom-text-truncate mb-2">asdf asdfffffffffffffffff fghfgh ghfh ffasdffffff sdfsdf dfgdfg dfgdfgf  sfsdf{{ unitTodo.getTitle() }} </h6>
+        <h6 class="card-title custom-text-truncate mb-2">asdf asdfffffffffffffffff fghfgh ghfh ffasdffffff sdfsdf dfgdfg dfgdfgf  sfsdf{{ unitTodo.name }} </h6>
         <div class="imageWrapper">
-            <img *ngIf="unitTodo.getTaskStatus()" src="/assets/images/to-do/completed-task/1.png" alt="taskIndicator">
-            <img *ngIf="!unitTodo.getTaskStatus()" src="/assets/images/to-do/incomplete-task/3.png" alt="taskIndicator">
+            <img *ngIf="unitTodo.taskStatus" src="/assets/images/to-do/completed-task/1.png" alt="taskIndicator">
+            <img *ngIf="!unitTodo.taskStatus" src="/assets/images/to-do/incomplete-task/3.png" alt="taskIndicator">
         </div>
         <!-- <p class="card-text custom-text-truncate">
             {{ unitTodo.getTextContent() }}
@@ -14,7 +14,7 @@
     </div>
     <a (click)="onViewClick()" class="btn btn-primary m-auto mb-3">View Detail</a>
     <div class="card-footer text-muted">
-        {{ unitTodo.getCreationTime() }}
+        {{ unitTodo.creationTime }}
     </div>
 </div>
 

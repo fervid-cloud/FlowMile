@@ -4,7 +4,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { AbstractControl, FormControl, NgForm } from '@angular/forms';
 import { ActivatedRoute, Params } from '@angular/router';
 import { UtilService } from 'src/app/shared/utility/util-service/util.service';
-import { ToDoTask } from '../../model/to-do-task';
+import { Task } from '../../model/task';
 import { TaskManagementService } from '../../service/to-do-management/task-management.service';
 
 @Component({
@@ -55,8 +55,8 @@ export class CreateToDoComponent implements OnInit {
     ) {
 
         this.activatedRoutedSubscription = this.activatedRoute.params.subscribe((params: Params) => {
-            const allParams : Params = this.utilService.getAllRouteParams1(this.activatedRoute);
-            this.taskCategoryId = allParams['categoryId'];
+            const allParams: Params = this.utilService.getAllRouteParams1(this.activatedRoute);
+            this.taskCategoryId = allParams.categoryId;
         });
      }
 
@@ -89,14 +89,14 @@ export class CreateToDoComponent implements OnInit {
         console.log(this.formObject);
         const controls = this.formObject.form.controls;
         const fieldNames = Object.keys(controls);
-        let nn = fieldNames.length;
+        const nn = fieldNames.length;
         this.invalidityReasons = [];
         let validCounter = 0;
         for (let k = 0; k < nn; ++k) {
             const fieldName = fieldNames[k];
             const fieldDetails: AbstractControl = controls[fieldName];
-            const fieldValue = <string>fieldDetails.value;
-            let n = fieldValue?.length;
+            const fieldValue = fieldDetails.value as string;
+            const n = fieldValue?.length;
             if (!n || n == 0) {
                 const emptyReason = `${fieldName} can't be empty`;
                 this.invalidityReasons.push(emptyReason);
@@ -117,15 +117,15 @@ export class CreateToDoComponent implements OnInit {
             this.invalidityReasons = [];
             this.successMessages = [];
             ++this.taskAlreadyAddedTracker;
-            const successMessage = "Task Created Successfully"
+            const successMessage = "Task Created Successfully";
             this.successMessages.push(successMessage);
             this.disableForm();
 
-            const todo: ToDoTask = new ToDoTask();
-            todo.setTitle(controls.titleName.value);
-            todo.setTextContent(controls.taskDetail.value);
-            todo.setTaskStatus(false);
-            todo.setTaskCategoryId(this.taskCategoryId);
+            const todo: Task = new Task();
+            todo.name = controls.titleName.value;
+            todo.description = controls.taskDetail.value;
+            todo.taskStatus = 0;
+            todo.id = this.taskCategoryId;
             // this.toDoManagementService.createTask(todo);
             setTimeout(() => {
                 this.validSubmitClickIndicator = false;
@@ -137,7 +137,7 @@ export class CreateToDoComponent implements OnInit {
 
     notifyForAlreadyAddedTask() {
         this.successMessages = [];
-        const successMessage = "Task has already been added"
+        const successMessage = "Task has already been added";
         this.successMessages.push(successMessage);
     }
 

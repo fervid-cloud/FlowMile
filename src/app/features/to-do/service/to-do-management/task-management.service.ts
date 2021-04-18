@@ -5,7 +5,7 @@ import { ResponseModel } from 'src/app/shared/utility/response-model/response-mo
 import { TaskType } from '../../enum/TaskType';
 import { PaginationWrapperDto } from '../../model/pagination-wrapper-dto';
 import { TaskCategory } from '../../model/task-category';
-import { ToDoTask } from '../../model/to-do-task';
+import { Task } from '../../model/task';
 
 @Injectable({
     providedIn: 'root'
@@ -48,7 +48,7 @@ export class TaskManagementService {
 
 
     async getAllTasksCategories(): Promise<void> {
-        this.taskCategoriesInfo = <PaginationWrapperDto>(await this.backendRestApiService.getAllCategory()).data;
+        this.taskCategoriesInfo = ((await this.backendRestApiService.getAllCategory(1, 25)).data as PaginationWrapperDto);
         this._taskCategoriesInfo.next(this.taskCategoriesInfo);
     }
 
@@ -77,7 +77,7 @@ export class TaskManagementService {
     }
 
 
-    async getTaskDetail(taskId: number): Promise<ToDoTask> {
+    async getTaskDetail(taskId: number): Promise<Task> {
         const taskDetailResponse: ResponseModel = await this.backendRestApiService.getTaskDetail(taskId);
         return taskDetailResponse.data;
     }

@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ToDoTask } from '../../model/to-do-task';
+import { Task } from '../../model/task';
 import { PaginationWrapperDto } from '../../model/pagination-wrapper-dto';
 
 @Component({

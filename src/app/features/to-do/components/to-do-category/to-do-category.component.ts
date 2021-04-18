@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TaskCategory } from '../../model/task-category';
 import { TaskManagementService } from '../../service/to-do-management/task-management.service';
@@ -13,7 +13,7 @@ import { PaginationWrapperDto } from '../../model/pagination-wrapper-dto';
     templateUrl: './to-do-category.component.html',
     styleUrls: ['./to-do-category.component.css']
 })
-export class ToDoCategoryComponent implements OnInit {
+export class ToDoCategoryComponent implements OnInit, OnDestroy {
 
     // adding a template reference of this element to avoid some global mis - happening related to model dialog
     @ViewChild('addCategoryModelDialog')
@@ -45,7 +45,7 @@ export class ToDoCategoryComponent implements OnInit {
         this.fetchRequiredCategoriesData();
     }
 
-    async fetchRequiredCategoriesData() {
+    async fetchRequiredCategoriesData(): Promise<void> {
         this.showSpinner = true;
         try {
             await this.todoManagementService.getAllTasksCategories();
@@ -55,7 +55,7 @@ export class ToDoCategoryComponent implements OnInit {
     }
 
 
-    categoryCreateFormInitialization() {
+    categoryCreateFormInitialization(): void {
         this.newCategoryForm = new FormGroup({
             name: new FormControl(null, [Validators.required, this.isStringValidator.bind(this)]),
             description: new FormControl(null, Validators.required)
@@ -83,7 +83,7 @@ export class ToDoCategoryComponent implements OnInit {
     }
 
 
-    private initializeSubscriptions() {
+    private initializeSubscriptions(): void {
         this.subscribeToTaskCategories();
     }
 
@@ -108,7 +108,7 @@ export class ToDoCategoryComponent implements OnInit {
     }
 
 
-    initializeAddTaskCategoryModelDialog() {
+    initializeAddTaskCategoryModelDialog(): void {
         // const myModalEl = <HTMLElement>document.querySelector('#myModal');
         const myModalElement = this.addCategoryModelDialogTemplateRef.nativeElement;
         this.addTaskModelDialog = new Modal(myModalElement, {
@@ -133,20 +133,20 @@ export class ToDoCategoryComponent implements OnInit {
     }
 
 
-    private subscribeToTaskCategories() {
+    private subscribeToTaskCategories(): void {
         this.taskCategorySubscription = this.todoManagementService.taskCategoriesInfo$.subscribe((updatedCategoriesInfo) => {
             this.taskCategoriesInfo = updatedCategoriesInfo;
         });
     }
 
-    onChoosingViewDetail(taskCategoryId: number) {
+    onChoosingViewDetail(taskCategoryId: number): void{
         this.router.navigate([taskCategoryId], {
             relativeTo: this.activatedRoute
         });
     }
 
 
-    addTaskCategory() {
+    addTaskCategory(): void {
 /*         const myModalEl = <HTMLElement>document.querySelector('#myModal');
         console.log("my category modal is : ", myModalEl);
         console.log(this.addTaskModelDialog);
@@ -158,11 +158,11 @@ export class ToDoCategoryComponent implements OnInit {
 
     }
 
-    cancelAddTaskCategory() {
+    cancelAddTaskCategory(): void {
         this.addTaskModelDialog.hide();
     }
 
-    async addTaskCategorySubmit(event: Event) {
+    async addTaskCategorySubmit(event: Event): Promise<void> {
 
         // const submitButton: HTMLButtonElement = event.target as HTMLButtonElement;
 
@@ -199,13 +199,13 @@ export class ToDoCategoryComponent implements OnInit {
 
 
 
-    ngOnDestroy() {
+    ngOnDestroy(): void {
         this.addTaskModelDialog.dispose();
         this.taskCategorySubscription.unsubscribe();
     }
 
 
-    toggleSpinnerStatus() {
+    toggleSpinnerStatus(): void {
         console.log('old spinner status ', this.showSpinner);
         this.showSpinner = !this.showSpinner;
         console.log('new spinner status ', this.showSpinner);

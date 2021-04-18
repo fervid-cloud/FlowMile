@@ -2,7 +2,7 @@ import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, ActivatedRouteSnapshot, Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { UtilService } from 'src/app/shared/utility/util-service/util.service';
-import { ToDoTask } from '../../model/to-do-task';
+import { Task } from '../../model/task';
 import { TaskManagementService } from '../../service/to-do-management/task-management.service';
 import { PaginationWrapperDto } from '../../model/pagination-wrapper-dto';
 
@@ -15,7 +15,7 @@ export class ToDoListComponent implements OnInit, OnDestroy {
 
     taskCategoryId = 0;
 
-    toDoTasks: ToDoTask[] = [];
+    toDoTasks: Task[] = [];
 
     currentActiveTasksInfo!: PaginationWrapperDto;
 
@@ -82,8 +82,8 @@ export class ToDoListComponent implements OnInit, OnDestroy {
         }
     }
 
-    invalidRouteDetected(): void {
-        this.router.navigate(['../..'], {
+    invalidRouteDetected(): Promise<boolean> {
+        return this.router.navigate(['../..'], {
             relativeTo: this.activatedRoute
         });
     }

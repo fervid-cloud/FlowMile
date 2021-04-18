@@ -1,4 +1,4 @@
-import { ToDoTask } from "./to-do-task";
+import { Task } from "./task";
 
 export default class TaskListInfo {
 
@@ -8,6 +8,6 @@ export default class TaskListInfo {
 
     totalResults!: number;
 
-    taskList!: ToDoTask;
+    taskList!: Task;
 
 }
