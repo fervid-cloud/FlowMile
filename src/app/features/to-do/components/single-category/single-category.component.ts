@@ -4,7 +4,7 @@ import { Subscription } from 'rxjs';
 import { UtilService } from 'src/app/shared/utility/util-service/util.service';
 import { TaskCategory } from '../../model/task-category';
 import { ToDoTask } from '../../model/to-do-task';
-import { ToDoManagementService } from '../../service/to-do-management/to-do-management.service';
+import { TaskManagementService } from '../../service/to-do-management/task-management.service';
 
 @Component({
     selector: 'app-single-category',
@@ -14,24 +14,23 @@ import { ToDoManagementService } from '../../service/to-do-management/to-do-mana
 })
 export class SingleCategoryComponent implements OnInit {
 
-
     currentCategory!: TaskCategory;
 
     private activatedRouteSubscription!: Subscription;
 
     constructor(
-        private todoManagementService: ToDoManagementService,
+        private todoManagementService: TaskManagementService,
         private router: Router,
         private activatedRoute: ActivatedRoute,
         private utilService: UtilService
     ) { }
 
-    ngOnInit(): void {
+    async ngOnInit(): Promise<void> {
         // by default angular nagivates relative to root route
         // this.router.navigate(["list", "all"], {
         //     relativeTo: this.activatedRoute
         // });
-        this.subscribeToActivatedRoute();
+        await this.subscribeToActivatedRoute();
 
 
     }
@@ -42,21 +41,23 @@ export class SingleCategoryComponent implements OnInit {
 
 
     subscribeToActivatedRoute() {
-        this.activatedRouteSubscription = this.activatedRoute.params.subscribe((updatedParams: Params) => {
-            console.log("The activated routes params is : ", updatedParams);
+        this.activatedRouteSubscription = this.activatedRoute.params.subscribe(async (updatedParams: Params) => {
+            console.log('The activated routes params is : ', updatedParams);
             const allParams: Params = this.utilService.getAllRouteParams1(this.activatedRoute);
-            console.log("all params are : ", allParams);
-            const currentTaskCategoryId = allParams['categoryId'];
-            this.showCurrentCategory(currentTaskCategoryId);
+            console.log('all params are : ', allParams);
+            const currentTaskCategoryId = allParams.categoryId;
+            // await new Promise((resolve, reject) => setTimeout(() => resolve(4), 4000));
+            await this.showCurrentCategory(currentTaskCategoryId);
+            console.log('current category detail is ', this.currentCategory);
         });
     }
 
 
-    async showCurrentCategory(currentTaskCategoryId : number) {
-        const targetCategory = await this.todoManagementService.getCategoryDetail(currentTaskCategoryId)
+    async showCurrentCategory(currentTaskCategoryId: number) {
+        const targetCategory = await this.todoManagementService.getCategoryDetail(currentTaskCategoryId);
         if (!targetCategory) {
 
-            console.log("current category doesn't exists");
+            console.log('current category doesn\'t exists');
             this.router.navigate(['..'], {
                 relativeTo: this.activatedRoute
             });

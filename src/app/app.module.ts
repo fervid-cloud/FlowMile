@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'; // <-- NgModel lives here
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -27,6 +27,7 @@ import { GenericDialogModelComponent } from './shared/utility/components/generic
 import { PaginationComponent } from './features/to-do/components/pagination/pagination.component';
 import { SingleTaskListComponent } from './features/to-do/components/single-task-list/single-task-list.component';
 import { SingleCategoryComponent } from './features/to-do/components/single-category/single-category.component';
+import { AuthInterceptor } from './auth/interceptor/AuthInterceptor';
 
 
 
@@ -63,7 +64,9 @@ import { SingleCategoryComponent } from './features/to-do/components/single-cate
         ReactiveFormsModule,
         HttpClientModule
     ],
-    providers: [],
+    providers: [
+        { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    ],
     bootstrap: [AppComponent]
 })
 export class AppModule { }

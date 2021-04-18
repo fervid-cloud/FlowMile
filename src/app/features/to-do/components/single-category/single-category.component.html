@@ -31,7 +31,7 @@
         <!-- routerLink can be attached to a tag, button tag, div tag fine, not tested for others  -->
         <!-- routerLinkActive="class_Name" here class name of active is decorated by bootstrap that is why it is used here, we can use our own custom class also and decorate the element according to that class -->
         <button routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" #rla="routerLinkActive"
-            [routerLink]="['/dashboard', 'todo', currentCategory.getCategoryId()]" class="nav-link"
+            [routerLink]="['/dashboard', 'todo', currentCategory?.id]" class="nav-link"
             title="view all tasks" type="button" role="tab">
             Detail
         </button>

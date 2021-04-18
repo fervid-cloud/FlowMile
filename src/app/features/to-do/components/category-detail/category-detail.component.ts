@@ -1,11 +1,11 @@
-import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core'
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import Modal from 'bootstrap/js/dist/modal';
 import { Subscription } from 'rxjs';
 import { UtilService } from 'src/app/shared/utility/util-service/util.service';
 import { TaskCategory } from '../../model/task-category';
-import { ToDoManagementService } from '../../service/to-do-management/to-do-management.service';
+import { TaskManagementService } from '../../service/to-do-management/task-management.service';
 
 @Component({
     selector: 'app-category-detail',
@@ -14,12 +14,12 @@ import { ToDoManagementService } from '../../service/to-do-management/to-do-mana
 })
 export class CategoryDetailComponent implements OnInit {
 
-    @Input("currentCategoryDetail") currentCategory!: TaskCategory;
+    @Input('currentCategoryDetail') currentCategory!: TaskCategory;
 
     @ViewChild('deleteConfirmationDialog')
     deleteConfirmationDialogModelTemplateRef!: ElementRef;
 
-    @ViewChild("saveConfirmationDialog")
+    @ViewChild('saveConfirmationDialog')
     saveConfirmationDialogModelTemplateRef!: ElementRef;
 
     private deleteConfirmationDialogModel!: Modal;
@@ -28,15 +28,15 @@ export class CategoryDetailComponent implements OnInit {
 
     private todoManagementServiceSubscription!: Subscription;
 
-    categoryEditMode: boolean = false;
+    categoryEditMode = false;
 
     categoryEditForm!: FormGroup;
 
-    showSpinner: boolean = false;
+    showSpinner = false;
     editFormSubscription!: Subscription;
 
     constructor(
-        private todoManagementService: ToDoManagementService,
+        private todoManagementService: TaskManagementService,
         private utilService: UtilService,
         private router: Router,
         private activatedRoute: ActivatedRoute
@@ -48,7 +48,7 @@ export class CategoryDetailComponent implements OnInit {
     }
 
     ngAfterViewInit() {
-        //was put here as not this life cycle hook runs when all the dom element are made(except external api call eg. http);
+        // was put here as not this life cycle hook runs when all the dom element are made(except external api call eg. http);
         this.initializeConfirmationDialogModel();
 
     }
@@ -62,8 +62,8 @@ export class CategoryDetailComponent implements OnInit {
     initializeAndSubscribeCategoryEditForm() {
 
         this.categoryEditForm = new FormGroup({
-            'categoryTitle': new FormControl(this.currentCategory.getCategoryTitle(), [Validators.required]),
-            'categoryDescription': new FormControl(this.currentCategory.getCategoryDescription(), [Validators.required])
+            name: new FormControl(this.currentCategory.name, [Validators.required]),
+            description: new FormControl(this.currentCategory.description, [Validators.required])
         });
         this.editFormSubscription = this.categoryEditForm.valueChanges.subscribe(values => {
             this.areSomeEquivalent(this.currentCategory, values);
@@ -72,11 +72,11 @@ export class CategoryDetailComponent implements OnInit {
     }
 
     areAllPropertyEquivalent(a: any, b: any) {
-        let aProps = Object.getOwnPropertyNames(a);
-        let bProps = Object.getOwnPropertyNames(b);
+        const aProps = Object.getOwnPropertyNames(a);
+        const bProps = Object.getOwnPropertyNames(b);
 
-        for (var i = 0; i < aProps.length; i++) {
-            let propName = aProps[i];
+        for (let i = 0; i < aProps.length; i++) {
+            const propName = aProps[i];
 
             if (a[propName] !== b[propName]) {
                 this.categoryEditForm.markAsDirty();
@@ -88,7 +88,7 @@ export class CategoryDetailComponent implements OnInit {
 
 
     areSomeEquivalent(a: any, b: any) {
-        const parameters : string [] = ['categoryTitle', 'categoryDescription'];
+        const parameters: string [] = ['categoryTitle', 'categoryDescription'];
         const n = parameters.length;
 
         for (let i = 0; i < n; ++i) {
@@ -113,7 +113,7 @@ export class CategoryDetailComponent implements OnInit {
     initializeDeleteConfirmationDialogModel() {
         // const myModalEl = <HTMLElement>document.getElementById('myModal');
         const myModalEl = this.deleteConfirmationDialogModelTemplateRef.nativeElement;
-        console.log("to-do detail myModelEl is : ", myModalEl);
+        console.log('to-do detail myModelEl is : ', myModalEl);
         this.deleteConfirmationDialogModel = new Modal(myModalEl, {
             backdrop: 'static', // means the modal will not close when clicking outside it.
             keyboard: false,
@@ -124,7 +124,7 @@ export class CategoryDetailComponent implements OnInit {
     initializeSaveConfirmationDialogModel() {
         // const myModalEl = <HTMLElement>document.getElementById('myModal');
         const myModalEl = this.saveConfirmationDialogModelTemplateRef.nativeElement;
-        console.log("to-do detail myModelEl is : ", myModalEl);
+        console.log('to-do detail myModelEl is : ', myModalEl);
         this.saveConfirmationDialogModel = new Modal(myModalEl, {
             backdrop: 'static', // means the modal will not close when clicking outside it.
             keyboard: false,
@@ -168,9 +168,9 @@ export class CategoryDetailComponent implements OnInit {
     async OnSaveConfirm() {
         this.saveConfirmationDialogModel.hide();
         this.toggleSpinnerStatus();
-        this.currentCategory.setCategoryTitle(this.categoryEditForm.get('categoryTitle')?.value);
-        this.currentCategory.setCategoryDescription(this.categoryEditForm.get("categoryDescription")?.value);
-        this.currentCategory.setModifiedTime(new Date());
+        this.currentCategory.name = this.categoryEditForm.get('categoryTitle')?.value;
+        this.currentCategory.description = this.categoryEditForm.get('categoryDescription')?.value;
+        this.currentCategory.modificationTime = new Date();
         // await this.todoManagementService.editProvidedCategory(this.currentCategory);
         this.categoryEditMode = false;
         this.toggleSpinnerStatus();
@@ -178,9 +178,9 @@ export class CategoryDetailComponent implements OnInit {
 
 
     toggleSpinnerStatus() {
-        console.log("old spinner status ", this.showSpinner);
+        console.log('old spinner status ', this.showSpinner);
         this.showSpinner = !this.showSpinner;
-        console.log("new spinner status ", this.showSpinner);
+        console.log('new spinner status ', this.showSpinner);
     }
 
 

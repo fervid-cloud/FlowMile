@@ -153,6 +153,7 @@
 .forgotPassword p {
     cursor: pointer;
     display: inline-block;
+    border-bottom: 1px solid transparent;
 }
 
 .forgotPassword p:hover {

@@ -1,6 +1,6 @@
 <div class="card text-center" style="max-width: 100%; height: 100%">
     <div class="card-header">
-        <p>{{ currentTaskCategory.getTaskCount() > 0 ? "Task Count - " + currentTaskCategory.getTaskCount() : "No-Tasks"
+        <p>{{  "Task Count - " + 5
             }}</p>
     </div>
     <div class="card-body categoryBody">
@@ -9,8 +9,8 @@
             <img src="/assets/images/to-do/category/9.png" alt=category_indicator>
         </div>
         <!-- <div class="titleWrapper m-auto"></div> -->
-            <h6 class="card-title m-auto mt-3 mb-0 custom-text-truncate"> Category Title adsfffffffffffff fdddddd
-                ddddddddddddgdfssssssssssadfssssdffffffffffff {{ currentTaskCategory.getCategoryTitle() }} </h6>
+            <h6 class="card-title m-auto mt-3 mb-0 custom-text-truncate"> Category name adsfffffffffffff fdddddd
+                ddddddddddddgdfssssssssssadfssssdffffffffffff {{ currentTaskCategory.name }} </h6>
         <!-- </div> -->
         <!-- <p class="card-text custom-text-truncate">
             Category Description - {{ currentTaskCategory.getCategoryDescription() }}
@@ -18,6 +18,6 @@
     </div>
     <a class="btn btn-primary m-auto mb-3" (click)="onViewClick()">View more</a>
     <div class="card-footer text-muted">
-        {{ currentTaskCategory.getTaskCount() > 0 ? "Task Count - " + currentTaskCategory.getTaskCount() : "No-Tasks" }}
+        {{ "Task Count - " + 5 }}
     </div>
 </div>

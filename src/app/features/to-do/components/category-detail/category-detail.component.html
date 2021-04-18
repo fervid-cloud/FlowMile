@@ -14,28 +14,28 @@
     <div class="col-sm-6">
         <div [formGroup]="categoryEditForm" class="categoryDetails p-3">
             <div>
-                <h2 class="categoryTitle">{{ currentCategory.getCategoryTitle() }}</h2>
-                <h6>Created on {{ currentCategory.getCreationTime() }}</h6>
+                <h2 class="categoryTitle">{{ currentCategory.name }}</h2>
+                <h6>Created on {{ currentCategory.creationTime }}</h6>
             </div>
 
             <div class="individualField  my-3">
                 <h6>Category Id</h6>
-                <p>{{ currentCategory.getCategoryId() }}</p>
+                <p>{{ currentCategory.id }}</p>
             </div>
 
             <div *ngIf="!categoryEditMode" class="individualField  mb-3">
-                <h6>Category title</h6>
-                <p>{{ currentCategory.getCategoryTitle() }}</p>
+                <h6>Category name</h6>
+                <p>{{ currentCategory.name }}</p>
             </div>
 
             <div *ngIf="categoryEditMode" class="individualField  mb-3">
-                <h6>Category title</h6>
+                <h6>Category name</h6>
                 <input type="text" [formControlName]="'categoryTitle'" class="editField form-control">
             </div>
 
             <div *ngIf="!categoryEditMode" class="individualField  mb-3">
                 <h6>Category Description</h6>
-                <p>{{ currentCategory.getCategoryDescription() }}</p>
+                <p>{{ currentCategory.description }}</p>
             </div>
 
             <div *ngIf="categoryEditMode" class="individualField  mb-3">
@@ -46,17 +46,17 @@
 
             <div class="individualField  mb-3">
                 <h6>taskCount</h6>
-                <p>{{ currentCategory.getTaskCount() }}</p>
+                <p>{{ 5 }}</p>
             </div>
 
             <div class="individualField  mb-3">
                 <h6>creationTime</h6>
-                <p>{{ currentCategory.getCreationTime() }}</p>
+                <p>{{ currentCategory.creationTime }}</p>
             </div>
 
             <div class="individualField  mb-3">
-                <h6>modifiedTime</h6>
-                <p>{{ currentCategory.getModifiedTime() }}</p>
+                <h6>modificationTime</h6>
+                <p>{{ currentCategory.modificationTime }}</p>
             </div>
 
 

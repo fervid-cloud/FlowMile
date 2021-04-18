@@ -19,7 +19,7 @@ export class CategoryBoxComponent implements OnInit {
 
     onViewClick() {
         console.debug("tategory view------------- clicked");
-        this.viewEventNotifier.emit(this.currentTaskCategory.getCategoryId());
+        this.viewEventNotifier.emit(this.currentTaskCategory.id);
     }
 
 }

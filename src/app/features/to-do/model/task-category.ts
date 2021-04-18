@@ -1,77 +1,65 @@
 export class TaskCategory {
 
-    private categoryId: number;
 
-    private categoryTitle: string;
+    private _id: number;
 
-    private categoryDescription: string;
+    private _name: string;
 
-    private taskCount: number;
+    private _description: string;
 
+    private _creationTime: Date;
 
-
-    private creationTime: Date;
-
-    private modifiedTime: Date;
+    private _modificationTime: Date;
 
     constructor() {
 
-        this.categoryId = 0;
-        this.categoryTitle = "";
-        this.categoryDescription = "";
-        this.taskCount = 0;
-        this.creationTime = new Date();
-        this.modifiedTime = new Date();
+        this._id = 0;
+        this._name = '';
+        this._description = '';
+        this._creationTime = new Date();
+        this._modificationTime = new Date();
 
     }
 
-    public getCategoryId(): number {
-        return this.categoryId;
+
+    get id(): number {
+        return this._id;
     }
 
-    public setCategoryId(categoryId: number): void {
-        this.categoryId = categoryId;
+    set id(value: number) {
+        this._id = value;
     }
 
-    public getCategoryTitle(): string {
-        return this.categoryTitle;
+    get name(): string {
+        return this._name;
     }
 
-    public setCategoryTitle(categoryTitle: string): void {
-        this.categoryTitle = categoryTitle;
+    set name(value: string) {
+        this._name = value;
     }
 
-    public getCategoryDescription(): string {
-        return this.categoryDescription;
+    get description(): string {
+        return this._description;
     }
 
-    public setCategoryDescription(categoryDescription: string): void {
-        this.categoryDescription = categoryDescription;
+    set description(value: string) {
+        this._description = value;
     }
 
-    public getCreationTime(): Date {
-        return this.creationTime;
+    get creationTime(): Date {
+        return this._creationTime;
     }
 
-    public setCreationTime(creationTime: Date): void {
-        this.creationTime = creationTime;
+    set creationTime(value: Date) {
+        this._creationTime = value;
     }
 
-
-    public getTaskCount(): number {
-        return this.taskCount;
+    get modificationTime(): Date {
+        return this._modificationTime;
     }
 
-    public setTaskCount(taskCount: number): void {
-        this.taskCount = taskCount;
-    }
-
-    public getModifiedTime(): Date {
-        return this.modifiedTime;
-    }
-
-    public setModifiedTime(modifiedTime: Date): void {
-        this.modifiedTime = modifiedTime;
+    set modificationTime(value: Date) {
+        this._modificationTime = value;
     }
 
 

@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { AuthService } from '../auth-service/auth.service';
+import { UserLoginDto } from '../dto/request/user-login-dto';
 
 @Component({
     selector: 'app-login',
@@ -14,16 +17,22 @@ export class LoginComponent implements OnInit {
 
     invalidFormSubmission: boolean = false;
 
-    constructor() { }
+    constructor(
+        private authService: AuthService,
+        private router: Router
+    ) { }
+
 
     ngOnInit(): void {
         this.signInForm = new FormGroup({
-            'email': new FormControl(null, [Validators.required, Validators.email]),
+            // 'email': new FormControl(null, [Validators.required, Validators.email]),
+            'email': new FormControl(null, [Validators.required]),
             'password': new FormControl(null, Validators.required)
         });
     }
 
-    onLoginAttempt(event: Event): void {
+
+    async onLoginAttempt(event: Event): Promise<void> {
         console.log(this.signInForm);
         this.invalidFormSubmission = false;
         if (!this.signInForm.valid) {
@@ -34,11 +43,20 @@ export class LoginComponent implements OnInit {
         const submitButton: HTMLElement = event.target as HTMLElement;
         submitButton.classList.add("disabled");
 
-        setTimeout(() => {
-            this.signInForm.enable();
-            submitButton.classList.remove("disabled");
+        const loginAttemptResult = await this.authService.logIn({
+            username: this.signInForm.get("email")?.value,
+            password: this.signInForm.get("password")?.value
+        });
 
-        }, 2000);
+        if (loginAttemptResult) {
+            console.log("login successful :)");
+            this.router.navigate(["/dashboard"]);
+            return;
+        }
+        this.invalidCredentialStatus = true;
+        this.signInForm.enable();
+        submitButton.classList.remove("disabled");
+
 
     }
 

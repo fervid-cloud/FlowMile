@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { BackendRestApiService } from 'src/app/shared/utility/backend/backend-rest-api.service';
+import { BackendRestApiService } from 'src/app/features/to-do/service/backend-rest-api/backend-rest-api.service';
 import { ResponseModel } from 'src/app/shared/utility/response-model/response-model';
 import { TaskType } from '../../enum/TaskType';
 import { PaginationWrapperDto } from '../../model/pagination-wrapper-dto';
@@ -10,7 +10,7 @@ import { ToDoTask } from '../../model/to-do-task';
 @Injectable({
     providedIn: 'root'
 })
-export class ToDoManagementService {
+export class TaskManagementService {
 
     private taskCategoriesInfo: PaginationWrapperDto = new PaginationWrapperDto();
     private allAnyStatusTasksInfo: PaginationWrapperDto = new PaginationWrapperDto();
@@ -29,7 +29,7 @@ export class ToDoManagementService {
     public allPendingStatusTaskInfo$: Observable<PaginationWrapperDto>;
     public allDoneStatusTaskInfo$: Observable<PaginationWrapperDto>;
 
-    constructor(private backendRestApiService :BackendRestApiService) {
+    constructor(private backendRestApiService: BackendRestApiService) {
         this.taskCategoriesInfo$ = this._taskCategoriesInfo.asObservable();
         this.allAnyStatusTasksInfo$ = this._allAnyStatusTasksInfo.asObservable();
         this.allPendingStatusTaskInfo$ = this._allPendingStatusTaskInfo.asObservable();
@@ -37,7 +37,7 @@ export class ToDoManagementService {
         this.initializeTasks();
     }
 
-    initializeTasks() {
+    initializeTasks(): void{
 
         // this.fetchAndUpdateCategories();
         // this.fetchAndUpdateAnyStatusTasks();
@@ -47,44 +47,44 @@ export class ToDoManagementService {
     }
 
 
-    async getAllTasksCategories() {
+    async getAllTasksCategories(): Promise<void> {
         this.taskCategoriesInfo = <PaginationWrapperDto>(await this.backendRestApiService.getAllCategory()).data;
         this._taskCategoriesInfo.next(this.taskCategoriesInfo);
     }
 
 
-    async getAllAnyStatusTasks(categoryId: number) {
-        this.allAnyStatusTasksInfo = <PaginationWrapperDto>(await this.backendRestApiService.getAllAnyStatusTasks(categoryId)).data;
+    async getAllAnyStatusTasks(categoryId: number): Promise<void> {
+        this.allAnyStatusTasksInfo = ((await this.backendRestApiService.getAllAnyStatusTasks(categoryId)).data as PaginationWrapperDto);
         this._allAnyStatusTasksInfo.next(this.allAnyStatusTasksInfo);
     }
 
 
-    async getAllPendingStatusTasks(categoryId: number) {
-        this.allPendingStatusTaskInfo = <PaginationWrapperDto>(await this.backendRestApiService.getAllPendingStatusTasks(categoryId)).data;
+    async getAllPendingStatusTasks(categoryId: number): Promise<void> {
+        this.allPendingStatusTaskInfo = ((await this.backendRestApiService.getAllPendingStatusTasks(categoryId)).data as PaginationWrapperDto);
         this._allPendingStatusTaskInfo.next(this.allPendingStatusTaskInfo);
     }
 
 
-    async getAlleDoneStatusTasks(categoryId: number) {
-        this.allDoneStatusTaskInfo = <PaginationWrapperDto>(await this.backendRestApiService.getAllDoneStatusTasks(categoryId)).data;
+    async getAllDoneStatusTasks(categoryId: number): Promise<void> {
+        this.allDoneStatusTaskInfo = ((await this.backendRestApiService.getAllDoneStatusTasks(categoryId)).data as PaginationWrapperDto);
         this._allDoneStatusTaskInfo.next(this.allDoneStatusTaskInfo);
     }
 
 
-    async getCategoryDetail(categoryId: number) {
+    async getCategoryDetail(categoryId: number): Promise<TaskCategory> {
         const categoryDetailResponse: ResponseModel = await this.backendRestApiService.getCategoryDetail(categoryId);
         return categoryDetailResponse.data;
     }
 
 
-    async getTaskDetail(taskId: number) {
+    async getTaskDetail(taskId: number): Promise<ToDoTask> {
         const taskDetailResponse: ResponseModel = await this.backendRestApiService.getTaskDetail(taskId);
         return taskDetailResponse.data;
     }
 
 
-    async createNewCategory(taskCategory: TaskCategory) {
-        console.log("added");
+    async createNewCategory(taskCategory: TaskCategory): Promise<void> {
+        console.log('added');
     }
 
     requestMockUp() : Promise<boolean> {

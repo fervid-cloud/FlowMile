@@ -5,7 +5,7 @@ import { AbstractControl, FormControl, NgForm } from '@angular/forms';
 import { ActivatedRoute, Params } from '@angular/router';
 import { UtilService } from 'src/app/shared/utility/util-service/util.service';
 import { ToDoTask } from '../../model/to-do-task';
-import { ToDoManagementService } from '../../service/to-do-management/to-do-management.service';
+import { TaskManagementService } from '../../service/to-do-management/task-management.service';
 
 @Component({
     selector: 'app-create-to-do',
@@ -49,7 +49,7 @@ export class CreateToDoComponent implements OnInit {
     taskAlreadyAddedTracker: number = 0;
 
     constructor(
-        private toDoManagementService: ToDoManagementService,
+        private toDoManagementService: TaskManagementService,
         private activatedRoute: ActivatedRoute,
         private utilService: UtilService
     ) {

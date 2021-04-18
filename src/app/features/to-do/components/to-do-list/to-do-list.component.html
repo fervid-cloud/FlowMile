@@ -1,2 +1,9 @@
 
-<app-single-task-list [taskList]="currentActiveTaskList"></app-single-task-list>
+<app-single-task-list [tasksInfo]="currentActiveTasksInfo"></app-single-task-list>
+
+<div *ngIf="showSpinner" class="position-fixed top-0 start-0 h-100 w-100 d-flex"
+     style="z-index: 2000; opacity:0.5; background-color: whitesmoke">
+    <div class="spinner-grow m-auto" style="width: 4rem; height: 4rem; color: blue" role="status">
+        <span class="visually-hidden">Loading...</span>
+    </div>
+</div>

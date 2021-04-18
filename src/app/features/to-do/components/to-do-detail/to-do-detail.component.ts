@@ -3,7 +3,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, ActivatedRouteSnapshot, NavigationEnd, Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ToDoTask } from '../../model/to-do-task';
-import { ToDoManagementService } from '../../service/to-do-management/to-do-management.service';
+import { TaskManagementService } from '../../service/to-do-management/task-management.service';
 import { UtilService } from 'src/app/shared/utility/util-service/util.service';
 import { GenericDialogModelComponent } from 'src/app/shared/utility/components/generic-dialog-model/generic-dialog-model.component';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
@@ -64,7 +64,7 @@ export class ToDoDetailComponent implements OnInit {
     constructor(private activatedRoute: ActivatedRoute,
         private router: Router,
         private location: Location,
-        private taskManagementService: ToDoManagementService,
+        private taskManagementService: TaskManagementService,
         private utilService: UtilService
     ) {
 

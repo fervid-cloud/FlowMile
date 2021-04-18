@@ -1,8 +1,8 @@
-<div *ngIf="tasks.length > 0 else emptyTasksTemplateRef" class="tab-pane fade show active" id="nav-all" role="tabpanel"
+<div *ngIf="tasksInfoPage.results.length > 0 else emptyTasksTemplateRef" class="tab-pane fade show active" id="nav-all" role="tabpanel"
     aria-labelledby="nav-home-tab">
 
     <div class="row">
-        <div *ngFor="let cur of tasks" class="col-sm-6 col-md-4 col-lg-3 mb-2">
+        <div *ngFor="let cur of tasksInfoPage.results" class="col-sm-6 col-md-4 col-lg-3 mb-2">
             <app-to-do-box [unitTodo]="cur" (viewEventNotifier)="onChoosingViewDetail($event)"></app-to-do-box>
         </div>
     </div>

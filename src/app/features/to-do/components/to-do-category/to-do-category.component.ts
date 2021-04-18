@@ -1,7 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TaskCategory } from '../../model/task-category';
-import { ToDoManagementService } from '../../service/to-do-management/to-do-management.service';
+import { TaskManagementService } from '../../service/to-do-management/task-management.service';
 // import Tooltip from 'bootstrap/js/dist/tooltip';
 import Modal from 'bootstrap/js/dist/modal';
 import { Subscription } from 'rxjs';
@@ -16,7 +16,7 @@ import { PaginationWrapperDto } from '../../model/pagination-wrapper-dto';
 export class ToDoCategoryComponent implements OnInit {
 
     // adding a template reference of this element to avoid some global mis - happening related to model dialog
-    @ViewChild("addCategoryModelDialog")
+    @ViewChild('addCategoryModelDialog')
     addCategoryModelDialogTemplateRef!: ElementRef;
 
     private addTaskModelDialog!: Modal;
@@ -27,14 +27,14 @@ export class ToDoCategoryComponent implements OnInit {
 
     newCategoryForm!: FormGroup;
 
-    invalidCategoryCreationAttempt: boolean = false;
+    invalidCategoryCreationAttempt = false;
 
-    creatingCategoryState: boolean = false;
+    creatingCategoryState = false;
 
-    showSpinner: boolean = false;
+    showSpinner = false;
 
     constructor(
-        private todoManagementService: ToDoManagementService,
+        private todoManagementService: TaskManagementService,
         private router: Router,
         private activatedRoute: ActivatedRoute
     ) { }
@@ -57,15 +57,15 @@ export class ToDoCategoryComponent implements OnInit {
 
     categoryCreateFormInitialization() {
         this.newCategoryForm = new FormGroup({
-            'name': new FormControl(null, [Validators.required, this.isStringValidator.bind(this)]),
-            'description': new FormControl(null, Validators.required)
+            name: new FormControl(null, [Validators.required, this.isStringValidator.bind(this)]),
+            description: new FormControl(null, Validators.required)
         });
     }
 
     isStringValidator(currentFormControl: FormControl): { [key: string]: boolean } | null {
         if (currentFormControl.value == null) {
             // at the start of the our reactive form initialization, it's get called and at that time
-            //our value is null so we are not looking for that case, so avoiding it
+            // our value is null so we are not looking for that case, so avoiding it
             return null;
         }
         const categoryName = currentFormControl.value;
@@ -75,7 +75,7 @@ export class ToDoCategoryComponent implements OnInit {
 
         for (let i = 0; i < n; ++i) {
             if (!((categoryName[i] >= 'a' && categoryName[i] <= 'z') || (categoryName[i] >= 'A' && categoryName[i] <= 'Z'))) {
-                return { 'invalidName': true };
+                return { invalidName: true };
             }
         }
 
@@ -178,14 +178,15 @@ export class ToDoCategoryComponent implements OnInit {
 
         const newTaskCategory: TaskCategory = new TaskCategory();
 
-        let categoryTitle = this.newCategoryForm.get("name")!.value; // telling the compiler that value wil always exist
-        let categoryDescription = this.newCategoryForm.get("description")?.value; // another trick using optional chaining
+        // tslint:disable-next-line:no-non-null-assertion
+        const name = this.newCategoryForm.get('name')!.value; // telling the compiler that value wil always exist
+        const description = this.newCategoryForm.get('description')?.value; // another trick using optional chaining
 
         this.toggleSpinnerStatus();
 
-        newTaskCategory.setCategoryTitle(categoryTitle);
-        newTaskCategory.setCategoryDescription(categoryDescription);
-        newTaskCategory.setTaskCount(0);
+        newTaskCategory.id = 0;
+        newTaskCategory.name = name;
+        newTaskCategory.description = description;
         await this.todoManagementService.createNewCategory(newTaskCategory);
 
         this.creatingCategoryState = false;
@@ -205,9 +206,9 @@ export class ToDoCategoryComponent implements OnInit {
 
 
     toggleSpinnerStatus() {
-        console.log("old spinner status ", this.showSpinner);
+        console.log('old spinner status ', this.showSpinner);
         this.showSpinner = !this.showSpinner;
-        console.log("new spinner status ", this.showSpinner);
+        console.log('new spinner status ', this.showSpinner);
     }
 
 
