@@ -4,7 +4,7 @@
     <div *ngIf="taskNotExistStatus && currentToDoTask" class="contentWrapper pb-3">
         <div class="udButtonWrapper mx-4 py-3">
             <!-- <div *ngIf="!editMode" class="btn btn-primary px-3 py-1 me-auto" (click)="goBack()">Back</div> -->
-            <button *ngIf="!editMode" [routerLink]="['..']" class="px-3 py-1 me-auto text-primary border-0 bg-transparent"
+            <button *ngIf="!editMode" (click)="goBack()" class="px-3 py-1 me-auto text-primary border-0 bg-transparent"
                 type="button" title="back to all tasks">
                 <i class="fas fa-arrow-left"></i>
             </button>

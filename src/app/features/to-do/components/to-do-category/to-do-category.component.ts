@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { TaskCategory } from '../../model/task-category';
 import { TaskManagementService } from '../../service/to-do-management/task-management.service';
 // import Tooltip from 'bootstrap/js/dist/tooltip';
@@ -7,6 +7,7 @@ import Modal from 'bootstrap/js/dist/modal';
 import { Subscription } from 'rxjs';
 import {FormControl, FormGroup, Validators } from '@angular/forms';
 import { PaginationWrapperDto } from '../../model/pagination-wrapper-dto';
+import { UtilService } from 'src/app/shared/utility/util-service/util.service';
 
 @Component({
     selector: 'app-to-do-category',
@@ -21,7 +22,7 @@ export class ToDoCategoryComponent implements OnInit, OnDestroy {
 
     private addTaskModelDialog!: Modal;
 
-    taskCategoriesInfo!: PaginationWrapperDto;
+    taskCategoriesInfo: PaginationWrapperDto = new PaginationWrapperDto();
 
     private taskCategorySubscription!: Subscription;
 
@@ -32,9 +33,11 @@ export class ToDoCategoryComponent implements OnInit, OnDestroy {
     creatingCategoryState = false;
 
     showSpinner = false;
+    activatedQueryParamRouteSubscription!: Subscription;
+    currentPageNumber: any;
 
     constructor(
-        private todoManagementService: TaskManagementService,
+        private taskManagementService: TaskManagementService,
         private router: Router,
         private activatedRoute: ActivatedRoute
     ) { }
@@ -42,17 +45,8 @@ export class ToDoCategoryComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
         this.initializeSubscriptions();
         this.categoryCreateFormInitialization();
-        this.fetchRequiredCategoriesData();
     }
 
-    async fetchRequiredCategoriesData(): Promise<void> {
-        this.showSpinner = true;
-        try {
-            await this.todoManagementService.getAllTasksCategories();
-        } finally {
-            this.showSpinner = false;
-        }
-    }
 
 
     categoryCreateFormInitialization(): void {
@@ -84,8 +78,24 @@ export class ToDoCategoryComponent implements OnInit, OnDestroy {
 
 
     private initializeSubscriptions(): void {
-        this.subscribeToTaskCategories();
+        this.subscribeToActivatedQueryParams();
     }
+
+    subscribeToActivatedQueryParams(): void {
+        this.activatedQueryParamRouteSubscription = this.activatedRoute.queryParams.subscribe(async (updatedQueryParams: Params) => {
+
+            const pageNumber = updatedQueryParams.page;
+            console.log("The before updated page number is : ", pageNumber);
+            this.currentPageNumber = UtilService.getUpdatedPageNumber(pageNumber);
+            console.log('calling task service in queryParams subscribe--------------');
+            console.log("the current page is : " , this.currentPageNumber);
+            await this.showLoading( () => {
+                 return this.getAllCategories(this.currentPageNumber);
+            });
+            this.taskManagementService.setLastCategoriesListPageNumber(this.currentPageNumber);
+        });
+    }
+
 
     ngAfterViewInit() {
         // actually what was happening was that old Model with same Id was not destroyed till now, so
@@ -133,13 +143,12 @@ export class ToDoCategoryComponent implements OnInit, OnDestroy {
     }
 
 
-    private subscribeToTaskCategories(): void {
-        this.taskCategorySubscription = this.todoManagementService.taskCategoriesInfo$.subscribe((updatedCategoriesInfo) => {
-            this.taskCategoriesInfo = updatedCategoriesInfo;
-        });
+    private async getAllCategories(pageNumber: number): Promise<void> {
+        this.taskCategoriesInfo = await this.taskManagementService.getAllTasksCategories(pageNumber);
     }
 
     onChoosingViewDetail(taskCategoryId: number): void{
+
         this.router.navigate([taskCategoryId], {
             relativeTo: this.activatedRoute
         });
@@ -147,15 +156,7 @@ export class ToDoCategoryComponent implements OnInit, OnDestroy {
 
 
     addTaskCategory(): void {
-/*         const myModalEl = <HTMLElement>document.querySelector('#myModal');
-        console.log("my category modal is : ", myModalEl);
-        console.log(this.addTaskModelDialog);
-        const modal = document.querySelectorAll(".modal");
-        console.log(modal); */
-
         this.addTaskModelDialog.show();
-
-
     }
 
     cancelAddTaskCategory(): void {
@@ -163,9 +164,6 @@ export class ToDoCategoryComponent implements OnInit, OnDestroy {
     }
 
     async addTaskCategorySubmit(event: Event): Promise<void> {
-
-        // const submitButton: HTMLButtonElement = event.target as HTMLButtonElement;
-
         this.invalidCategoryCreationAttempt = false;
         if (!this.newCategoryForm.valid) {
             this.invalidCategoryCreationAttempt = true;
@@ -182,35 +180,35 @@ export class ToDoCategoryComponent implements OnInit, OnDestroy {
         const name = this.newCategoryForm.get('name')!.value; // telling the compiler that value wil always exist
         const description = this.newCategoryForm.get('description')?.value; // another trick using optional chaining
 
-        this.toggleSpinnerStatus();
+        await this.showLoading(async () => {
+            newTaskCategory.id = 0;
+            newTaskCategory.name = name;
+            newTaskCategory.description = description;
+            await this.taskManagementService.createNewCategory(newTaskCategory);
+            this.creatingCategoryState = false;
+            this.newCategoryForm.enable();
+            this.newCategoryForm.reset();
+        });
 
-        newTaskCategory.id = 0;
-        newTaskCategory.name = name;
-        newTaskCategory.description = description;
-        await this.todoManagementService.createNewCategory(newTaskCategory);
-
-        this.creatingCategoryState = false;
-        this.newCategoryForm.enable();
-        this.newCategoryForm.reset();
-
-        this.toggleSpinnerStatus();
 
     }
 
 
 
     ngOnDestroy(): void {
-        this.addTaskModelDialog.dispose();
-        this.taskCategorySubscription.unsubscribe();
+        this.addTaskModelDialog?.dispose();
+        this.taskCategorySubscription?.unsubscribe();
+        this.activatedQueryParamRouteSubscription?.unsubscribe();
     }
 
 
-    toggleSpinnerStatus(): void {
-        console.log('old spinner status ', this.showSpinner);
-        this.showSpinner = !this.showSpinner;
-        console.log('new spinner status ', this.showSpinner);
+    async showLoading(callback: () => void): Promise<void> {
+        try {
+            this.showSpinner = true;
+            await callback();
+        } finally {
+            this.showSpinner = false;
+        }
     }
-
-
 
 }

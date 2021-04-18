@@ -1,15 +1,27 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { PaginationWrapperDto } from '../../model/pagination-wrapper-dto';
 
 @Component({
-  selector: 'app-pagination',
-  templateUrl: './pagination.component.html',
-  styleUrls: ['./pagination.component.css']
+    selector: 'app-pagination',
+    templateUrl: './pagination.component.html',
+    styleUrls: [ './pagination.component.css' ]
 })
 export class PaginationComponent implements OnInit {
 
-  constructor() { }
+    // by default same name
+    @Input() tasksInfoPage: PaginationWrapperDto = new PaginationWrapperDto();
 
-  ngOnInit(): void {
-  }
+    currentPageIndicatorArray: number[];
+
+    constructor() {
+        this.currentPageIndicatorArray = [];
+    }
+
+    ngOnInit(): void {
+
+    }
+
+
+
 
 }

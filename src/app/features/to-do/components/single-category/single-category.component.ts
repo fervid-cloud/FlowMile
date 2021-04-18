@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Params, Router } from '@angular/router';
+import { ActivatedRoute, NavigationExtras, Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { UtilService } from 'src/app/shared/utility/util-service/util.service';
 import { TaskCategory } from '../../model/task-category';
-import { Task } from '../../model/task';
 import { TaskManagementService } from '../../service/to-do-management/task-management.service';
 
 @Component({
@@ -19,10 +18,9 @@ export class SingleCategoryComponent implements OnInit {
     private activatedRouteSubscription!: Subscription;
 
     constructor(
-        private todoManagementService: TaskManagementService,
+        private taskManagementService: TaskManagementService,
         private router: Router,
-        private activatedRoute: ActivatedRoute,
-        private utilService: UtilService
+        private activatedRoute: ActivatedRoute
     ) { }
 
     async ngOnInit(): Promise<void> {
@@ -43,7 +41,7 @@ export class SingleCategoryComponent implements OnInit {
     subscribeToActivatedRoute() {
         this.activatedRouteSubscription = this.activatedRoute.params.subscribe(async (updatedParams: Params) => {
             console.log('The activated routes params is : ', updatedParams);
-            const allParams: Params = this.utilService.getAllRouteParams1(this.activatedRoute);
+            const allParams: Params = UtilService.getAllRouteParams1(this.activatedRoute);
             console.log('all params are : ', allParams);
             const currentTaskCategoryId = allParams.categoryId;
             // await new Promise((resolve, reject) => setTimeout(() => resolve(4), 4000));
@@ -54,7 +52,7 @@ export class SingleCategoryComponent implements OnInit {
 
 
     async showCurrentCategory(currentTaskCategoryId: number) {
-        const targetCategory = await this.todoManagementService.getCategoryDetail(currentTaskCategoryId);
+        const targetCategory = await this.taskManagementService.getCategoryDetail(currentTaskCategoryId);
         if (!targetCategory) {
 
             console.log('current category doesn\'t exists');
@@ -67,5 +65,18 @@ export class SingleCategoryComponent implements OnInit {
         }
         console.log(targetCategory);
         this.currentCategory = targetCategory;
+    }
+
+    goBack(): void {
+        const previousPage = this.taskManagementService.getLastCategoriesListPageNumber();
+        const navigationExtraInfo: NavigationExtras = {};
+        console.log("previous page is : ", previousPage);
+        navigationExtraInfo.relativeTo = this.activatedRoute;
+        if (previousPage > 1) {
+            navigationExtraInfo.queryParams = {
+                page: previousPage
+            };
+        }
+        this.router.navigate(["../"], navigationExtraInfo);
     }
 }

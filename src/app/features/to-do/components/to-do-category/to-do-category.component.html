@@ -5,7 +5,6 @@
             Task Categories
         </button>
 
-
         <!-- was sometime not working 10-20% time due to some problem in bootstrap 5 alpha 2 as bootstrap used to use jquery before bootstrap 5, but below is how we initialize for tooltip -->
         <!--         <div class="ms-auto d-flex">
             <button class="nav-link me-2 addIconWrap" type="button" data-bs-toggle="tooltip"
@@ -24,17 +23,30 @@
 </nav>
 
 
-<div *ngIf="taskCategoriesInfo.results.length > 0 else emptyCategoryTemplateRef" class="container-fluid px-1 mt-2 customContainer">
 
-    <div class="row">
-        <div *ngFor="let cur of taskCategoriesInfo.results" class="col-sm-6 col-md-4 col-lg-3 mb-2">
-            <app-category-box [currentTaskCategory]="cur" (viewEventNotifier)="onChoosingViewDetail($event)">
-            </app-category-box>
+<ng-container *ngIf="!showSpinner">
+    <div *ngIf="taskCategoriesInfo.results.length > 0" class="container-fluid px-1 mt-2 customContainer">
+        <div class="row">
+            <div *ngFor="let cur of taskCategoriesInfo.results" class="col-sm-6 col-md-4 col-lg-3 mb-2">
+                <app-category-box [currentTaskCategory]="cur" (viewEventNotifier)="onChoosingViewDetail($event)">
+                </app-category-box>
+            </div>
         </div>
     </div>
 
+    <div *ngIf="taskCategoriesInfo.results.length === 0" class="emptyTaskList d-flex">
+        <!-- <img src="assets/images/to-do/empty-category/1.jpg" alt="no tasks of this type"> -->
+        <h2 class="m-auto text-center">Wow, such empty</h2>
+    </div>
+</ng-container>
 
-</div>
+<ng-container *ngIf="showSpinner">
+    <div class="emptyTaskList d-flex">
+        <!-- <img src="assets/images/to-do/empty-category/1.jpg" alt="no tasks of this type"> -->
+        <h2 class="m-auto text-center">Please Wait</h2>
+    </div>
+</ng-container>
+
 
 <!-- Modal -->
 <!-- adding a template reference of this element to avoid some global mis-happening related to model dialog -->
@@ -44,7 +56,7 @@
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Add Task Category</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" (click)="cancelAddTaskCategory()"
-                    aria-label="Close"></button>
+                        aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <!-- <p>Add Task Category</p> -->
@@ -52,7 +64,7 @@
                     <div class="mb-3">
                         <label for="formGroupExampleInput" class="form-label">Name</label>
                         <input [formControlName]="'name'" type="text" class="form-control" id="formGroupExampleInput"
-                            placeholder="Category Name">
+                               placeholder="Category Name">
                         <span class="text-danger" *ngIf="invalidCategoryCreationAttempt">
                             <span *ngIf="newCategoryForm.get('name')?.errors?.required" class=" help-block">
                                 Name is required
@@ -66,7 +78,7 @@
                     <div class="mb-3">
                         <label for="formGroupExampleInput2" class="form-label">Description</label>
                         <input [formControlName]="'description'" type="text" class="form-control"
-                            id="formGroupExampleInput2" placeholder="Category Description">
+                               id="formGroupExampleInput2" placeholder="Category Description">
                         <span class="text-danger" *ngIf="invalidCategoryCreationAttempt">
                             <span class="help-block" *ngIf="newCategoryForm.get('description')?.errors?.required">
                                 Description is required
@@ -78,20 +90,12 @@
             </div>
             <div class="modal-footer">
                 <button *ngIf="!creatingCategoryState" type="button" class="btn btn-secondary me-auto customButton"
-                    data-bs-dismiss="modal" (click)="cancelAddTaskCategory()">Cancel</button>
+                        data-bs-dismiss="modal" (click)="cancelAddTaskCategory()">Cancel
+                </button>
                 <button [disabled]="creatingCategoryState" type="button" class="btn btn-primary customButton"
-                    (click)="addTaskCategorySubmit($event)">Add</button>
+                        (click)="addTaskCategorySubmit($event)">Add
+                </button>
             </div>
         </div>
     </div>
 </div>
-
-
-
-
-<ng-template #emptyCategoryTemplateRef>
-    <div class="emptyTaskList d-flex">
-        <!-- <img src="assets/images/to-do/empty-category/1.jpg" alt="no tasks of this type"> -->
-        <h2 class="m-auto text-center">Wow, such empty</h2>
-    </div>
-</ng-template>

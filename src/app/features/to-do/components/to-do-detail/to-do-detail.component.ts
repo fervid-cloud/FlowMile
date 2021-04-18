@@ -65,8 +65,7 @@ export class ToDoDetailComponent implements OnInit, OnDestroy, AfterViewInit {
     constructor(private activatedRoute: ActivatedRoute,
                 private router: Router,
                 private location: Location,
-                private taskManagementService: TaskManagementService,
-                private utilService: UtilService
+                private taskManagementService: TaskManagementService
     ) {
 
         // our choice where we want to subscribe if the observable/subject we are subscribing to exist at
@@ -95,21 +94,26 @@ export class ToDoDetailComponent implements OnInit, OnDestroy, AfterViewInit {
 
 
     ngOnDestroy() {
-        this.activatedRouteSubscription.unsubscribe();
-        this.routerEventSubscription.unsubscribe();
+        this.activatedRouteSubscription?.unsubscribe();
+        this.routerEventSubscription?.unsubscribe();
 
-        this.taskEditValueChangeSubscription.unsubscribe();
+        this.taskEditValueChangeSubscription?.unsubscribe();
         console.log('+++++++++++++++++++++++++++++destroying to-do detail component');
     }
 
 
      async subscribeToActivatedRoute(): Promise<void> {
         this.activatedRouteSubscription = this.activatedRoute.params.subscribe(async (updatedParams: Params) => {
-            const allParams: Params = this.utilService.getAllRouteParams1(this.activatedRoute);
+            const allParams: Params = UtilService.getAllRouteParams1(this.activatedRoute);
             console.log('all params are :', allParams);
             const categoryId = allParams.categoryId;
             const providedTaskId = allParams.taskId;
-
+            const parsedTaskId = parseInt(providedTaskId, 10);
+            if (!UtilService.isValidNumber(parsedTaskId)) {
+                console.log("going to do routing")
+                this.router.navigate(['/dashboard']);
+                return;
+            }
             console.log('Provided taskId is : ', providedTaskId);
             await new Promise((resolve, reject) => setTimeout(() => resolve(true), 3000));
 

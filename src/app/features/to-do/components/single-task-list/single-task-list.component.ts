@@ -10,7 +10,7 @@ import { PaginationWrapperDto } from '../../model/pagination-wrapper-dto';
 })
 export class SingleTaskListComponent implements OnInit, AfterViewInit {
 
-    @Input('tasksInfo') tasksInfoPage!: PaginationWrapperDto;
+    @Input("tasksInfo") tasksInfoPage: PaginationWrapperDto = new PaginationWrapperDto();
 
     constructor(
         private router: Router,

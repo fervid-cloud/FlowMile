@@ -1,5 +1,14 @@
+<ng-container *ngIf="!showSpinner">
+    <app-single-task-list [tasksInfo]="currentActiveTasksInfo"></app-single-task-list>
+</ng-container>
 
-<app-single-task-list [tasksInfo]="currentActiveTasksInfo"></app-single-task-list>
+
+<ng-container *ngIf="showSpinner">
+    <div class="emptyTaskList d-flex">
+        <!-- <img src="assets/images/to-do/empty-category/1.jpg" alt="no tasks of this type"> -->
+        <h2 class="m-auto text-center">Please Wait</h2>
+    </div>
+</ng-container>
 
 <div *ngIf="showSpinner" class="position-fixed top-0 start-0 h-100 w-100 d-flex"
      style="z-index: 2000; opacity:0.5; background-color: whitesmoke">
@@ -7,3 +16,9 @@
         <span class="visually-hidden">Loading...</span>
     </div>
 </div>
+
+<!--
+ng-template is used to render HTML in a template but is never rendered directly. If you add a ng-template tag to your
+template, it and everything inside it will be replaced by a comment. It might seem a bit useless, but it is rarely used
+alone. It can be for example used to define the else case of an *ngIf
+-->

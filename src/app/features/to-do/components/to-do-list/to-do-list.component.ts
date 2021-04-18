@@ -9,31 +9,32 @@ import { PaginationWrapperDto } from '../../model/pagination-wrapper-dto';
 @Component({
     selector: 'app-to-do-list',
     templateUrl: './to-do-list.component.html',
-    styleUrls: ['./to-do-list.component.css']
+    styleUrls: [ './to-do-list.component.css' ]
 })
 export class ToDoListComponent implements OnInit, OnDestroy {
 
     taskCategoryId = 0;
-
-    toDoTasks: Task[] = [];
-
-    currentActiveTasksInfo!: PaginationWrapperDto;
+    currentActiveTasksInfo: PaginationWrapperDto = new PaginationWrapperDto();
 
     currentActiveSubscription!: Subscription;
 
     listType = 'all';
 
+    currentPageNumber: number = 1;
+
     showSpinner = false;
 
     // subscriptions
-    private toDoTaskSubscription!: Subscription;
-    private activatedRouteSubscription!: Subscription;
+    private paramUpdateTime: Date = new Date(1980);
+    private queryParamUpdateTime: Date = new Date(1980);
+    private activatedParamRouteSubscription!: Subscription;
+    private activatedQueryParamRouteSubscription!: Subscription;
+
 
     constructor(
         private taskManagementService: TaskManagementService,
         private router: Router,
-        private activatedRoute: ActivatedRoute,
-        private utilService: UtilService
+        private activatedRoute: ActivatedRoute
     ) {
 
     }
@@ -51,31 +52,59 @@ export class ToDoListComponent implements OnInit, OnDestroy {
     }
 
 
-    subscribeToActivatedRoute(): void{
-        this.activatedRouteSubscription = this.activatedRoute.params.subscribe(async (updatedParams: Params) => {
-            console.log('The activated routes params is : ', updatedParams);
-            const allParams: Params = this.utilService.getAllRouteParams1(this.activatedRoute);
-            console.log('all params are : ', allParams);
+    subscribeToActivatedRoute(): void {
 
+        this.activatedParamRouteSubscription = this.activatedRoute.params.subscribe(async (updatedParams: Params) => {
+            const allParams: Params = UtilService.getAllRouteParams1(this.activatedRoute);
             this.taskCategoryId = allParams.categoryId;
             const value = allParams.listType;
 
-            console.log('list type is : ', value);
-            await this.handleTaskType(value);
+            if (!UtilService.isValidNumber(this.taskCategoryId)) {
+                this.router.navigate(["/dashboard"]);
+                return;
+            }
+            const pageNumber = this.activatedRoute.snapshot.root.queryParamMap.get('page');
+            this.currentPageNumber = UtilService.getUpdatedPageNumber(pageNumber);
+
+            this.paramUpdateTime = new Date();
+            console.log('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%route params fired, page number is : ', this.currentPageNumber);
+            if (Math.abs(Number(Date.now() - this.queryParamUpdateTime.getTime() <= 500))) {
+                return;
+            }
+            console.log('calling task service in params subscribe--------------');
+            await this.showLoading( () => {
+                return this.handleTaskType();
+            });
+
+        });
+
+        this.activatedQueryParamRouteSubscription = this.activatedRoute.queryParams.subscribe(async (updatedQueryParams: Params) => {
+
+            const pageNumber = updatedQueryParams.page;
+            this.currentPageNumber = UtilService.getUpdatedPageNumber(pageNumber);
+            if (Math.abs(Number(Date.now() - this.paramUpdateTime.getTime() <= 500))) {
+                return;
+            }
+            this.queryParamUpdateTime = new Date();
+            console.log('calling task service in queryParams subscribe--------------');
+            await this.showLoading( () => {
+                return this.handleTaskType();
+            });
+
         });
     }
 
 
-    handleTaskType(taskType: string): Promise<void> | void{
-        console.log(this.toDoTasks);
-        switch (taskType) {
+    async handleTaskType(): Promise<Promise<void> | void> {
+        await new Promise(resolve => setTimeout(() => resolve(true), 3000));
 
+        switch (this.listType) {
             case 'done':
-                return this.updateSubscriptionToAllDoneTaskInfo();
+                return this.updateSubscriptionToAllDoneTaskInfo(this.currentPageNumber);
             case 'pending':
-                return this.updateSubscriptionToAllPendingTaskInfo();
+                return this.updateSubscriptionToAllPendingTaskInfo(this.currentPageNumber);
             case 'all':
-                return this.updateSubscriptionToAllAnyTaskInfo();
+                return this.updateSubscriptionToAllAnyTaskInfo(this.currentPageNumber);
             default:
                 this.invalidRouteDetected();
 
@@ -83,19 +112,10 @@ export class ToDoListComponent implements OnInit, OnDestroy {
     }
 
     invalidRouteDetected(): Promise<boolean> {
-        return this.router.navigate(['../..'], {
+        return this.router.navigate([ '../..' ], {
             relativeTo: this.activatedRoute
         });
     }
-
-/*
-    private subscribeToTaskManagement() {
-        this.toDoTaskSubscription = this.todoManagementService.categoryTaskMapping$.subscribe((updatedCategoryMapping) => {
-            this.toDoTasks = updatedCategoryMapping[this.taskCategoryId];
-            console.log("The tasks are : ", this.toDoTasks);
-        });
-    } */
-
 
     ngOnDestroy(): void {
         this.clearSubscriptions();
@@ -103,51 +123,50 @@ export class ToDoListComponent implements OnInit, OnDestroy {
 
 
     private clearSubscriptions(): void {
-        this.currentActiveSubscription.unsubscribe();
-        this.activatedRouteSubscription.unsubscribe();
+        this.currentActiveSubscription?.unsubscribe();
+        this.activatedParamRouteSubscription?.unsubscribe();
+        this.activatedQueryParamRouteSubscription?.unsubscribe();
     }
 
 
-
-
-    private async updateSubscriptionToAllDoneTaskInfo(): Promise<void> {
-        this.currentActiveSubscription?.unsubscribe();
+    private async updateSubscriptionToAllDoneTaskInfo(currentPageNumber: number): Promise<void> {
+/*        this.currentActiveSubscription?.unsubscribe();
         this.currentActiveSubscription = this.taskManagementService.allDoneStatusTaskInfo$.subscribe(paginationWrapperInfo => {
             this.currentActiveTasksInfo = paginationWrapperInfo;
-        });
-        try {
-            this.showSpinner = true;
-            await this.taskManagementService.getAllDoneStatusTasks(this.taskCategoryId);
-        } finally {
-            this.showSpinner = false;
-        }
+        });*/
+
+        this.currentActiveTasksInfo = await this.taskManagementService.getAllDoneStatusTasks(this.taskCategoryId, currentPageNumber);
+
     }
 
 
-    private async updateSubscriptionToAllPendingTaskInfo(): Promise<void>  {
-        this.currentActiveSubscription?.unsubscribe();
+    private async updateSubscriptionToAllPendingTaskInfo(currentPageNumber: number): Promise<void> {
+     /*   this.currentActiveSubscription?.unsubscribe();
         this.currentActiveSubscription = this.taskManagementService.allPendingStatusTaskInfo$.subscribe(paginationWrapperInfo => {
             this.currentActiveTasksInfo = paginationWrapperInfo;
-        });
-        try {
-            this.showSpinner = true;
-            await this.taskManagementService.getAllPendingStatusTasks(this.taskCategoryId);
-        } finally {
-            this.showSpinner = false;
-        }
+        });*/
+
+        this.currentActiveTasksInfo = await this.taskManagementService.getAllPendingStatusTasks(this.taskCategoryId, currentPageNumber);
+
     }
 
-    private async updateSubscriptionToAllAnyTaskInfo(): Promise<void>  {
-        this.currentActiveSubscription?.unsubscribe();
+    private async updateSubscriptionToAllAnyTaskInfo(currentPageNumber: number): Promise<void> {
+   /*     this.currentActiveSubscription?.unsubscribe();
         this.currentActiveSubscription = this.taskManagementService.allAnyStatusTasksInfo$.subscribe(paginationWrapperInfo => {
             this.currentActiveTasksInfo = paginationWrapperInfo;
-        });
+        });*/
+        this.currentActiveTasksInfo = await this.taskManagementService.getAllAnyStatusTasks(this.taskCategoryId, currentPageNumber);
+
+    }
+
+    async showLoading(callback: () => void): Promise<void> {
         try {
             this.showSpinner = true;
-            await this.taskManagementService.getAllAnyStatusTasks(this.taskCategoryId);
+            await callback();
         } finally {
             this.showSpinner = false;
         }
+
     }
 
 }

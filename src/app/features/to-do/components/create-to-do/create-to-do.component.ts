@@ -50,12 +50,11 @@ export class CreateToDoComponent implements OnInit {
 
     constructor(
         private toDoManagementService: TaskManagementService,
-        private activatedRoute: ActivatedRoute,
-        private utilService: UtilService
+        private activatedRoute: ActivatedRoute
     ) {
 
         this.activatedRoutedSubscription = this.activatedRoute.params.subscribe((params: Params) => {
-            const allParams: Params = this.utilService.getAllRouteParams1(this.activatedRoute);
+            const allParams: Params = UtilService.getAllRouteParams1(this.activatedRoute);
             this.taskCategoryId = allParams.categoryId;
         });
      }

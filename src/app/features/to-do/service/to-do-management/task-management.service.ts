@@ -29,6 +29,8 @@ export class TaskManagementService {
     public allPendingStatusTaskInfo$: Observable<PaginationWrapperDto>;
     public allDoneStatusTaskInfo$: Observable<PaginationWrapperDto>;
 
+    private lastCategoriesListPageNumber: number = 1;
+
     constructor(private backendRestApiService: BackendRestApiService) {
         this.taskCategoriesInfo$ = this._taskCategoriesInfo.asObservable();
         this.allAnyStatusTasksInfo$ = this._allAnyStatusTasksInfo.asObservable();
@@ -37,37 +39,48 @@ export class TaskManagementService {
         this.initializeTasks();
     }
 
+
+    setLastCategoriesListPageNumber(currentPageNumber: number): void {
+        this.lastCategoriesListPageNumber = currentPageNumber;
+    }
+
+
+    getLastCategoriesListPageNumber(): number {
+        return this.lastCategoriesListPageNumber;
+    }
+
     initializeTasks(): void{
-
-        // this.fetchAndUpdateCategories();
-        // this.fetchAndUpdateAnyStatusTasks();
-        // this.fetchAndUpdatePendingStatusTasks(TaskType.DONE);
-        // this.fetchAndUpdateDoneStatusTasks(TaskType.PENDING);
-
     }
 
 
-    async getAllTasksCategories(): Promise<void> {
-        this.taskCategoriesInfo = ((await this.backendRestApiService.getAllCategory(1, 25)).data as PaginationWrapperDto);
+    async getAllTasksCategories(pageNumber: number = 1): Promise<PaginationWrapperDto> {
+        // basically 12 has been choose because the no. of column specified for different size screen are
+        // divisors of it, so they will fit fully in the screen(there can be exception in the situation where the page is the last one)
+        // thus making the illusion of all items in the page, and no unnecessary possible spaces where it could be have been filled
+        this.taskCategoriesInfo = ((await this.backendRestApiService.getAllCategory(pageNumber, 12)).data as PaginationWrapperDto);
         this._taskCategoriesInfo.next(this.taskCategoriesInfo);
+        return this.taskCategoriesInfo;
     }
 
 
-    async getAllAnyStatusTasks(categoryId: number): Promise<void> {
-        this.allAnyStatusTasksInfo = ((await this.backendRestApiService.getAllAnyStatusTasks(categoryId)).data as PaginationWrapperDto);
+    async getAllAnyStatusTasks(categoryId: number, currentPageNumber: number): Promise<PaginationWrapperDto> {
+        this.allAnyStatusTasksInfo = ((await this.backendRestApiService.getAllAnyStatusTasks(categoryId, currentPageNumber)).data as PaginationWrapperDto);
         this._allAnyStatusTasksInfo.next(this.allAnyStatusTasksInfo);
+        return this.allAnyStatusTasksInfo;
     }
 
 
-    async getAllPendingStatusTasks(categoryId: number): Promise<void> {
-        this.allPendingStatusTaskInfo = ((await this.backendRestApiService.getAllPendingStatusTasks(categoryId)).data as PaginationWrapperDto);
+    async getAllPendingStatusTasks(categoryId: number, currentPageNumber: number): Promise<PaginationWrapperDto> {
+        this.allPendingStatusTaskInfo = ((await this.backendRestApiService.getAllPendingStatusTasks(categoryId, currentPageNumber)).data as PaginationWrapperDto);
         this._allPendingStatusTaskInfo.next(this.allPendingStatusTaskInfo);
+        return this.allPendingStatusTaskInfo;
     }
 
 
-    async getAllDoneStatusTasks(categoryId: number): Promise<void> {
+    async getAllDoneStatusTasks(categoryId: number, currentPageNumber: number): Promise<PaginationWrapperDto> {
         this.allDoneStatusTaskInfo = ((await this.backendRestApiService.getAllDoneStatusTasks(categoryId)).data as PaginationWrapperDto);
         this._allDoneStatusTaskInfo.next(this.allDoneStatusTaskInfo);
+        return this.allDoneStatusTaskInfo;
     }
 
 
@@ -87,7 +100,7 @@ export class TaskManagementService {
         console.log('added');
     }
 
-    requestMockUp() : Promise<boolean> {
+    requestMockUp(): Promise<boolean> {
         return new Promise((resolve, reject) => {
             setTimeout(() => {
                 resolve(true);

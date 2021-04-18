@@ -8,20 +8,20 @@ export class UtilService {
 
     constructor() { }
 
-    getAllRouteParams1(activatedRoute: ActivatedRoute) {
+    static getAllRouteParams1(activatedRoute: ActivatedRoute) {
         let allParams: Params = {};
         const activatedRouteSnapShotsArray: ActivatedRouteSnapshot[] = [activatedRoute.snapshot.root];
         console.log(activatedRouteSnapShotsArray);
-        //kind of dfs in iterative way
+        // kind of dfs in iterative way
         while (activatedRouteSnapShotsArray.length > 0) {
             const route = activatedRouteSnapShotsArray.pop()!;
-            allParams = { ...allParams, ...route.params };
+            allParams = { ...allParams, ...route.params , route};
             activatedRouteSnapShotsArray.push(...route.children);
         }
         return allParams;
     }
 
-    getAllRouteParams2(activatedRoute: ActivatedRoute) {
+    static getAllRouteParams2(activatedRoute: ActivatedRoute) {
         let allParams: Params = {};
         const activatedRouteSnapShots: ActivatedRouteSnapshot[] = [activatedRoute.snapshot.root];
         let route = activatedRouteSnapShots[0];
@@ -32,4 +32,17 @@ export class UtilService {
         }
         return allParams;
     }
+
+    static isValidNumber(givenValue: number): boolean {
+        return !isNaN(givenValue) && isFinite(givenValue) && givenValue > 0;
+    }
+
+    static getUpdatedPageNumber(pageNumber: any): number {
+        if (!pageNumber || !UtilService.isValidNumber(parseInt(pageNumber, 10))) {
+            return 1;
+        } else {
+            return parseInt(pageNumber, 10);
+        }
+    }
+
 }
