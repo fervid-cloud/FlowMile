@@ -4,7 +4,7 @@
 
 export const environment = {
     production: false,
-    backendSocket: "http://localhost:3852"
+    backendSocket: `http://${window.location.hostname}:3852`
 };
 
 /*

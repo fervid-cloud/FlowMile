@@ -31,7 +31,7 @@ export class BackendRestApiService {
       withCredentials?: boolean;
     }): Observable<any>;*/
 
-    getAllAnyStatusTasks(categoryId: number, pageNumber: number = 1, pageSize: number = 20): Promise<ResponseModel> {
+    getAllAnyStatusTasks(categoryId: number, pageNumber: number = 1, pageSize: number = 12): Promise<ResponseModel> {
         const currentBackendUrl = this.backendUrl + `/api/task_manage/task/all/${categoryId}?pageNumber=${ pageNumber }&pageSize=${ pageSize }`;
         return this.httpClient.request(RequestMethod.GET, currentBackendUrl, {
           headers: {
@@ -43,7 +43,7 @@ export class BackendRestApiService {
     }
 
 
-    getAllPendingStatusTasks(categoryId: number, pageNumber: number = 1, pageSize: number = 20) : Promise<ResponseModel>{
+    getAllPendingStatusTasks(categoryId: number, pageNumber: number = 1, pageSize: number = 12): Promise<ResponseModel>{
         const currentBackendUrl = this.backendUrl + `/api/task_manage/task/all/${categoryId}?pageNumber=${pageNumber}&pageSize=${pageSize}`;
         return this.httpClient.request(RequestMethod.GET, currentBackendUrl, {
             headers: {
@@ -54,7 +54,7 @@ export class BackendRestApiService {
         }).toPromise() as Promise<ResponseModel>;
     }
 
-    getAllDoneStatusTasks(categoryId: number, pageNumber: number = 1, pageSize: number = 20): Promise<ResponseModel>{
+    getAllDoneStatusTasks(categoryId: number, pageNumber: number = 1, pageSize: number = 12): Promise<ResponseModel>{
         const currentBackendUrl = this.backendUrl + `/api/task_manage/task/all/${categoryId}?pageNumber=${pageNumber}&pageSize=${pageSize}`;
         return this.httpClient.request(RequestMethod.GET, currentBackendUrl, {
             headers: {
@@ -65,7 +65,7 @@ export class BackendRestApiService {
         }).toPromise() as Promise<ResponseModel>;
     }
 
-    getAllCategory(pageNumber: number = 1, pageSize: number = 20): Promise<ResponseModel> {
+    getAllCategory(pageNumber: number = 1, pageSize: number = 12): Promise<ResponseModel> {
         const currentBackendUrl = this.backendUrl + `/api/task_manage/category/all?pageNumber=${pageNumber}&pageSize=${pageSize}`;
         return this.httpClient.request(RequestMethod.GET, currentBackendUrl, {
             headers: {

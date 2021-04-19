@@ -14,7 +14,7 @@ export class BodyComponent implements OnInit {
     }
 
 
-    public handleChoosenOption(eventData: string) {
+    public handleChosenOption(eventData: string) {
         console.log("The eventData is : ", eventData);
         // this.router.navigate(["dashboard/todo"]);
     }

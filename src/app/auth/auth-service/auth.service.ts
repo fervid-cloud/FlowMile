@@ -5,6 +5,8 @@ import { environment } from 'src/environments/environment';
 import { UserLoginDto } from '../dto/request/user-login-dto';
 import { UserAuthenticatedResponseDto } from '../dto/response/UserAuthenticatedResponseDto';
 import { Local } from 'protractor/built/driverProviders';
+import { HttpClient } from '@angular/common/http';
+import { RequestMethod } from '../enum/request-method-enum';
 
 @Injectable({
     providedIn: 'root'
@@ -19,7 +21,9 @@ export class AuthService {
 
     localUserDetail!: LocalUser | null;
 
-    constructor() {
+    constructor(
+        private httpClient: HttpClient
+    ) {
         this.getStoredData();
     }
 
@@ -44,16 +48,16 @@ export class AuthService {
     async logIn(userLoginDto: UserLoginDto): Promise<boolean> {
 
         try {
-            const authenticationResponse: UserAuthenticatedResponseDto = (await fetch(this.backendSocket + '/api/login/userLogin', {
-                method: 'POST',
-                cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+            const loginResponse =  await this.httpClient.request(RequestMethod.POST, this.backendSocket + '/api/login/userLogin', {
                 headers: {
                     'Content-Type': 'application/json'
                     // 'Content-Type': 'application/x-www-form-urlencoded',
                 },
+                responseType: 'json',
                 body: JSON.stringify(userLoginDto)
-            }).then(this.responseCheck)).data;
+            }).toPromise() as ResponseModel;
 
+            const authenticationResponse: UserAuthenticatedResponseDto  = (loginResponse.data as UserAuthenticatedResponseDto);
             this.accessToken = authenticationResponse.accessToken;
             this.localUserDetail = authenticationResponse.userDetailDto;
             this.storeRequiredData();

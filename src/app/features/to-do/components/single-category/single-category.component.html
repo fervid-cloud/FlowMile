@@ -93,7 +93,7 @@ add to the element when the linked route is active. -->
     </div>
 </nav>
 
-<div class="container-fluid px-1 mt-2 customContainer">
+<div class="container-fluid px-0 mt-2 customContainer">
     <!-- https://angular.io/api/router/RouterLinkActive -->
     <router-outlet *ngIf="!rla.isActive"></router-outlet>
     <app-category-detail [currentCategoryDetail]="currentCategory" *ngIf="rla.isActive"></app-category-detail>

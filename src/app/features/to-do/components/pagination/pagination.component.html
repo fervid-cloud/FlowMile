@@ -1,7 +1,7 @@
 <nav aria-label="..." class="m-auto">
     <ul class="pagination m-0">
         
-        <li class="page-item" [ngClass]="{disabled: currentPageIndicatorList[0] == 1}">
+        <li class="page-item" [ngClass]="{disabled: itemsInfoPage.pageNumber == 1}">
             <span class="page-link" (click)="updateCurrentPage(itemsInfoPage.pageNumber - 1)">Previous</span>
         </li>
         
@@ -11,7 +11,7 @@
         </li>
         
         
-        <li class="page-item" [ngClass]="{disabled: currentPageIndicatorList[currentAvailablePageWindowSize - 1] == itemsInfoPage.totalPages}">
+        <li class="page-item" [ngClass]="{disabled: itemsInfoPage.pageNumber == itemsInfoPage.totalPages}">
             <span class="page-link" (click)="updateCurrentPage(itemsInfoPage.pageNumber + 1)">Next</span>
         </li>
         
