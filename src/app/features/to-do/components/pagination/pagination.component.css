@@ -1,0 +1,18 @@
+:host {
+    margin: 0.7rem;
+    display: flex;
+}
+
+
+.disabled {
+    pointer-events: none;
+}
+
+.page-link {
+    cursor: pointer;
+}
+
+.active {
+    color: white;
+    background-color: #0d6efd;
+}

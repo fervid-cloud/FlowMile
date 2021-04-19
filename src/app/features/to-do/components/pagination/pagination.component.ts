@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { PaginationWrapperDto } from '../../model/pagination-wrapper-dto';
+import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 
 @Component({
     selector: 'app-pagination',
@@ -9,19 +10,32 @@ import { PaginationWrapperDto } from '../../model/pagination-wrapper-dto';
 export class PaginationComponent implements OnInit {
 
     // by default same name
-    @Input() tasksInfoPage: PaginationWrapperDto = new PaginationWrapperDto();
+    @Input() itemsInfoPage: PaginationWrapperDto = new PaginationWrapperDto();
 
-    currentPageIndicatorArray: number[];
+    currentPageIndicatorList: number[] = [];
 
-    constructor() {
-        this.currentPageIndicatorArray = [];
+    currentAvailablePageWindowSize: number = 6;
+
+
+    constructor(
+        private router: Router,
+        private activatedRoute: ActivatedRoute
+    ) {
+
     }
 
     ngOnInit(): void {
-
+        console.log("pagination info is : ", this.itemsInfoPage);
+        this.currentAvailablePageWindowSize = Math.min(this.currentAvailablePageWindowSize, this.itemsInfoPage.totalPages);
+        for (let i = 1; i <= this.currentAvailablePageWindowSize; ++i) {
+            this.currentPageIndicatorList.push(i);
+        }
     }
 
-
-
-
+    updateCurrentPage(newPageNumber: number): void {
+        this.router.navigate([], {
+            queryParams: { page: newPageNumber },
+            relativeTo: this.activatedRoute
+        });
+    }
 }
