@@ -11,6 +11,8 @@ import { ToDoCategoryComponent } from './features/to-do/components/to-do-categor
 import { LoginComponent } from './auth/login/login.component';
 import { SignupComponent } from './auth/signup/signup.component';
 import { CategoryDetailComponent } from './features/to-do/components/category-detail/category-detail.component';
+import { SettingsComponent } from './shared/components/settings/settings.component';
+import { AuthGuardService } from './auth/auth-guard/auth-guard.service';
 
 /* What about path: '**' ?
     path : '**' will match absolutely anything(af / frewf / 321532152 / fsa is a match) with or without a pathMatch: 'full'.
@@ -21,9 +23,12 @@ import { CategoryDetailComponent } from './features/to-do/components/category-de
 
 /* The path - matching strategy, one of 'prefix' or 'full'.Default is 'prefix'.
 
-By default, the router checks URL elements from the left to see if the URL matches a given path, and stops when there is a match.For example, '/team/11/user' matches 'team/:id'.
+By default, the router checks URL elements from the left to see if the URL matches a given path, and stops when
+there is a match.For example, '/team/11/user' matches 'team/:id'.
 
-The path - match strategy 'full' matches against the entire URL.It is important to do this when redirecting empty - path routes.Otherwise, because an empty path is a prefix of any URL, the router would apply the redirect even when navigating to the redirect destination, creating an endless loop.
+The path - match strategy 'full' matches against the entire URL.It is important to do this when redirecting empty -
+ path routes.Otherwise, because an empty path is a prefix of any URL, the router would apply the redirect even when
+ navigating to the redirect destination, creating an endless loop.
  */
 
 /*
@@ -61,6 +66,7 @@ const routes: Routes = [
         path: 'dashboard',
         // pathMatch: 'full',
         component: DashboardComponent,
+        canActivate: [AuthGuardService],
         children: [
             {
                 path: 'todo', component: ToDoCategoryComponent, pathMatch: 'full'
@@ -86,6 +92,12 @@ const routes: Routes = [
             }
 
         ]
+    },
+    {
+        path: 'user/settings',
+        component: SettingsComponent,
+        canActivate: [AuthGuardService],
+        children: []
     }
     ,
     {
@@ -93,7 +105,7 @@ const routes: Routes = [
     }
     ,
     {
-        path: '**', pathMatch: 'full',component: NotFoundComponent
+        path: '**', pathMatch: 'full', component: NotFoundComponent
     }
 ];
 

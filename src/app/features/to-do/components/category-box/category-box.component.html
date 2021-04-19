@@ -1,7 +1,10 @@
 <div class="card text-center" style="max-width: 100%; height: 100%">
-    <div class="card-header">
+<!--    <div class="card-header">
         <p>{{  "Task Count - " + 5
             }}</p>
+    </div>   -->
+    <div class="card-header">
+        <p>Last Modified: {{ currentTaskCategory.modificationTime }}</p>
     </div>
     <div class="card-body categoryBody">
 
@@ -18,6 +21,6 @@
     </div>
     <a class="btn btn-primary m-auto mb-3" (click)="onViewClick()">View more</a>
     <div class="card-footer text-muted">
-        {{ "Task Count - " + 5 }}
+        Created: {{ currentTaskCategory.creationTime }}
     </div>
 </div>

@@ -17,49 +17,51 @@
 <!-- <ul class="navbar-nav d-none d-md-block d-lg-none"> -->
 <ul class="navbar-nav d-none d-lg-flex">
     <li class="nav-item px-3"><a href="javascript:void(0);" [routerLink]="['/dashboard']" class="nav-link">Dashboard</a></li>
-    <li class="nav-item px-3"><a href="javascript:void(0);" class="nav-link">Users</a></li>
-    <li class="nav-item px-3"><a href="javascript:void(0);" class="nav-link">Settings</a></li>
+<!--    <li class="nav-item px-3"><a href="javascript:void(0);" class="nav-link">Users</a></li>-->
+    <li class="nav-item px-3"><a href="javascript:void(0);"  routerLink="/user/settings" class="nav-link">Settings</a></li>
 </ul>
 
 <!-- margin left auto -->
 <ul class="navbar-nav ms-auto">
 
-    <!-- hide on screens smaller than large -->
+<!--
+
+    &lt;!&ndash; hide on screens smaller than large &ndash;&gt;
     <li dropdown="" placement="bottom right" class="nav-item dropdown d-none d-lg-block">
-        <!-- Regardless of whether you call your dropdown via JavaScript or instead use the data-api, data-bs-toggle="dropdown" is
-        always required to be present on the dropdown’s trigger element. -->
+        &lt;!&ndash; Regardless of whether you call your dropdown via JavaScript or instead use the data-api, data-bs-toggle="dropdown" is
+        always required to be present on the dropdown’s trigger element. &ndash;&gt;
 
-        <!-- aria-haspopup="true" notify screen reader users that a 'Popup' is attached by adding the attribute aria-haspopup="true" to the triggering
-        element, but this is not a good idea. ... In short, don't use aria-haspopup unless you are triggering a menu. same is for role attribute -->
+        &lt;!&ndash; aria-haspopup="true" notify screen reader users that a 'Popup' is attached by adding the attribute aria-haspopup="true" to the triggering
+        element, but this is not a good idea. ... In short, don't use aria-haspopup unless you are triggering a menu. same is for role attribute &ndash;&gt;
 
-        <!-- The aria-labelledby attribute establishes relationships between objects and their label(s), and its value should be one
+        &lt;!&ndash; The aria-labelledby attribute establishes relationships between objects and their label(s), and its value should be one
         or more element IDs, which refer to elements that have the text needed for labeling. List multiple element IDs in a
         space delimited fashion.
 
         This idea is similar to how the "for" attribute is used to link a LABEL to an INPUT.
 
         Assistive technology, such as screen readers, use this attribute to catalog the objects in a document so that users can
-        navigate between them. Without an element ID, the assistive technology cannot catalog the object. -->
+        navigate between them. Without an element ID, the assistive technology cannot catalog the object. &ndash;&gt;
 
-        <!-- basically whatever starts with aria is related to specification provided by WAI-ARIA and some other attributes like role and other are for touch screen reader related devices-->
+        &lt;!&ndash; basically whatever starts with aria is related to specification provided by WAI-ARIA and some other attributes like role and other are for touch screen reader related devices&ndash;&gt;
 
-        <!-- note that data-bs-target is optional, as bootstrap will take the div having class of dropdown-menu as dropdown, but if we have
+        &lt;!&ndash; note that data-bs-target is optional, as bootstrap will take the div having class of dropdown-menu as dropdown, but if we have
         suppose multiple drowdowns depending upon some condition, we can show our particular drop down by pointing to
-        the particular type of element having drop-down-menu as class by using it's id attribute -->
+        the particular type of element having drop-down-menu as class by using it's id attribute &ndash;&gt;
         <a data-bs-toggle="dropdown" id="simple-dropdown" href="javascript:void(0);" role="button" aria-haspopup="true" class="nav-link"
             aria-expanded="false" data-bs-target="#pointingToTheSpecificDropDownMenuForMultipleDropDowns">
             <i class="far fa-bell icon-bell image_icon_custom_pos"></i>
-            <!-- Badges can be used as part of links or buttons to provide a counter. -->
+            &lt;!&ndash; Badges can be used as part of links or buttons to provide a counter. &ndash;&gt;
             <span class="badge badge-custom-pos badge-danger">5</span>
         </a>
-        <!-- <div id="pointingToTheSpecificDropDownMenuForMultipleDropDowns" class="dropdown-menu dropdown-menu-right dropdown-menu-lg" style="left: auto; right: 0px;">
+        &lt;!&ndash; <div id="pointingToTheSpecificDropDownMenuForMultipleDropDowns" class="dropdown-menu dropdown-menu-right dropdown-menu-lg" style="left: auto; right: 0px;">
             <a href="javascript:void(0);" class="dropdown-item">
                 <i class="fas fa-user text-success"></i>
                 <i class="icon-user-follow text-success"></i>
                 New user registered
             </a>
-        </div> -->
-        <!-- position absolute relative to li element  -->
+        </div> &ndash;&gt;
+        &lt;!&ndash; position absolute relative to li element  &ndash;&gt;
         <div id="pointingToTheSpecificDropDownMenuForMultipleDropDowns" aria-labelledby="simple-dropdown"
             class="dropdown-menu dropdown-menu-right dropdown-menu-lg" style="left: auto; right: 0px;">
             <div class="dropdown-header text-center">
@@ -68,7 +70,7 @@
 
             <a href="javascript:void(0);" class="dropdown-item">
                 <i class="fas fa-user text-success image_icon_custom_pos"></i>
-                <!-- <i class="image_icon_custom_pos icon-user-follow text-success"></i> -->
+                &lt;!&ndash; <i class="image_icon_custom_pos icon-user-follow text-success"></i> &ndash;&gt;
                 New user registered
             </a>
 
@@ -125,11 +127,11 @@
                 </span><small class="text-muted">243GB/256GB</small>
             </a>
         </div>
-        <!---->
+        &lt;!&ndash;&ndash;&gt;
     </li>
 
-    <!---->
-    <!-- hide on screens smaller than large -->
+    &lt;!&ndash;&ndash;&gt;
+    &lt;!&ndash; hide on screens smaller than large &ndash;&gt;
     <li dropdown="" placement="bottom right" class="nav-item dropdown d-none d-lg-block">
         <a data-bs-toggle="dropdown" href="javascript:void(0);" role="button" aria-haspopup="true" dropdowntoggle="" class="nav-link"
             aria-expanded="false">
@@ -175,10 +177,10 @@
                 </span>
             </a><a href="javascript:void(0);" class="dropdown-item text-center"><strong>View all tasks</strong></a>
         </div>
-        <!---->
+        &lt;!&ndash;&ndash;&gt;
     </li>
 
-    <!---->
+    &lt;!&ndash;&ndash;&gt;
     <li dropdown="" placement="bottom right" class="nav-item dropdown d-none d-lg-block">
         <a data-bs-toggle="dropdown" href="javascript:void(0);" role="button" aria-haspopup="true" dropdowntoggle="" class="nav-link"
             aria-expanded="false">
@@ -196,10 +198,10 @@
 
             <a href="javascript:void(0);" class="dropdown-item">
 
-                <!-- message notification view component -->
-                <!-- lesson to learn- a divison inside a division takes full width of the parent as we know div is a block level element, (assuming there is not flex element in ancestor chain)
+                &lt;!&ndash; message notification view component &ndash;&gt;
+                &lt;!&ndash; lesson to learn- a divison inside a division takes full width of the parent as we know div is a block level element, (assuming there is not flex element in ancestor chain)
                 but here is a twist that if a div is in inside a flex, unless we don't specify it's widht or height, it will resize according to it's children and may overflow out of flex parent(yes even if parent flex is fixed size, otherwise flex parent will also go with it)
-                 -->
+                 &ndash;&gt;
                 <div class="message">
                     <div class="me-3">
                         <div class="avatar">
@@ -217,13 +219,13 @@
                         </div>
 
                         <div class="text-truncate font-weight-bold">
-                            <!-- <span class="fa fa-exclamation text-danger"></span> -->
+                            &lt;!&ndash; <span class="fa fa-exclamation text-danger"></span> &ndash;&gt;
                             ! Important message
                         </div>
 
 
-                        <!-- For longer content, we can add a .text-truncate class to truncate the text with an ellipsis. Requires display:
-                        inline-block or display: block. -->
+                        &lt;!&ndash; For longer content, we can add a .text-truncate class to truncate the text with an ellipsis. Requires display:
+                        inline-block or display: block. &ndash;&gt;
                         <div class="small text-muted text-truncate">
                             This is a test message to check if the overflowed text
                             are truncated or not.
@@ -281,8 +283,11 @@
                 </div>
             </a><a href="javascript:void(0);" class="dropdown-item text-center"><strong>View all messages</strong></a>
         </div>
-        <!---->
+        &lt;!&ndash;&ndash;&gt;
     </li>
+    
+    
+-->
 
     <!---->
     <li class="nav-item d-none d-lg-block">
@@ -306,6 +311,13 @@
             <div class="dropdown-header text-center">
                 <strong>Account</strong>
             </div>
+            
+            <a href="javascript:void(0);"  routerLink="/user/settings"  class="dropdown-item">
+                <i class="fa fa-wrench image_icon_custom_pos"></i>
+                Setting
+            </a>
+
+<!--
 
             <a href="javascript:void(0);" class="dropdown-item">
                 <i class="far fa-bell icon-bell image_icon_custom_pos"></i>
@@ -332,40 +344,40 @@
                 <span class="badge info-custom_pos bg-warning">42</span>
             </a>
 
+-->
 
 
-
+<!--
             <div class="dropdown-header text-center">
-                <strong>Settings</strong>
+                <strong>Others</strong>
             </div>
-
+            
             <a href="javascript:void(0);" class="dropdown-item"><i class="fa fa-user image_icon_custom_pos"></i> Profile</a>
 
             <a href="javascript:void(0);" class="dropdown-item"><i class="fa fa-wrench image_icon_custom_pos"></i>Setting</a>
-
-
+            
             <a href="javascript:void(0);" class="dropdown-item">
                 <i class="fas fa-rupee-sign image_icon_custom_pos"></i>
                 Payments
                 <span class="badge info-custom_pos bg-dark">42</span>
             </a>
-
-
+            
             <a href="javascript:void(0);" class="dropdown-item">
                 <i class="fas fa-file image_icon_custom_pos"></i>
-                <!-- <i class="fa fa-file"></i> -->
+                &lt;!&ndash; <i class="fa fa-file"></i> &ndash;&gt;
                 Projects
                 <span class="badge info-custom_pos bg-primary">42</span></a>
-
-
+            
             <div class="divider"></div>
 
             <a href="javascript:void(0);" class="dropdown-item">
                 <i class="fas fa-shield-alt image_icon_custom_pos"></i>
                 Lock account
             </a>
+            
+            -->
 
-            <a href="javascript:void(0);" class="dropdown-item"><i class="fa fa-lock image_icon_custom_pos"></i> Logout</a>
+            <a href="javascript:void(0);" (click)="logOut()" class="dropdown-item"><i class="fa fa-lock image_icon_custom_pos"></i> Logout</a>
 
         </div>
         <!---->

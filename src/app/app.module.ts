@@ -28,6 +28,8 @@ import { PaginationComponent } from './features/to-do/components/pagination/pagi
 import { SingleTaskListComponent } from './features/to-do/components/single-task-list/single-task-list.component';
 import { SingleCategoryComponent } from './features/to-do/components/single-category/single-category.component';
 import { AuthInterceptor } from './auth/interceptor/AuthInterceptor';
+import { SettingsComponent } from './shared/components/settings/settings.component';
+import { AuthGuardService } from './auth/auth-guard/auth-guard.service';
 
 
 
@@ -54,7 +56,8 @@ import { AuthInterceptor } from './auth/interceptor/AuthInterceptor';
         CategoryDetailComponent,
         GenericDialogModelComponent,
         PaginationComponent,
-        SingleTaskListComponent
+        SingleTaskListComponent,
+        SettingsComponent
     ],
     imports: [
         BrowserModule,
@@ -63,9 +66,11 @@ import { AuthInterceptor } from './auth/interceptor/AuthInterceptor';
         FormsModule,
         ReactiveFormsModule,
         HttpClientModule
+
     ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+        AuthGuardService
     ],
     bootstrap: [AppComponent]
 })

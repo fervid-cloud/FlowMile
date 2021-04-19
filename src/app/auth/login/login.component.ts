@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth-service/auth.service';
-import { UserLoginDto } from '../dto/request/user-login-dto';
 
 @Component({
     selector: 'app-login',
@@ -33,7 +32,7 @@ export class LoginComponent implements OnInit {
 
 
     async onLoginAttempt(event: Event): Promise<void> {
-        console.log(this.signInForm);
+
         this.invalidFormSubmission = false;
         if (!this.signInForm.valid) {
             this.invalidFormSubmission = true;
@@ -42,11 +41,13 @@ export class LoginComponent implements OnInit {
         this.signInForm.disable();
         const submitButton: HTMLElement = event.target as HTMLElement;
         submitButton.classList.add("disabled");
-
+        console.log(this.signInForm);
         const loginAttemptResult = await this.authService.logIn({
             username: this.signInForm.get("email")?.value,
             password: this.signInForm.get("password")?.value
         });
+
+        console.log("login attempt was : ", loginAttemptResult);
 
         if (loginAttemptResult) {
             console.log("login successful :)");
