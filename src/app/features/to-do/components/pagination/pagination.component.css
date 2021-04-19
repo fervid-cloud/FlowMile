@@ -1,6 +1,6 @@
 :host {
-    margin: auto 0.7rem 0.7rem;
     display: flex;
+    margin-bottom: 0.50rem;
 }
 
 
@@ -15,4 +15,8 @@
 .active {
     color: white;
     background-color: #0d6efd;
+}
+
+ul {
+    font-size: 1rem;
 }

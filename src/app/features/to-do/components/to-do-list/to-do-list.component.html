@@ -3,19 +3,20 @@
 </ng-container>
 
 
+
 <ng-container *ngIf="showSpinner">
     <div class="emptyTaskList d-flex">
         <!-- <img src="assets/images/to-do/empty-category/1.jpg" alt="no tasks of this type"> -->
         <h2 class="m-auto text-center">Please Wait</h2>
     </div>
-</ng-container>
-
-<div *ngIf="showSpinner" class="position-fixed top-0 start-0 h-100 w-100 d-flex"
-     style="z-index: 2000; opacity:0.5; background-color: whitesmoke">
-    <div class="spinner-grow m-auto" style="width: 4rem; height: 4rem; color: blue" role="status">
-        <span class="visually-hidden">Loading...</span>
+    
+    <div class="position-fixed top-0 start-0 h-100 w-100 d-flex"
+         style="z-index: 2000; opacity:0.5; background-color: whitesmoke">
+        <div class="spinner-grow m-auto" style="width: 4rem; height: 4rem; color: blue" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
     </div>
-</div>
+</ng-container>
 
 <!--
 ng-template is used to render HTML in a template but is never rendered directly. If you add a ng-template tag to your

@@ -66,6 +66,7 @@ export class BackendRestApiService {
     }
 
     getAllCategory(pageNumber: number = 1, pageSize: number = 12): Promise<ResponseModel> {
+        console.log("sending the request now");
         const currentBackendUrl = this.backendUrl + `/api/task_manage/category/all?pageNumber=${pageNumber}&pageSize=${pageSize}`;
         return this.httpClient.request(RequestMethod.GET, currentBackendUrl, {
             headers: {

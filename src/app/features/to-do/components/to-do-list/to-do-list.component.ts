@@ -96,7 +96,7 @@ export class ToDoListComponent implements OnInit, OnDestroy {
 
 
     async handleTaskType(): Promise<Promise<void> | void> {
-        await new Promise(resolve => setTimeout(() => resolve(true), 3000));
+        // await new Promise(resolve => setTimeout(() => resolve(true), 3000));
 
         switch (this.listType) {
             case 'done':

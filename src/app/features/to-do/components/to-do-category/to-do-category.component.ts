@@ -144,6 +144,8 @@ export class ToDoCategoryComponent implements OnInit, OnDestroy {
 
 
     private async getAllCategories(pageNumber: number): Promise<void> {
+        // await new Promise(resolve => setTimeout(() => resolve(true), 3000));
+        console.log("sending the request to get all the task categories");
         this.taskCategoriesInfo = await this.taskManagementService.getAllTasksCategories(pageNumber);
     }
 

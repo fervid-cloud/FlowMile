@@ -22,32 +22,41 @@
     </div>
 </nav>
 
-
-<ng-container *ngIf="!showSpinner">
+<div class="container-fluid px-0 mt-2 customContainer">
+    <ng-container *ngIf="!showSpinner">
+        
+        <div *ngIf="taskCategoriesInfo.results.length > 0">
+            <!--        <app-pagination [itemsInfoPage]=taskCategoriesInfo></app-pagination>-->
+            <div class="row">
+                <div *ngFor="let cur of taskCategoriesInfo.results" class="col-sm-6 col-md-4 col-lg-3 mb-2">
+                    <app-category-box [currentTaskCategory]="cur" (viewEventNotifier)="onChoosingViewDetail($event)">
+                    </app-category-box>
+                </div>
+            </div>
+            <app-pagination [itemsInfoPage]=taskCategoriesInfo></app-pagination>
+        </div>
+        
+        <div *ngIf="taskCategoriesInfo.results.length === 0" class="emptyTaskList d-flex">
+            <!-- <img src="assets/images/to-do/empty-category/1.jpg" alt="no tasks of this type"> -->
+            <h2 class="m-auto text-center">Wow, such empty</h2>
+        </div>
+    </ng-container>
     
-    <div *ngIf="taskCategoriesInfo.results.length > 0" class="container-fluid px-0 mt-2 customContainer">
-<!--        <app-pagination [itemsInfoPage]=taskCategoriesInfo></app-pagination>-->
-        <div class="row">
-            <div *ngFor="let cur of taskCategoriesInfo.results" class="col-sm-6 col-md-4 col-lg-3 mb-2">
-                <app-category-box [currentTaskCategory]="cur" (viewEventNotifier)="onChoosingViewDetail($event)">
-                </app-category-box>
+    
+    <ng-container *ngIf="showSpinner">
+        <div class="emptyTaskList d-flex">
+            <!-- <img src="assets/images/to-do/empty-category/1.jpg" alt="no tasks of this type"> -->
+            <h2 class="m-auto text-center">Please Wait</h2>
+        </div>
+        
+        <div class="position-fixed top-0 start-0 h-100 w-100 d-flex"
+             style="z-index: 2000; opacity:0.5; background-color: whitesmoke">
+            <div class="spinner-grow m-auto" style="width: 4rem; height: 4rem; color: blue" role="status">
+                <span class="visually-hidden">Loading...</span>
             </div>
         </div>
-        <app-pagination [itemsInfoPage]=taskCategoriesInfo></app-pagination>
-    </div>
-    
-    <div *ngIf="taskCategoriesInfo.results.length === 0" class="emptyTaskList d-flex">
-        <!-- <img src="assets/images/to-do/empty-category/1.jpg" alt="no tasks of this type"> -->
-        <h2 class="m-auto text-center">Wow, such empty</h2>
-    </div>
-</ng-container>
-
-<ng-container *ngIf="showSpinner">
-    <div class="emptyTaskList d-flex">
-        <!-- <img src="assets/images/to-do/empty-category/1.jpg" alt="no tasks of this type"> -->
-        <h2 class="m-auto text-center">Please Wait</h2>
-    </div>
-</ng-container>
+    </ng-container>
+</div>
 
 
 <!-- Modal -->
@@ -101,3 +110,5 @@
         </div>
     </div>
 </div>
+
+
