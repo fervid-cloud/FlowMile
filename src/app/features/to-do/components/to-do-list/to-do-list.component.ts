@@ -166,7 +166,6 @@ export class ToDoListComponent implements OnInit, OnDestroy {
         } finally {
             this.showSpinner = false;
         }
-
     }
 
 }

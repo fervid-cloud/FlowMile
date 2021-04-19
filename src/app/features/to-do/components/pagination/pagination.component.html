@@ -8,7 +8,7 @@
         </li>
         
                 <li class="page-item" [ngClass]="{disabled: itemsInfoPage.pageNumber == 1}">
-            <span class="page-link" (click)="updateCurrentPage(itemsInfoPage.pageNumber - 1)">Previous</span>
+            <span class="page-link" (click)="updateCurrentPage(itemsInfoPage.pageNumber - 1)">< Previous</span>
         </li>
         
         
@@ -18,7 +18,7 @@
         
         
         <li class="page-item" [ngClass]="{disabled: itemsInfoPage.pageNumber == itemsInfoPage.totalPages}">
-            <span class="page-link" (click)="updateCurrentPage(itemsInfoPage.pageNumber + 1)">Next</span>
+            <span class="page-link" (click)="updateCurrentPage(itemsInfoPage.pageNumber + 1)">Next ></span>
         </li>
     
         <li class="page-item"  *ngIf="currentPageIndicatorList[currentPageIndicatorList.length - 1] != itemsInfoPage.totalPages">

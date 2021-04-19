@@ -93,7 +93,7 @@ export class ToDoDetailComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
 
-    ngOnDestroy() {
+    ngOnDestroy(): void {
         this.activatedRouteSubscription?.unsubscribe();
         this.routerEventSubscription?.unsubscribe();
 
@@ -115,9 +115,13 @@ export class ToDoDetailComponent implements OnInit, OnDestroy, AfterViewInit {
                 return;
             }
             console.log('Provided taskId is : ', providedTaskId);
-            await new Promise((resolve, reject) => setTimeout(() => resolve(true), 3000));
 
-            this.currentToDoTask = await this.taskManagementService.getTaskDetail( providedTaskId);
+
+            await this.showLoading(async () => {
+                // await new Promise((resolve, reject) => setTimeout(() => resolve(true), 3000));
+                this.currentToDoTask = await this.taskManagementService.getTaskDetail(providedTaskId);
+            });
+
             if (!this.currentToDoTask) {
                 await this.router.navigate([ '../' ], {
                     relativeTo: this.activatedRoute
@@ -143,7 +147,7 @@ export class ToDoDetailComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
 
-    areSomeEquivalent(a: any, b: any) {
+    areSomeEquivalent(a: any, b: any): void {
         const parameters: string[] = ['title', 'textContent'];
         const n = parameters.length;
         console.log('first one is ', a);
@@ -302,5 +306,15 @@ export class ToDoDetailComponent implements OnInit, OnDestroy, AfterViewInit {
          this.taskTitle.nativeElement.contentEditable = true;
          this.taskTitle.nativeElement.style.borderLeft = "1px solid blue";
          this.taskTitle.nativeElement.style.borderRight = "1px solid blue"; */
+    }
+
+
+    async showLoading(callback: () => void): Promise<void> {
+        try {
+            this.showSpinner = true;
+            await callback();
+        } finally {
+            this.showSpinner = false;
+        }
     }
 }

@@ -1,7 +1,5 @@
 <ng-container *ngIf="tasksInfoPage.results.length > 0">
-    <div class="tab-pane fade show active"
-         id="nav-all" role="tabpanel"
-         aria-labelledby="nav-home-tab">
+    <div class="tab-pane fade show active">
         <div class="row">
             <div *ngFor="let cur of tasksInfoPage.results" class="col-sm-6 col-md-4 col-lg-3 mb-2">
                 <app-to-do-box [unitTodo]="cur" (viewEventNotifier)="onChoosingViewDetail($event)"></app-to-do-box>
@@ -9,7 +7,7 @@
         </div>
     </div>
     
-    <div class="paginationInfo d-flex mb-2">
+    <div *ngIf="tasksInfoPage.totalPages > 1" class="paginationInfo d-flex mb-2">
         <app-pagination [itemsInfoPage]="tasksInfoPage" class="m-auto">
         </app-pagination>
     </div>
