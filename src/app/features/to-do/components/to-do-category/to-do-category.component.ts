@@ -134,7 +134,7 @@ export class ToDoCategoryComponent implements OnInit, OnDestroy {
         /* const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
         const tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
             return new Tooltip(tooltipTriggerEl, {
-                container: 'body',
+                container: 'dashboard-body',
                 placement: 'left',
                 trigger: 'hover',
                 title: "Add Category"

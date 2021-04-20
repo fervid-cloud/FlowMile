@@ -20,7 +20,7 @@ html {
     overflow: auto;
 }
 
-/* body {
+/* dashboard-body {
     position: relative;
     height: 100vh;
     width: 100vw;
@@ -41,10 +41,10 @@ body {
 }
 
 .modal-open, .modal.show {
-    padding-right: 0px !important;
+    padding-right: 0 !important;
 }
 
-.app, app-dashboard, app-root, app-login, app-signup, app-not-found, app-internal-server-error {
+.app, user-account, app-root, app-login, app-signup, app-not-found, app-internal-server-error {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
@@ -98,19 +98,7 @@ body {
 app-footer {
     margin-top: auto;
 }
-.app-footer {
-    margin-top: auto;
-}
 
-.app-body {
-    display: flex;
-    flex-direction: row;
-    flex-grow: 1;
-    margin-top: 55px;
-    position: relative;
-    overflow: hidden;
-}
 
-.app-body .main-content {
-    flex: 1;
-}
+
+

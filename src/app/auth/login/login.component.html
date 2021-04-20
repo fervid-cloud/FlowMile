@@ -27,7 +27,7 @@
                 <p>Wrong email or password.</p>
             </div>
             <!-- Note that there is no relation of [formGroup] with form type element, we can use it for even normal div also -->
-            <form [formGroup]="signInForm">
+            <form (keyup.enter)="onLoginAttempt($event)" [formGroup]="signInForm">
                 <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label">Email</label>
                     <input [formControlName]="'email'" type="email" class="form-control" id="exampleInputEmail1"
@@ -60,7 +60,11 @@
                         </span>
                     </span>
                 </div>
-                <div type="submit" class="btn customButton  d-block" (click)="onLoginAttempt($event)">Log In
+<!--                you need to indicate that it's standalone and therefore it doesn't conflict with the form controls:
+    
+                [ngModelOptions]="{standalone: true}"-->
+                
+                <div class="btn customButton  d-block" (click)="onLoginAttempt($event)" #submitButtonTemplateRef >Log In
                     ></div>
                 <div class="forgotPassword pt-3 text-center">
                     <p>Don't remember your password?</p>

@@ -6,12 +6,10 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { BodyComponent } from './shared/components/body/body.component';
 import { FooterComponent } from './shared/components/footer/footer.component';
 import { HeaderComponent } from './shared/components/header/header.component';
 import { DashboardComponent } from './shared/components/dashboard/dashboard.component';
 import { SidebarComponent } from './shared/components/sidebar/sidebar.component';
-import { MainContentComponent } from './shared/components/main-content/main-content.component';
 import { NotFoundComponent } from './shared/components/error-handling/not-found/not-found.component';
 import { InternalServerErrorComponent } from './shared/components/error-handling/internal-server-error/internal-server-error.component';
 import { ToDoBoxComponent } from './features/to-do/components/to-do-box/to-do-box.component';
@@ -30,18 +28,20 @@ import { SingleCategoryComponent } from './features/to-do/components/single-cate
 import { AuthInterceptor } from './auth/interceptor/AuthInterceptor';
 import { SettingsComponent } from './shared/components/settings/settings.component';
 import { AuthGuardService } from './auth/auth-guard/auth-guard.service';
+import { UserAccountComponent } from './shared/components/user-account/user-account.component';
+import { DashboardBodyComponent } from './shared/components/dashboard-body/dashboard-body.component';
 
 
 
 @NgModule({
     declarations: [
         AppComponent,
-        DashboardComponent,
+        UserAccountComponent,
         HeaderComponent,
+        DashboardComponent,
+        DashboardBodyComponent,
         FooterComponent,
-        BodyComponent,
         SidebarComponent,
-        MainContentComponent,
         NotFoundComponent,
         InternalServerErrorComponent,
         SingleCategoryComponent,
@@ -57,7 +57,8 @@ import { AuthGuardService } from './auth/auth-guard/auth-guard.service';
         GenericDialogModelComponent,
         PaginationComponent,
         SingleTaskListComponent,
-        SettingsComponent
+        SettingsComponent,
+
     ],
     imports: [
         BrowserModule,

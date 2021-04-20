@@ -161,3 +161,9 @@ element (which for most browsers has a default value of 16px). */
     font-size: 80%;
     font-weight: 400;
 }
+
+
+.goBack {
+    border: none;
+    background: transparent;
+}

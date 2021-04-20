@@ -74,7 +74,7 @@
     padding: 0.2rem 0.8rem;
 }
 
-/* doesn't work through here because this class is not in this component, need to apply on global css because this is added to body element */
+/* doesn't work through here because this class is not in this component, need to apply on global css because this is added to dashboard-body element */
 
 .modal-open {
     padding-right: 0px !important;

@@ -18,7 +18,7 @@ export class BackendRestApiService {
     backendUrl = environment.backendSocket;
 
 /*    request(method: string, url: string, options?: {
-      body?: any;
+      dashboard-body?: any;
       headers?: HttpHeaders | {
         [header: string]: string | string[];
       };

@@ -151,7 +151,7 @@
     "component-selector": [
       true,
       "element",
-      "app",
+      ["","app"],
       "kebab-case"
     ]
   }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth-service/auth.service';
@@ -16,6 +16,8 @@ export class LoginComponent implements OnInit {
 
     invalidFormSubmission: boolean = false;
 
+    @ViewChild("submitButtonTemplateRef") loginSubmit!: ElementRef;
+
     constructor(
         private authService: AuthService,
         private router: Router
@@ -32,16 +34,16 @@ export class LoginComponent implements OnInit {
 
 
     async onLoginAttempt(event: Event): Promise<void> {
-
+        // not using event and using ngModel because of edge case of submitting the form by pressing enter
         this.invalidFormSubmission = false;
         if (!this.signInForm.valid) {
             this.invalidFormSubmission = true;
             return;
         }
         this.signInForm.disable();
-        const submitButton: HTMLElement = event.target as HTMLElement;
+        console.log("login submit button is : ", this.loginSubmit);
+        const submitButton = this.loginSubmit.nativeElement;
         submitButton.classList.add("disabled");
-        console.log(this.signInForm);
         const loginAttemptResult = await this.authService.logIn({
             username: this.signInForm.get("email")?.value,
             password: this.signInForm.get("password")?.value
@@ -51,7 +53,7 @@ export class LoginComponent implements OnInit {
 
         if (loginAttemptResult) {
             console.log("login successful :)");
-            this.router.navigate(["/dashboard"]);
+            this.router.navigate(["/user/dashboard"]);
             return;
         }
         this.invalidCredentialStatus = true;

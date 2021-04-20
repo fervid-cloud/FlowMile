@@ -13,6 +13,7 @@ import { SignupComponent } from './auth/signup/signup.component';
 import { CategoryDetailComponent } from './features/to-do/components/category-detail/category-detail.component';
 import { SettingsComponent } from './shared/components/settings/settings.component';
 import { AuthGuardService } from './auth/auth-guard/auth-guard.service';
+import { UserAccountComponent } from './shared/components/user-account/user-account.component';
 
 /* What about path: '**' ?
     path : '**' will match absolutely anything(af / frewf / 321532152 / fsa is a match) with or without a pathMatch: 'full'.
@@ -63,43 +64,47 @@ const routes: Routes = [
         pathMatch: 'full'
     },
     {
-        path: 'dashboard',
-        // pathMatch: 'full',
-        component: DashboardComponent,
-        canActivate: [AuthGuardService],
+        path: 'user',
+        component: UserAccountComponent,
+        canActivate: [ AuthGuardService ],
         children: [
             {
-                path: 'todo', component: ToDoCategoryComponent, pathMatch: 'full'
-            },
-
-            {
-                path: 'todo/:categoryId', component: SingleCategoryComponent,
+                path: 'dashboard',
+                // pathMatch: 'full',
+                component: DashboardComponent,
                 children: [
                     {
-                        path: 'list/:listType', component: ToDoListComponent, pathMatch: 'full',
+                        path: 'todo', component: ToDoCategoryComponent, pathMatch: 'full'
                     },
-                    {
-                        path: 'add', component: CreateToDoComponent, pathMatch: 'full',
-                    },
-                    {
-                        path: 'list/:listType/:taskId', component: ToDoDetailComponent, pathMatch: 'full',
-                    }
-                   /*  ,
-                    {
-                        path: '', component: CategoryDetailComponent, pathMatch: 'full'
-                    } */
-                ]
-            }
 
+                    {
+                        path: 'todo/:categoryId', component: SingleCategoryComponent,
+                        children: [
+                            {
+                                path: 'list/:listType', component: ToDoListComponent, pathMatch: 'full',
+                            },
+                            {
+                                path: 'add', component: CreateToDoComponent, pathMatch: 'full',
+                            },
+                            {
+                                path: 'list/:listType/:taskId', component: ToDoDetailComponent, pathMatch: 'full',
+                            }
+                            /*  ,
+                             {
+                                 path: '', component: CategoryDetailComponent, pathMatch: 'full'
+                             } */
+                        ]
+                    }
+
+                ]
+            },
+            {
+                path: 'settings',
+                component: SettingsComponent,
+                children: []
+            }
         ]
     },
-    {
-        path: 'user/settings',
-        component: SettingsComponent,
-        canActivate: [AuthGuardService],
-        children: []
-    }
-    ,
     {
         path: 'error', pathMatch: 'full', component: InternalServerErrorComponent
     }
@@ -110,7 +115,8 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+    imports: [ RouterModule.forRoot(routes) ],
+    exports: [ RouterModule ]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {
+}

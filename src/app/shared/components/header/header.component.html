@@ -1,22 +1,33 @@
 <!-- means at large screen diplay none, since we have not specified for other screens, it will visibe in other screen -->
-<button type="button" appsidebartoggler="" class="d-lg-none navbar-toggler custom-side-nav-toggler">
+<ng-container >
+    <span routerLinkActive="active" #dashBoardComponentIndicator="routerLinkActive" routerLink="/user/dashboard"></span>
+    <span routerLinkActive="active" #settingComponentIndicator="routerLinkActive" routerLink="/user/settings"></span>
+
+</ng-container>
+
+<button *ngIf="dashBoardComponentIndicator.isActive" type="button" appsidebartoggler="" class="d-lg-none navbar-toggler custom-side-nav-toggler">
     <span class="navbar-toggler-icon"></span>
 </button>
 
-<a class="navbar-brand" [routerLink]="['/dashboard']">
-    <div class="logoWrapper">
+<button *ngIf="settingComponentIndicator.isActive" routerLink="/user/dashboard" class="nav-link me-2 goBack d-lg-none" type="button" title="back to dashboard"
+        role="tab">
+    <i class="fas fa-arrow-left"></i>
+</button>
+
+<div class="navbar-brand" >
+    <a class="logoWrapper" [routerLink]="['/user/dashboard']">
         <!-- <img src="assets/images/logo/logo.svg" width="89" height="35" alt="Mss Logo" class="logo-img"> -->
         <img src="../../../../assets/images/logo/logo.svg" alt="Mss Logo" class="logo-img">
-    </div>
-</a>
-<button type="button" class="d-none d-lg-block navbar-toggler custom-side-nav-toggler">
+    </a>
+</div>
+<button *ngIf="dashBoardComponentIndicator.isActive" type="button" class="d-none d-lg-block navbar-toggler custom-side-nav-toggler">
     <span class="navbar-toggler-icon"></span>
 </button>
 
 <!-- hide on screens smaller than md(note that it means it will be there for lg, xl also, for removing lg, mentioned it specifically)-->
 <!-- <ul class="navbar-nav d-none d-md-block d-lg-none"> -->
 <ul class="navbar-nav d-none d-lg-flex">
-    <li class="nav-item px-3"><a href="javascript:void(0);" [routerLink]="['/dashboard']" class="nav-link">Dashboard</a></li>
+    <li class="nav-item px-3"><a href="javascript:void(0);" [routerLink]="['/user/dashboard']" class="nav-link">Dashboard</a></li>
 <!--    <li class="nav-item px-3"><a href="javascript:void(0);" class="nav-link">Users</a></li>-->
     <li class="nav-item px-3"><a href="javascript:void(0);"  routerLink="/user/settings" class="nav-link">Settings</a></li>
 </ul>
@@ -377,7 +388,7 @@
             
             -->
 
-            <a href="javascript:void(0);" (click)="logOut()" class="dropdown-item"><i class="fa fa-lock image_icon_custom_pos"></i> Logout</a>
+            <a href="javascript:void(0);" (click)="logOut()" class="dropdown-item"><i class="fas fa-sign-out-alt image_icon_custom_pos"></i>Logout</a>
 
         </div>
         <!---->
@@ -387,6 +398,6 @@
 </ul>
 
 
-<button type="button" appasidemenutoggler="" class="navbar-toggler">
+<button *ngIf="dashBoardComponentIndicator.isActive" type="button" appasidemenutoggler="" class="navbar-toggler">
     <span class="navbar-toggler-icon"></span>
 </button>

@@ -1,4 +1,4 @@
-.app-header, .app-footer, .main-content, .sidebar {
+.app-header, .footer-with-sidebar, .main-content, .sidebar {
     transition: margin-left .25s, margin-right .25s, width .25s, flex .25s;
 }
 
@@ -21,8 +21,8 @@ will be applied to the elements */
     /* height: 100vh; */
 }
 
-.app-footer, .main-content {
-    margin-left: 0px;
+.footer-with-sidebar, .main-content {
+    margin-left: 0;
 }
 
 /* // X-Small devices (portrait phones, less than 576px) */
@@ -43,8 +43,8 @@ will be applied to the elements */
 
 /* we want to let sidebar go over the footer and main content if the width of the screen is less than large */
 
-.sidebar-show .app-footer, .sidebar-show .main-content {
-    margin-left: 0px;
+.sidebar-show .footer-with-sidebar, .sidebar-show .main-content {
+    margin-left: 0;
 }
 
 /* basically transition has not efect on pseudo class selectors but only on normal selector, but animation can work
@@ -97,13 +97,13 @@ pseudo-classes and pseudo-elements. Browsers also accept the notation :before in
 /* // Large devices (desktops, 992px and up) */
 
 @media (min-width: 992px) {
-    .sidebar-lg-show .app-footer, .sidebar-lg-show .main-content {
+    .sidebar-lg-show .footer-with-sidebar, .sidebar-lg-show .main-content {
         margin-left: 200px;
     }
     .sidebar-lg-show .sidebar {
         margin-left: 0;
     }
-    .sidebar-show .app-footer, .sidebar-show .main-content {
+    .sidebar-show .footer-with-sidebar, .sidebar-show .main-content {
         margin-left: 200px;
     }
     /* .sidebar-show .main-content:before {

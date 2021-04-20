@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
-    selector: 'app-body',
-    templateUrl: './body.component.html',
-    styleUrls: ['./body.component.css']
+    selector: 'app-dashboard-body',
+    templateUrl: './dashboard-body.component.html',
+    styleUrls: ['./dashboard-body.component.css']
 })
-export class BodyComponent implements OnInit {
+export class DashboardBodyComponent implements OnInit {
 
     constructor(private router: Router) { }
 
