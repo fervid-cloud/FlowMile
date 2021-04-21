@@ -1,0 +1,16 @@
+<div class="main_profile_logo_wrapper"
+     [title]="completeName[0].trim() + ' ' + completeName[1].trim()"
+     [ngStyle]="{height: size + unit, width: size + unit}">
+        <div class="name_logo_wrapper m-auto" >
+            <span class="shortName" aria-hidden="true" [ngStyle]="{'font-size': (this.fontSizeMapperValue * this.defaultFontSize) + 'px'}" >{{ shortName }}</span>
+        </div>
+</div>
+<!--
+<div class="main_profile_logo_wrapper rounded-circle text-white text-uppercase"
+     [title]="completeName[0].trim() + ' ' + completeName[1].trim()"
+     [ngStyle]="{height: size + unit, width: size + unit}">
+        <div class="m-auto d-flex" style="height: 100%; width: 100%">
+            <span aria-hidden="true" class="m-auto" style="font-size: 100%;">{{ shortName }}</span>
+        </div>
+</div>
+-->

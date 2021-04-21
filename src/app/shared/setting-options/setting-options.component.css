@@ -1,0 +1,80 @@
+:host {
+    width: 260px;
+    padding: 32px 0 0 16px;
+    background-color: white;
+    /*    https://stackoverflow.com/questions/20959600/height-100-on-flexbox-column-child
+        see above for reason of weird behaviour we get due to setting height: 100%
+        height: 100%;*/
+}
+
+.profile_detail_wrapper {
+    display: flex;
+
+    padding-bottom: 16px;
+}
+
+.profile_info {
+    overflow: hidden;
+}
+
+
+
+.profile_name {
+    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+    font-weight: 480;
+}
+
+.profile_email {
+    color: rgba(30,41,51,.45);
+    font-weight: 400;
+
+}
+
+.textChecker {
+    font-size: 0.95rem;
+    max-width: 100%;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    overflow-wrap: break-word;
+}
+
+
+.settingIconsWrapper *{
+    font-size: 1.3rem;
+
+    color: black;
+}
+
+.settingIconsWrapper {
+    padding-right: 12px;
+    width: 24px;
+    height: 24px;
+}
+
+
+.settingLink {
+    padding: 8px 12px;
+
+}
+
+.defaultProfileLogo {
+    padding: 0 16px 0 8px;
+}
+
+.nav-link {
+    color: black;
+}
+
+.nav-item {
+    margin-top: 8px;
+}
+
+.currentActiveOption {
+    background-color: rgba(64,87,109,.07);
+    font-weight: 480;
+}
+
+.nav-link:hover {
+    background-color: rgba(64,87,109,.07);
+}

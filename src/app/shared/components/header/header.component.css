@@ -1,6 +1,7 @@
 /* This means that 1rem equals the font size of the html
 element (which for most browsers has a default value of 16px). */
 
+
 .navbar-brand {
     display: inline-flex;
     align-items: center;
@@ -85,7 +86,8 @@ element (which for most browsers has a default value of 16px). */
 
 .dropdown-item {
     min-width: 180px;
-    border-bottom: 1px solid #c8ced3;
+    /*border-bottom: 1px solid #c8ced3;*/
+    /*border-bottom: 1px solid #c8ced3;*/
     position: relative;
     padding: 10px 20px;
 }

@@ -1,0 +1,26 @@
+.main_profile_logo_wrapper {
+    border-radius: 50%;
+    background-color: rgb(0, 126, 182);
+    display: flex;
+    width: 40px;
+    height: 40px;
+    align-items: center;
+    justify-content: center;
+}
+
+.shortName {
+    letter-spacing: .01rem;
+    fill: #fff;
+    color: #fff;
+    text-transform: uppercase;
+    /*font-size: 1.3em;*/
+    /*font-size: 1.2em;*/
+    font-weight: 400;
+}
+
+.px1{
+    width: 35px;
+    height: 35px;
+}
+
+

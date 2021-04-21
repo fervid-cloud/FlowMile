@@ -30,6 +30,8 @@ import { SettingsComponent } from './shared/components/settings/settings.compone
 import { AuthGuardService } from './auth/auth-guard/auth-guard.service';
 import { UserAccountComponent } from './shared/components/user-account/user-account.component';
 import { DashboardBodyComponent } from './shared/components/dashboard-body/dashboard-body.component';
+import { SettingOptionsComponent } from './shared/setting-options/setting-options.component';
+import { DefaultProfileLogoComponent } from './shared/components/default-profile-logo/default-profile-logo.component';
 
 
 
@@ -58,6 +60,8 @@ import { DashboardBodyComponent } from './shared/components/dashboard-body/dashb
         PaginationComponent,
         SingleTaskListComponent,
         SettingsComponent,
+        SettingOptionsComponent,
+        DefaultProfileLogoComponent,
 
     ],
     imports: [

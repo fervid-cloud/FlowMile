@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from '../../../auth/auth-service/auth.service';
+import { LocalUser } from '../../model/LocalUser';
 
 @Component({
   selector: 'app-settings',
@@ -7,9 +9,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SettingsComponent implements OnInit {
 
-  constructor() { }
+  localUserInfo: LocalUser = new LocalUser();
+
+  constructor(private authService: AuthService) { }
 
   ngOnInit(): void {
+    this.updateLocalUserInfo();
+  }
+
+  private updateLocalUserInfo(): void {
+    this.localUserInfo = this.authService.getLocalUserInfo();
   }
 
 }

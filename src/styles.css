@@ -56,8 +56,10 @@ body {
     height: 55px;
     padding: 0;
     margin: 0;
-    background-color: #fff;
-    border-bottom: 1px solid #c8ced3;
+    /*background-color: #fff;*/
+    /*border-bottom: 1px solid #c8ced3;*/
+    /*box-shadow: 0 1px 4px rgb(64 87 109 / 7%);*/
+    box-shadow: 0px 8px 15px -15px #111;
 }
 
 .app-header {

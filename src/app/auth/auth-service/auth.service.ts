@@ -81,7 +81,7 @@ export class AuthService {
     }
 
     isAuthenticated(): boolean {
-        if (!this.accessToken) {
+        if (!this.accessToken || !this.localUserDetail) {
             return false;
         }
         return !AuthService.isTokenExpired(this.accessToken);
@@ -119,6 +119,10 @@ export class AuthService {
     getAuthorizationToken(): string {
         console.log('the token is :');
         return this.accessToken as string;
+    }
+
+    getLocalUserInfo(): LocalUser {
+        return this.localUserDetail as LocalUser;
     }
 
      static isTokenExpired(currentToken: string): boolean {

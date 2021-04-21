@@ -1,154 +1,150 @@
 
 export class LocalUser {
 
-    private userId: number;
+    private _userId: number;
 
-    private username: string;
+    private _username: string;
 
-    private email: string;
+    private _email: string;
 
-    private phoneNumber: string;
+    private _phoneNumber: string;
 
-    private firstName: string;
+    private _firstName: string;
 
-    private lastName: string;
+    private _lastName: string;
 
-    private profileImageUrl: string;
+    private _profileImageUrl: string;
 
-    private lastLoginTime: Date;
+    private _lastLoginTime: Date;
 
-    private creationTime: Date;
+    private _creationTime: Date;
 
-    private lastModifiedTime: Date;
+    private _lastModifiedTime: Date;
 
-    private isAccountLocked: boolean;
+    private _isAccountLocked: boolean;
 
-    private isEnabled: boolean;
+    private _isEnabled: boolean;
 
-    private isVerified: boolean;
+    private _isVerified: boolean;
 
     constructor() {
-        this.userId = 0;
-        this.username = "";
-        this.email = "";
-        this.phoneNumber = "";
-        this.firstName = "";
-        this.lastName = "";
-        this.profileImageUrl = "";
-        this.lastLoginTime = new Date();
-        this.creationTime = new Date();
-        this.lastModifiedTime = new Date();
-        this.isAccountLocked = false;
-        this.isEnabled = false;
-        this.isVerified = false;
+        this._userId = 0;
+        this._username = "";
+        this._email = "";
+        this._phoneNumber = "";
+        this._firstName = "";
+        this._lastName = "";
+        this._profileImageUrl = "";
+        this._lastLoginTime = new Date();
+        this._creationTime = new Date();
+        this._lastModifiedTime = new Date();
+        this._isAccountLocked = false;
+        this._isEnabled = false;
+        this._isVerified = false;
     }
 
 
-    public getUserId(): number {
-        return this.userId;
+    get userId(): number {
+        return this._userId;
     }
 
-    public setUserId(userId: number): void {
-        this.userId = userId;
+    set userId(value: number) {
+        this._userId = value;
     }
 
-    public getUsername(): string {
-        return this.username;
+    get username(): string {
+        return this._username;
     }
 
-    public setUsername(username: string): void {
-        this.username = username;
+    set username(value: string) {
+        this._username = value;
     }
 
-    public getEmail(): string {
-        return this.email;
+    get email(): string {
+        return this._email;
     }
 
-    public setEmail(email: string): void {
-        this.email = email;
+    set email(value: string) {
+        this._email = value;
     }
 
-    public getPhoneNumber(): string {
-        return this.phoneNumber;
+    get phoneNumber(): string {
+        return this._phoneNumber;
     }
 
-    public setPhoneNumber(phoneNumber: string): void {
-        this.phoneNumber = phoneNumber;
+    set phoneNumber(value: string) {
+        this._phoneNumber = value;
     }
 
-    public getFirstName(): string {
-        return this.firstName;
+    get firstName(): string {
+        return this._firstName;
     }
 
-    public setFirstName(firstName: string): void {
-        this.firstName = firstName;
+    set firstName(value: string) {
+        this._firstName = value;
     }
 
-    public getLastName(): string {
-        return this.lastName;
+    get lastName(): string {
+        return this._lastName;
     }
 
-    public setLastName(lastName: string): void {
-        this.lastName = lastName;
+    set lastName(value: string) {
+        this._lastName = value;
     }
 
-    public getProfileImageUrl(): string {
-        return this.profileImageUrl;
+    get profileImageUrl(): string {
+        return this._profileImageUrl;
     }
 
-    public setProfileImageUrl(profileImageUrl: string): void {
-        this.profileImageUrl = profileImageUrl;
+    set profileImageUrl(value: string) {
+        this._profileImageUrl = value;
     }
 
-    public getLastLoginTime(): Date {
-        return this.lastLoginTime;
+    get lastLoginTime(): Date {
+        return this._lastLoginTime;
     }
 
-    public setLastLoginTime(lastLoginTime: Date): void {
-        this.lastLoginTime = lastLoginTime;
+    set lastLoginTime(value: Date) {
+        this._lastLoginTime = value;
     }
 
-    public getCreationTime(): Date {
-        return this.creationTime;
+    get creationTime(): Date {
+        return this._creationTime;
     }
 
-    public setCreationTime(creationTime: Date): void {
-        this.creationTime = creationTime;
+    set creationTime(value: Date) {
+        this._creationTime = value;
     }
 
-    public getLastModifiedTime(): Date {
-        return this.lastModifiedTime;
+    get lastModifiedTime(): Date {
+        return this._lastModifiedTime;
     }
 
-    public setLastModifiedTime(lastModifiedTime: Date): void {
-        this.lastModifiedTime = lastModifiedTime;
+    set lastModifiedTime(value: Date) {
+        this._lastModifiedTime = value;
     }
 
-    public isIsAccountLocked(): boolean {
-        return this.isAccountLocked;
+    get isAccountLocked(): boolean {
+        return this._isAccountLocked;
     }
 
-    public setIsAccountLocked(isAccountLocked: boolean): void {
-        this.isAccountLocked = isAccountLocked;
+    set isAccountLocked(value: boolean) {
+        this._isAccountLocked = value;
     }
 
-    public isIsEnabled(): boolean {
-        return this.isEnabled;
+    get isEnabled(): boolean {
+        return this._isEnabled;
     }
 
-    public setIsEnabled(isEnabled: boolean): void {
-        this.isEnabled = isEnabled;
+    set isEnabled(value: boolean) {
+        this._isEnabled = value;
     }
 
-    public isIsVerified(): boolean {
-        return this.isVerified;
+    get isVerified(): boolean {
+        return this._isVerified;
     }
 
-    public setIsVerified(isVerified: boolean): void {
-        this.isVerified = isVerified;
+    set isVerified(value: boolean) {
+        this._isVerified = value;
     }
-
-
-
-
 }

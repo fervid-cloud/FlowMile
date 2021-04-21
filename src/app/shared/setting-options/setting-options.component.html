@@ -1,0 +1,41 @@
+<div class="profile_detail_wrapper">
+    <default-profile-logo class="defaultProfileLogo"
+                          [completeName]="[this.localUserInfo.firstName, this.localUserInfo.lastName]"></default-profile-logo>
+    
+    <div class="profile_info">
+        <!--        // using the benifit of attribute directive as it is hard to directly assign the given below value to native title -->
+        <div class="profile_name textChecker"
+             [title]="this.localUserInfo.firstName + ' ' + this.localUserInfo.lastName">
+            {{ this.localUserInfo.firstName + ' ' + this.localUserInfo.lastName}}
+        </div>
+        <div class="profile_email textChecker" [title]="this.localUserInfo.email">
+            {{ this.localUserInfo.email }}
+        </div>
+    
+    </div>
+</div>
+
+<ul class="navbar-nav">
+    <li class="nav-item">
+        <a routerLinkActive="currentActiveOption" routerLink="profile" href="" class="nav-link settingLink">
+            <span class="settingIconsWrapper">
+                <i class="far fa-user-circle"></i>
+            </span>
+            <span class="textChecker"> Your Profile</span>
+        </a>
+    </li>
+    
+    <li class="nav-item">
+        <a routerLinkActive="currentActiveOption" routerLink="changePassword" href="" class="nav-link settingLink">
+            <span class="settingIconsWrapper">
+                <i class="fas fa-unlock-alt"></i>
+            </span>
+            <span class="textChecker"> Change Password</span>
+        </a>
+    </li>
+
+</ul>
+
+
+
+
