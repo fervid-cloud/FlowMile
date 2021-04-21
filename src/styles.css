@@ -59,7 +59,14 @@ body {
     /*background-color: #fff;*/
     /*border-bottom: 1px solid #c8ced3;*/
     /*box-shadow: 0 1px 4px rgb(64 87 109 / 7%);*/
-    box-shadow: 0px 8px 15px -15px #111;
+    /*box-shadow: -15px 8px 15px -15px #111;*/
+
+/*    // this is nothing but for case when we want to use multiple box-shadow of different color or same color at once, as
+    // if we do it by defining and doing then css will use the latest one, so this way, css understand that all of these
+    // box-shadow has to be used on element
+    */
+    box-shadow: -25px 8px 15px -15px #111, 25px 8px 15px -15px #111;
+    /*box-shadow: 0 8px 15px -15px #111, 0 1px 2px #111;*/
 }
 
 .app-header {

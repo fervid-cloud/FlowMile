@@ -32,6 +32,10 @@ import { UserAccountComponent } from './shared/components/user-account/user-acco
 import { DashboardBodyComponent } from './shared/components/dashboard-body/dashboard-body.component';
 import { SettingOptionsComponent } from './shared/setting-options/setting-options.component';
 import { DefaultProfileLogoComponent } from './shared/components/default-profile-logo/default-profile-logo.component';
+import { ProfileDetailComponent } from './shared/components/profile-detail/profile-detail.component';
+import { ChangePasswordComponent } from './shared/components/change-password/change-password.component';
+import { WelcomeUserComponent } from './shared/components/welcome-user/welcome-user.component';
+import { CustomSpinnerComponent } from './shared/components/custom-spinner/custom-spinner.component';
 
 
 
@@ -62,6 +66,10 @@ import { DefaultProfileLogoComponent } from './shared/components/default-profile
         SettingsComponent,
         SettingOptionsComponent,
         DefaultProfileLogoComponent,
+        ProfileDetailComponent,
+        ChangePasswordComponent,
+        WelcomeUserComponent,
+        CustomSpinnerComponent,
 
     ],
     imports: [

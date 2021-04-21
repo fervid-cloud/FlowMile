@@ -24,7 +24,9 @@ export class LoginComponent implements OnInit {
     ) { }
 
 
-    ngOnInit(): void {
+    async ngOnInit(): Promise<void> {
+        await this.routeIfLoggedIn();
+
         this.signInForm = new FormGroup({
             // 'email': new FormControl(null, [Validators.required, Validators.email]),
             email: new FormControl(null, [Validators.required]),
@@ -61,6 +63,11 @@ export class LoginComponent implements OnInit {
         submitButton.classList.remove("disabled");
 
 
+    }
+
+    private routeIfLoggedIn(): Promise<boolean> {
+        this.authService.isAuthenticated();
+        return this.router.navigate(["/user/dashboard"]);
     }
 
 }

@@ -40,7 +40,7 @@ export class DefaultProfileLogoComponent implements OnInit, AfterViewInit {
             this.shortName = "-1";
         }
 
-        this.fontSizeMapperValue = (this.size - Math.abs(this.size - this.defaultSize)) / this.defaultSize;
+        this.fontSizeMapperValue = (this.size) / this.defaultSize;
         // this.fontSizeMapperValue = (this.size ) / this.defaultSize;
     }
 

@@ -308,19 +308,19 @@
         </a>
     </li>
 
-    <li dropdown="" placement="bottom right" class="nav-item dropdown">
+    <li dropdown="" placement="bottom right" class="nav-item dropdown me-2">
         <a data-bs-toggle="dropdown" href="javascript:void(0);" role="button" aria-haspopup="true" dropdowntoggle="" class="nav-link"
             aria-expanded="false">
 <!--            <div class=" profileImageWrapper m-auto">
                 <img src="../../../../assets/images/my-profile/avatar.jpg" alt="profile_photo" class="img-avatar">
             </div>-->
-            <default-profile-logo  [size]="35" [unit]="'px'" [completeName]="['Madhusudan', 'Singh']"></default-profile-logo>
+            <default-profile-logo  [size]="35" [unit]="'px'" [completeName]="[this.localUserInfo.firstName, this.localUserInfo.lastName]"></default-profile-logo>
             
             
         </a>
 
         <div aria-labelledby="simple-dropdown" class="dropdown-menu dropdown-menu-right"
-            style="left: auto; right: 0px;">
+            style="left: auto; right: 15px;">
 
             <div class="dropdown-header text-center">
                 <strong>Account</strong>
@@ -401,6 +401,6 @@
 </ul>
 
 
-<button *ngIf="dashBoardComponentIndicator.isActive" type="button" appasidemenutoggler="" class="navbar-toggler">
+<!--<button *ngIf="dashBoardComponentIndicator.isActive" type="button" appasidemenutoggler="" class="navbar-toggler">
     <span class="navbar-toggler-icon"></span>
-</button>
+</button>-->

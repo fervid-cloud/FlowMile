@@ -14,6 +14,9 @@ import { CategoryDetailComponent } from './features/to-do/components/category-de
 import { SettingsComponent } from './shared/components/settings/settings.component';
 import { AuthGuardService } from './auth/auth-guard/auth-guard.service';
 import { UserAccountComponent } from './shared/components/user-account/user-account.component';
+import { ProfileDetailComponent } from './shared/components/profile-detail/profile-detail.component';
+import { ChangePasswordComponent } from './shared/components/change-password/change-password.component';
+import { WelcomeUserComponent } from './shared/components/welcome-user/welcome-user.component';
 
 /* What about path: '**' ?
     path : '**' will match absolutely anything(af / frewf / 321532152 / fsa is a match) with or without a pathMatch: 'full'.
@@ -74,6 +77,9 @@ const routes: Routes = [
                 component: DashboardComponent,
                 children: [
                     {
+                      path: '', component: WelcomeUserComponent, pathMatch: 'full'
+                    },
+                    {
                         path: 'todo', component: ToDoCategoryComponent, pathMatch: 'full'
                     },
 
@@ -101,7 +107,18 @@ const routes: Routes = [
             {
                 path: 'settings',
                 component: SettingsComponent,
-                children: []
+                children: [
+                    {
+                        path: 'profile',
+                        component: ProfileDetailComponent,
+                        pathMatch: 'full'
+                    },
+                    {
+                        path: 'change-password',
+                        component: ChangePasswordComponent,
+                        pathMatch: 'full'
+                    }
+                ]
             }
         ]
     },

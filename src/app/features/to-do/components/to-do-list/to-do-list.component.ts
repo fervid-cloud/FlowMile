@@ -72,8 +72,10 @@ export class ToDoListComponent implements OnInit, OnDestroy {
                 return;
             }
             console.log('calling task service in params subscribe--------------');
-            await this.showLoading( () => {
-                return this.handleTaskType();
+
+            await this.showLoading( async () => {
+                //     await new Promise((resolve) => setTimeout(() => resolve(true), 300000));
+                await this.handleTaskType();
             });
 
         });

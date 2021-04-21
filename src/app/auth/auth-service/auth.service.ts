@@ -20,9 +20,9 @@ export class AuthService {
 
     backendSocket: string = environment.backendSocket;
 
-    accessToken!: string | null;
+    accessToken!: string | null | undefined;
 
-    localUserDetail!: LocalUser | null;
+    localUserDetail!: LocalUser | null | undefined;
 
     constructor(
         private router: Router,
@@ -111,6 +111,8 @@ export class AuthService {
     }
 
     logOut(): void {
+        this.accessToken = null;
+        this.localUserDetail = null;
         window.localStorage.removeItem(AuthService.ACCESS_TOKEN);
         window.localStorage.clear();
         this.router.navigateByUrl("/login");

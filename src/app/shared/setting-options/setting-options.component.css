@@ -1,10 +1,17 @@
 :host {
-    width: 260px;
+    width: 100%;
     padding: 32px 0 0 16px;
     background-color: white;
+    flex-grow: 1;
     /*    https://stackoverflow.com/questions/20959600/height-100-on-flexbox-column-child
         see above for reason of weird behaviour we get due to setting height: 100%
         height: 100%;*/
+}
+
+@media (min-width: 576px) {
+    :host {
+        max-width: 260px;
+    }
 }
 
 .profile_detail_wrapper {
@@ -70,9 +77,10 @@
     margin-top: 8px;
 }
 
-.currentActiveOption {
+.currentActiveIndicator {
     background-color: rgba(64,87,109,.07);
     font-weight: 480;
+
 }
 
 .nav-link:hover {

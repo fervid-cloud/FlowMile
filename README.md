@@ -2,7 +2,7 @@
 
 This is the FrontEnd Part of the Project
 
-PolyFlow is a Hobby Project that aims to provides multiple utilities to the User. for eg. Task task management many more utilities which will be added in the project with time...
+PolyFlow is a Hobby Project that aims to provide multiple utilities to the User. for e.g. Task management, and many more utilities which will be added in the project with time...
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.0.2.
 

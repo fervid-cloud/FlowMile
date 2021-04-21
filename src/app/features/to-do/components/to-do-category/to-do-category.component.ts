@@ -89,7 +89,8 @@ export class ToDoCategoryComponent implements OnInit, OnDestroy {
             this.currentPageNumber = UtilService.getUpdatedPageNumber(pageNumber);
             console.log('calling task service in queryParams subscribe--------------');
             console.log("the current page is : " , this.currentPageNumber);
-            await this.showLoading( () => {
+            await this.showLoading( async () => {
+                 // await new Promise((resolve) => setTimeout(() => resolve(true), 300000));
                  return this.getAllCategories(this.currentPageNumber);
             });
             this.taskManagementService.setLastCategoriesListPageNumber(this.currentPageNumber);

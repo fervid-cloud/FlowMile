@@ -1,3 +1,23 @@
+<setting-options class="d-none d-sm-block" [localUserInfo]="localUserInfo"></setting-options>
+<div *ngIf="mainSettingRoute.isActive" class="d-none d-sm-flex defaultSettingImage">
+<div class="imageWrapper">
+    <img src="assets/images/avatars/minion.jpeg">
+</div>
 
-<setting-options [localUserInfo]="localUserInfo"></setting-options>
+</div>
+
+<setting-options *ngIf="mainSettingRoute.isActive" class="d-sm-none" [localUserInfo]="localUserInfo"></setting-options>
+
+
+<div routerLinkActive="anyRandomClassName"
+     routerLink="/user/settings"
+     [routerLinkActiveOptions]="{exact: true}"
+     #mainSettingRoute="routerLinkActive">
+</div>
+
+<div *ngIf="!mainSettingRoute.isActive" class="nav-item d-sm-none">
+    <a class="nav-link" href="#" routerLink="/user/settings"> < Settings</a>
+</div>
+
 <router-outlet></router-outlet>
+
