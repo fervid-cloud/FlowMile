@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, Params, Router } from '@angular/router';
+import { ActivatedRoute, NavigationExtras, Params, Router } from '@angular/router';
 import { TaskCategory } from '../../model/task-category';
 import { TaskManagementService } from '../../service/to-do-management/task-management.service';
 // import Tooltip from 'bootstrap/js/dist/tooltip';
@@ -35,6 +35,11 @@ export class ToDoCategoryComponent implements OnInit, OnDestroy {
     showSpinner = false;
     activatedQueryParamRouteSubscription!: Subscription;
     currentPageNumber: any;
+
+
+    private searchWait = 500;
+
+    setTimeoutTracker: any = undefined;
 
     constructor(
         private taskManagementService: TaskManagementService,
@@ -214,4 +219,20 @@ export class ToDoCategoryComponent implements OnInit, OnDestroy {
         }
     }
 
+    manageThroughDebouncingSearch(emittedSearchValue: string): void {
+        if (this.setTimeoutTracker) {
+            clearTimeout(this.setTimeoutTracker);
+        }
+
+        this.setTimeoutTracker = setTimeout(() => {
+            const navigationExtraInfo: NavigationExtras = {};
+            if (emittedSearchValue.length > 0) {
+                navigationExtraInfo.queryParams = {
+                    search: emittedSearchValue
+                };
+            }
+            navigationExtraInfo.relativeTo = this.activatedRoute;
+            this.router.navigate([], navigationExtraInfo);
+        }, this.searchWait);
+    }
 }

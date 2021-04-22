@@ -93,7 +93,7 @@ const routes: Routes = [
                                 path: 'add', component: CreateToDoComponent, pathMatch: 'full',
                             },
                             {
-                                path: 'list/:listType/:taskId', component: ToDoDetailComponent, pathMatch: 'full',
+                                path: ':taskId', component: ToDoDetailComponent, pathMatch: 'full',
                             }
                             /*  ,
                              {

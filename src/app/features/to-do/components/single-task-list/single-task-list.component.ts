@@ -27,7 +27,7 @@ export class SingleTaskListComponent implements OnInit, AfterViewInit {
 
 
     onChoosingViewDetail(taskId: number): void {
-        this.router.navigate([taskId], {
+        this.router.navigate(['../..', taskId], {
             relativeTo: this.activatedRoute
         });
     }

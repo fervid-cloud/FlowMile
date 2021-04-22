@@ -1,0 +1,18 @@
+<div class="nav-item  defaultSearchInputStatus" #searchInputButton>
+    <div class="bothWrapper nav-item">
+        <span (click)="toggleSearchInputBar()" class="nav-item">
+            <i class="fas fa-search searchIndicator imageIcon"></i>
+        </span>
+        <div class="inputWrapper">
+            <input type="text" class="form-control " [(ngModel)]="searchInputValue" (keyup)="indicateTyping()">
+            <!--
+                                   display:none means that the tag in question will not appear on the page at all (although you can
+                                    still interact with it through the dom). There will be no space allocated for it between the other tags.
+                                    visibility:hidden means that unlike display:none, the tag is not visible, but space is allocated for it
+                                    on the page. The tag is rendered, it just isn't seen on the page.
+            -->
+            <span class="me-2 h-100" [ngClass]="{noSearchInput: this.searchInputValue.trim().length == 0}"
+                  (click)="removeInputSearch()"><i class="far fa-times-circle imageIcon circleClose"></i></span>
+        </div>
+    </div>
+</div>

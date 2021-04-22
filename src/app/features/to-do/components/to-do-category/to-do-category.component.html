@@ -15,6 +15,9 @@
         </div> -->
         
         <div class="ms-auto d-flex">
+    
+            <animated-search-input #inputSearchBar class="nav-item border-0 outline-0" (onTyping)="manageThroughDebouncingSearch($event)" ></animated-search-input>
+    
             <button class="nav-link me-2 addIconWrap" title="Add Category" (click)="addTaskCategory()">
                 <i class="iconStyle fas fa-plus" data-bs-toggle="tooltip" data-bs-original-title="Add Category"></i>
             </button>

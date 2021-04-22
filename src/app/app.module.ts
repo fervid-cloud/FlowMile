@@ -37,6 +37,7 @@ import { ChangePasswordComponent } from './shared/components/change-password/cha
 import { WelcomeUserComponent } from './shared/components/welcome-user/welcome-user.component';
 import { CustomSpinnerComponent } from './shared/components/custom-spinner/custom-spinner.component';
 import { TypeWriterWordSimulatorComponent } from './shared/components/type-writer-word-simulator/type-writer-word-simulator.component';
+import { AnimatedSearchInputComponent } from './shared/components/animated-search-input/animated-search-input.component';
 
 
 
@@ -72,6 +73,7 @@ import { TypeWriterWordSimulatorComponent } from './shared/components/type-write
         WelcomeUserComponent,
         CustomSpinnerComponent,
         TypeWriterWordSimulatorComponent,
+        AnimatedSearchInputComponent,
 
     ],
     imports: [

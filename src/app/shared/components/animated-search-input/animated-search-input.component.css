@@ -1,0 +1,128 @@
+:host {
+    display: flex;
+    align-items: center;
+}
+
+.defaultSearchInputStatus {
+    display: flex;
+    align-items: center;
+}
+
+.searchIndicator {
+    cursor: pointer;
+}
+
+.defaultSearchInputStatus .closeSearchIndicator {
+    display: none;
+}
+
+
+.inputWrapper {
+    max-width: 0;
+    background-color: white;
+    /*width: 0;*/
+    transition: max-width 0.85s ease;
+
+    max-height: 95%;
+    padding: 0;
+    border: none;
+    outline: none;
+}
+
+
+.defaultSearchInputStatus.openedSearchInput .inputWrapper {
+    max-width: 200px;
+    transition: max-width 0.35s ease;
+
+}
+
+.inputWrapper:active, .input-group:focus {
+    border: none;
+    outline: none
+}
+
+
+.inputWrapper .form-control {
+    border: none !important;
+    outline: none;
+    padding: .345rem .01rem;
+    border-radius: 0;
+    box-shadow: none;
+    height: 95%;
+    /*font-size: 14px;*/
+    /*max-height: 90%;*/
+}
+
+
+.bothWrapper {
+    background-color: transparent;
+    display: flex;
+    align-items: center;
+    border: 1px solid transparent;
+    /*    // background is added for smooth transition of all child element whose background is transparent
+    // transition doesn't work with initial value of 'none', doesn't matter whether the property is display or border
+        it need some initial value and none doesn't satisfy that for transition to work*/
+    transition: border 0.85s ease, background-color 0.85s ease, padding 0.85s ease;
+    border-radius: .25rem;
+}
+
+.openedSearchInput .bothWrapper {
+    background-color: white;
+    border: 1px solid gray;
+    padding: 1px;
+    /*
+        //basically here transition means how much time it will take to reach this state, wherever we mention
+        // transition, it means how much duration and other property apply to reach that state, if transition of
+        // only one state is applied, it is usually applied to initial state so it applies transition to both while
+        // reaching the final state and coming back to final state, but if transition is mentioned at final state
+        // then transition will only happen for reaching the final state, it will not happened when reaching from final
+        // to back to initial state, so either mention transition at initial state(for same transition effect on trying to reach either state from one to another)
+        // or mention transition at both state where both transition property will written to show how that state is reached through transition
+        */
+    transition: border 0.35s ease, background-color 0.35s ease, padding 0.35s ease;
+}
+
+.bothWrapper .searchIndicator {
+    width: 2rem;
+    /*background-color: transparent;*/
+}
+
+
+.defaultSearchInputStatus.openedSearchInput .bothWrapper:active, .defaultSearchInputStatus.openedSearchInput .bothWrapper:focus {
+    /*border: 1px solid black;*/
+    /*border: 1px solid black;*/
+    /*border: 1px solid black;*/
+}
+
+.imageIcon {
+    max-width: 100%;
+    outline: none;
+    background-color: transparent;
+    border: none transparent !important;
+    box-shadow: none;
+}
+
+.defaultSearchInputStatus button {
+    border: none;
+}
+
+.openedSearchInput .closeSearchIndicator {
+    display: block;
+}
+
+.inputWrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.circleClose {
+    cursor: pointer;
+    display: block;
+}
+
+.noSearchInput {
+    visibility: hidden;
+}
+
+

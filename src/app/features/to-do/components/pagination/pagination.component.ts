@@ -35,7 +35,8 @@ export class PaginationComponent implements OnInit {
     updateCurrentPage(newPageNumber: number): void {
         this.router.navigate([], {
             queryParams: {page: newPageNumber},
-            relativeTo: this.activatedRoute
+            relativeTo: this.activatedRoute,
+             queryParamsHandling: 'merge'
         });
     }
 
