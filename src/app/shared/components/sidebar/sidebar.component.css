@@ -155,3 +155,17 @@ rendering at all!).
 /* .si:hover > .scrollbar {
         opacity: .6;
     } */
+
+.nav-item {
+    /*overflow: hidden;*/
+    max-width: 100%;
+}
+.textChecker {
+
+    font-size: 0.95rem;
+    max-width: 100%;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    overflow-wrap: break-word;
+}

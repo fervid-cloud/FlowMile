@@ -1,4 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { AuthService } from '../../../auth/auth-service/auth.service';
 
 @Component({
     selector: 'app-sidebar',
@@ -9,11 +10,14 @@ export class SidebarComponent implements OnInit {
 
 
     @Output() optionChoosen: EventEmitter<string> = new EventEmitter<string>();
-    constructor() { }
+    constructor(private authService: AuthService) { }
 
     ngOnInit(): void {
     }
 
+    getUserFirstName(): string {
+        return this.authService.getLocalUserInfo().firstName;
+    }
 
     handleClickOnOption(event: Event) {
         console.log("clicked happened");

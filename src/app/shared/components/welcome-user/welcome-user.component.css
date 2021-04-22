@@ -1,0 +1,25 @@
+:host {
+    display: block;
+    background-color: white;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    margin-bottom: 20px;
+}
+
+.welcomeWrapper {
+    height: 100%;
+    /*margin-bottom: 20px;*/
+    color: green;
+    display: flex;
+    flex-direction: column;
+    font-family: fantasy;
+}
+
+.welcomeImageWrapper {
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+

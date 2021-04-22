@@ -36,6 +36,7 @@ import { ProfileDetailComponent } from './shared/components/profile-detail/profi
 import { ChangePasswordComponent } from './shared/components/change-password/change-password.component';
 import { WelcomeUserComponent } from './shared/components/welcome-user/welcome-user.component';
 import { CustomSpinnerComponent } from './shared/components/custom-spinner/custom-spinner.component';
+import { TypeWriterWordSimulatorComponent } from './shared/components/type-writer-word-simulator/type-writer-word-simulator.component';
 
 
 
@@ -70,6 +71,7 @@ import { CustomSpinnerComponent } from './shared/components/custom-spinner/custo
         ChangePasswordComponent,
         WelcomeUserComponent,
         CustomSpinnerComponent,
+        TypeWriterWordSimulatorComponent,
 
     ],
     imports: [

@@ -1,1 +1,7 @@
-<p>welcome-user works!</p>
+<div class="welcomeWrapper">
+   <div class="welcomeImageWrapper text-center">
+      <img src="/assets/images/avatars/welcome.webp"  (contextmenu)="onRightClick()" alt="welcome">
+      <type-writer-word-simulator class="m-auto" [word]="'Welcome ' + this.getCurrentUserCompleteName()"></type-writer-word-simulator>
+   </div>
+   
+</div>
