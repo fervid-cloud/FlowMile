@@ -28,6 +28,7 @@ export class TypeWriterWordSimulatorComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy(): void {
+        console.log("clearing welcome message to the user");
         clearInterval(this.timerTracker);
     }
 

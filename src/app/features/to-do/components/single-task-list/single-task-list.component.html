@@ -1,7 +1,7 @@
 <ng-container *ngIf="tasksInfoPage.results.length > 0">
     <div class="tab-pane fade show active">
         <div class="row">
-            <div *ngFor="let cur of tasksInfoPage.results" class="col-sm-6 col-md-4 col-lg-3 mb-2">
+            <div *ngFor="let cur of tasksInfoPage.results" class="col-sm-6 col-md-4 col-lg-3 col-xl-2 mb-2">
                 <app-to-do-box [unitTodo]="cur" (viewEventNotifier)="onChoosingViewDetail($event)"></app-to-do-box>
             </div>
         </div>

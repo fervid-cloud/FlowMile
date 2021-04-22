@@ -71,7 +71,7 @@ add to the element when the linked route is active. -->
                 to show the sort button but that felt like hardcoded to me, since hardcoded was the only way
                 template file is even better place to do the things hardcoded way
              -->
-            <div #requiredRoute="routerLinkActive" [routerLinkActiveOptions]="{exact: true}"
+            <div #requiredRoute="routerLinkActive"
                  routerLinkActive="['inValidDummyClass1', 'invalidDummyClass2']"
                  style="pointer-events: none; height: 0px; width: 0px;">
                 <div routerLink="list/all"></div>

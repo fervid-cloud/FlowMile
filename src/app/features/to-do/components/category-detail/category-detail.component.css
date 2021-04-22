@@ -20,7 +20,7 @@ h6 {
 }
 
 .categoryImageWrapper {
-    width: 90%;
+    width: 60vmin;
     margin: auto;
     /* height: 80%; */
 }

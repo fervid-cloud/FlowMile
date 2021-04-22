@@ -4,7 +4,7 @@
             <i class="fas fa-search searchIndicator imageIcon"></i>
         </span>
         <div class="inputWrapper">
-            <input type="text" class="form-control " [(ngModel)]="searchInputValue" (keyup)="indicateTyping()">
+            <input type="text" class="form-control "  placeholder="Search by name" [(ngModel)]="searchInputValue" (keyup)="indicateTyping()">
             <!--
                                    display:none means that the tag in question will not appear on the page at all (although you can
                                     still interact with it through the dom). There will be no space allocated for it between the other tags.
