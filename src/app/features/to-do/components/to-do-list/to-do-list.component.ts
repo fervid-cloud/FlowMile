@@ -1,10 +1,18 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, ActivatedRouteSnapshot, Params, Router } from '@angular/router';
+import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute, ActivatedRouteSnapshot, NavigationExtras, Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { UtilService } from 'src/app/shared/utility/util-service/util.service';
 import { Task } from '../../model/task';
 import { TaskManagementService } from '../../service/to-do-management/task-management.service';
 import { PaginationWrapperDto } from '../../model/pagination-wrapper-dto';
+import { AnimatedSearchInputComponent } from '../../../../shared/components/animated-search-input/animated-search-input.component';
+import {
+    CriteriaInfo,
+    ListFilterSortPaginationWrapper,
+    sortCriteriaInfo,
+    typeCriteriaInfo
+} from '../../model/list-filterWrapper';
+import { typeCheckFilePath } from '@angular/compiler-cli/src/ngtsc/typecheck';
 
 @Component({
     selector: 'app-to-do-list',
@@ -24,6 +32,18 @@ export class ToDoListComponent implements OnInit, OnDestroy {
 
     showSpinner = false;
 
+    @ViewChild("inputSearchBar") inputSearchBar!: AnimatedSearchInputComponent;
+
+    private searchWait = 500;
+
+    setTimeoutTracker: any = undefined;
+
+    currentListFilterSortPaginationWrapper!: ListFilterSortPaginationWrapper;
+
+    sortCriteriaInfo: CriteriaInfo[] = sortCriteriaInfo;
+
+    typeCriteriaInfo: CriteriaInfo [] = typeCriteriaInfo;
+
     // subscriptions
     private paramUpdateTime: Date = new Date(1980);
     private queryParamUpdateTime: Date = new Date(1980);
@@ -36,6 +56,13 @@ export class ToDoListComponent implements OnInit, OnDestroy {
         private router: Router,
         private activatedRoute: ActivatedRoute
     ) {
+        this.currentListFilterSortPaginationWrapper = {
+            type: typeCriteriaInfo[0],
+            sort: sortCriteriaInfo[0],
+            name:  "",
+            pageNumber: 1,
+            pageSize: 24
+        };
 
     }
 
@@ -170,4 +197,41 @@ export class ToDoListComponent implements OnInit, OnDestroy {
         }
     }
 
+    manageThroughDebouncingSearch = (emittedSearchValue: string): void => {
+        if (this.setTimeoutTracker) {
+            clearTimeout(this.setTimeoutTracker);
+        }
+
+        this.setTimeoutTracker = setTimeout(() => {
+            const navigationExtraInfo: NavigationExtras = {};
+            if (emittedSearchValue.length > 0) {
+                navigationExtraInfo.queryParams = {
+                    search: emittedSearchValue
+                };
+            }
+            navigationExtraInfo.relativeTo = this.activatedRoute;
+            this.router.navigate([], navigationExtraInfo);
+        }, this.searchWait);
+    }
+
+
+    resetOpenedSearchBar(): void {
+        this.inputSearchBar?.resetOpenedSearchBar();
+    }
+
+    handleSelectedSortCriteria(selectedCriteria: CriteriaInfo): void {
+        const chosenCriteria: CriteriaInfo [] = this.sortCriteriaInfo.filter(criteria => criteria.id == selectedCriteria.id);
+        if (chosenCriteria.length > 0) {
+            this.currentListFilterSortPaginationWrapper.sort = chosenCriteria[0];
+        }
+        // do the searching here
+    }
+
+    handleSelectedTypeCriteria(selectedCriteria: CriteriaInfo): void {
+        const chosenCriteria: CriteriaInfo [] = this.sortCriteriaInfo.filter(criteria => criteria.id == selectedCriteria.id);
+        if (chosenCriteria.length > 0) {
+            this.currentListFilterSortPaginationWrapper.type = chosenCriteria[0];
+        }
+        // do the searching here
+    }
 }

@@ -1,0 +1,16 @@
+<div class="btn-group">
+    <div class="customFilter btn btn-secondary btn-sm dropdown-toggle text-black-50" type="button"
+         data-bs-toggle="dropdown" aria-expanded="false">
+        {{ name }}
+    </div>
+    <div class="dropdown-menu customDropdownProperty">
+        <div class="selectMenuHeader">{{ headerTitle }}</div>
+        <ul style="margin: 0; padding: 0">
+            <li class="dropdown-item clickable d-flex" *ngFor="let dropdownItem of dropdownList;" (click)="handleSelection(dropdownItem)">
+                        <span> {{ dropdownItem.name }}</span>
+                         <span *ngIf="currentSelected.id ==  dropdownItem.id" class="ms-auto"><i class="fas fa-check"></i></span>
+
+            </li>
+        </ul>
+    </div>
+</div>

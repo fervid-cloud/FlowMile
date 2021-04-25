@@ -8,6 +8,7 @@ import { Subscription } from 'rxjs';
 import {FormControl, FormGroup, Validators } from '@angular/forms';
 import { PaginationWrapperDto } from '../../model/pagination-wrapper-dto';
 import { UtilService } from 'src/app/shared/utility/util-service/util.service';
+import { CriteriaInfo, ListFilterSortPaginationWrapper, sortCriteriaInfo, typeCriteriaInfo } from '../../model/list-filterWrapper';
 
 @Component({
     selector: 'app-to-do-category',
@@ -36,6 +37,11 @@ export class ToDoCategoryComponent implements OnInit, OnDestroy {
     activatedQueryParamRouteSubscription!: Subscription;
     currentPageNumber: any;
 
+    currentListFilterSortPaginationWrapper!: ListFilterSortPaginationWrapper;
+
+    sortCriteriaInfo: CriteriaInfo[] = sortCriteriaInfo;
+
+    typeCriteriaInfo: CriteriaInfo [] = typeCriteriaInfo;
 
     private searchWait = 500;
 
@@ -45,7 +51,16 @@ export class ToDoCategoryComponent implements OnInit, OnDestroy {
         private taskManagementService: TaskManagementService,
         private router: Router,
         private activatedRoute: ActivatedRoute
-    ) { }
+    ) {
+        this.currentListFilterSortPaginationWrapper = {
+            type: typeCriteriaInfo[0],
+            sort: sortCriteriaInfo[0],
+            name:  "",
+            pageNumber: 1,
+            pageSize: 24
+        };
+
+    }
 
     ngOnInit(): void {
         this.initializeSubscriptions();
@@ -235,4 +250,12 @@ export class ToDoCategoryComponent implements OnInit, OnDestroy {
             this.router.navigate([], navigationExtraInfo);
         }, this.searchWait);
     }
+
+    handleSelectedSortCriteria(selectedCriteria: CriteriaInfo): void {
+        const chosenCriteria: CriteriaInfo [] = this.sortCriteriaInfo.filter(criteria => criteria.id == selectedCriteria.id);
+        if (chosenCriteria.length > 0) {
+            this.currentListFilterSortPaginationWrapper.sort = chosenCriteria[0];
+        }
+    }
+
 }

@@ -18,11 +18,6 @@ export class SingleCategoryComponent implements OnInit {
 
     private activatedRouteSubscription!: Subscription;
 
-    @ViewChild("inputSearchBar") inputSearchBar!: AnimatedSearchInputComponent;
-
-    private searchWait = 500;
-
-    setTimeoutTracker: any = undefined;
 
     constructor(
         private taskManagementService: TaskManagementService,
@@ -90,24 +85,5 @@ export class SingleCategoryComponent implements OnInit {
     }
 
 
-    resetOpenedSearchBar(): void {
-        this.inputSearchBar?.resetOpenedSearchBar();
-    }
 
-    manageThroughDebouncingSearch = (emittedSearchValue: string): void => {
-        if (this.setTimeoutTracker) {
-            clearTimeout(this.setTimeoutTracker);
-        }
-
-        this.setTimeoutTracker = setTimeout(() => {
-            const navigationExtraInfo: NavigationExtras = {};
-            if (emittedSearchValue.length > 0) {
-                navigationExtraInfo.queryParams = {
-                    search: emittedSearchValue
-                };
-            }
-            navigationExtraInfo.relativeTo = this.activatedRoute;
-            this.router.navigate([], navigationExtraInfo);
-        }, this.searchWait);
-    };
 }

@@ -27,12 +27,13 @@
         it need some initial value and none doesn't satisfy that for transition to work*/
     transition: border 0.85s ease, background-color 0.85s ease, padding 0.85s ease;
     border-radius: .25rem;
+    /*padding: 1px;*/
 }
 
 .openedSearchInput .bothWrapper {
     background-color: white;
     border: 1px solid gray;
-    padding: 1px;
+
     /*
         //basically here transition means how much time it will take to reach this state, wherever we mention
         // transition, it means how much duration and other property apply to reach that state, if transition of
@@ -86,7 +87,7 @@
 .inputWrapper .form-control {
     border: none !important;
     outline: none;
-    padding: .355rem .01rem;
+    padding: .375rem .01rem;
     border-radius: 0;
     box-shadow: none;
     height: 95%;

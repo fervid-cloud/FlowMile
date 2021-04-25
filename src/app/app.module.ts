@@ -38,6 +38,7 @@ import { WelcomeUserComponent } from './shared/components/welcome-user/welcome-u
 import { CustomSpinnerComponent } from './shared/components/custom-spinner/custom-spinner.component';
 import { TypeWriterWordSimulatorComponent } from './shared/components/type-writer-word-simulator/type-writer-word-simulator.component';
 import { AnimatedSearchInputComponent } from './shared/components/animated-search-input/animated-search-input.component';
+import { CustomFilterDropdownComponent } from './shared/components/custom-filter-dropdown/custom-filter-dropdown.component';
 
 
 
@@ -74,6 +75,7 @@ import { AnimatedSearchInputComponent } from './shared/components/animated-searc
         CustomSpinnerComponent,
         TypeWriterWordSimulatorComponent,
         AnimatedSearchInputComponent,
+        CustomFilterDropdownComponent,
 
     ],
     imports: [

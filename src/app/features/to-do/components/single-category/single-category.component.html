@@ -36,20 +36,22 @@
             Detail
         </button>
         
-        <button routerLink="list/pending" routerLinkActive="active" class="nav-link" title="view pending tasks"
-                type="button" role="tab" (click)="resetOpenedSearchBar()">
-            Pending
+        <button routerLink="list/tasks" routerLinkActive="active" #tasksRoute="routerLinkActive" class="nav-link" title="view pending tasks"
+                type="button" role="tab">
+            Tasks
         </button>
+
         
-        <button routerLinkActive="active" routerLink="list/all" class="nav-link" title="view all tasks" type="button"
-                role="tab" (click)="resetOpenedSearchBar()">
-            All
-        </button>
-        
-        <button routerLink="list/done" routerLinkActive="active" class="nav-link" title="view done tasks" type="button"
-                role="tab" (click)="resetOpenedSearchBar()">
-            Done
-        </button>
+        <!--
+                <button routerLinkActive="active" routerLink="list/all" class="nav-link" title="view all tasks" type="button"
+                        role="tab" (click)="resetOpenedSearchBar()">
+                    All
+                </button>
+                
+                <button routerLink="list/done" routerLinkActive="active" class="nav-link" title="view done tasks" type="button"
+                        role="tab" (click)="resetOpenedSearchBar()">
+                    Done
+                </button>-->
         
         <!-- routerLink starting with '/' means relative to root path i.e '', otherwise from current activated route path -->
         <button routerLink="add" routerLinkActive="active" class="nav-link" title="add task" type="button" role="tab">
@@ -74,12 +76,12 @@ add to the element when the linked route is active. -->
             <div #requiredRoute="routerLinkActive"
                  routerLinkActive="['inValidDummyClass1', 'invalidDummyClass2']"
                  style="pointer-events: none; height: 0px; width: 0px;">
-                <div routerLink="list/all"></div>
-                <div routerLink="list/done"></div>
-                <div routerLink="list/pending"></div>
+                <div routerLink="list/tasks"></div>
+<!--                <div routerLink="list/done"></div>
+                <div routerLink="list/pending"></div>-->
             </div>
             
-            <animated-search-input *ngIf="requiredRoute.isActive" #inputSearchBar class="nav-item border-0 outline-0" (onTyping)="manageThroughDebouncingSearch($event)" ></animated-search-input>
+
             
             
             <button (click)="goBack()" class="nav-link me-2" type="button" title="back to all categories"

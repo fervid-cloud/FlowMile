@@ -1,3 +1,15 @@
+<div class="d-flex p-2 customListUtilityContainer">
+    
+    <custom-filter-dropdown (onCriteriaSelected)="handleSelectedTypeCriteria($event)" name="Type" [headerTitle]="'Select type'"
+                            [dropdownList]="typeCriteriaInfo" [currentSelected]="currentListFilterSortPaginationWrapper.type"></custom-filter-dropdown>
+    <custom-filter-dropdown (onCriteriaSelected)="handleSelectedSortCriteria($event)" name="Sort"   [headerTitle]="'Select order'"
+                            [dropdownList]="sortCriteriaInfo" [currentSelected]="currentListFilterSortPaginationWrapper.sort"></custom-filter-dropdown>
+    
+    <animated-search-input #inputSearchBar class="nav-item border-0 outline-0 ms-auto"
+                           (onTyping)="manageThroughDebouncingSearch($event)" ></animated-search-input>
+</div>
+
+
 <ng-container *ngIf="!showSpinner">
     <app-single-task-list [tasksInfo]="currentActiveTasksInfo"></app-single-task-list>
 </ng-container>
