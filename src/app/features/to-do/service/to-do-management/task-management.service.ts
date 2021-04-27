@@ -142,7 +142,7 @@ export class TaskManagementService {
         });
     }
 
-    InitializeListFilterSortPaginationWrapperDto(): ListFilterSortPaginationWrapperDto {
+    InitializeTaskListFilterSortPaginationWrapperDto(): ListFilterSortPaginationWrapperDto {
         return {
             type: "",
             name: "",
@@ -152,12 +152,17 @@ export class TaskManagementService {
         };
     }
 
+    InitializeCategoryListFilterSortPaginationWrapperDto(): ListFilterSortPaginationWrapperDto {
+        return {
+            name: "",
+            sort: "",
+            page: 1,
+            pageSize: 12
+        };
+    }
+
     async fetchFilteredTasks(queryData: ListFilterSortPaginationWrapperDto): Promise<PaginationWrapperDto> {
-        let queryParams = new HttpParams();
-        Object.entries(queryData).forEach((entry) => {
-            // The HttpParams is immutable as you can see here
-           queryParams = queryParams.append(entry[0], entry[1]);
-        });
+        const queryParams = this.convertToQueryParams(queryData);
         const currentBackendUrl = BackendRestApiService.BACKEND_URL + `/api/task_manage/task/all/${ this.taskCategoryId }`;
         const response = (await this.httpClient.request(RequestMethod.GET, currentBackendUrl, {
             params: queryParams,
@@ -168,5 +173,29 @@ export class TaskManagementService {
             responseType: 'json' // by default
         }).toPromise()) as ResponseModel;
         return response.data;
+    }
+
+
+    async fetchFilteredCategories(queryData: ListFilterSortPaginationWrapperDto): Promise<PaginationWrapperDto>{
+        const queryParams = this.convertToQueryParams(queryData);
+        const currentBackendUrl = BackendRestApiService.BACKEND_URL + `/api/task_manage/category/all`;
+        const response = (await this.httpClient.request(RequestMethod.GET, currentBackendUrl, {
+            params: queryParams,
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            reportProgress: true,
+            responseType: 'json' // by default
+        }).toPromise()) as ResponseModel;
+        return response.data;
+    }
+
+    private convertToQueryParams(queryData: ListFilterSortPaginationWrapperDto) {
+        let queryParams = new HttpParams();
+        Object.entries(queryData).forEach((entry) => {
+            // The HttpParams is immutable as you can see here
+            queryParams = queryParams.append(entry[0], entry[1]);
+        });
+        return queryParams;
     }
 }

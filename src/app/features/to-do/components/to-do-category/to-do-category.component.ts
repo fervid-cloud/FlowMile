@@ -10,6 +10,7 @@ import { PaginationWrapperDto } from '../../model/pagination-wrapper-dto';
 import { UtilService } from 'src/app/shared/utility/util-service/util.service';
 import { CriteriaInfo, ListFilterSortPaginationWrapper } from '../../model/list-filterWrapper';
 import { ListFilterSortPaginationWrapperDto } from '../../dto/list-filter-wrapper-dto';
+import { AnimatedSearchInputComponent } from '../../../../shared/components/animated-search-input/animated-search-input.component';
 
 @Component({
     selector: 'app-to-do-category',
@@ -22,9 +23,11 @@ export class ToDoCategoryComponent implements OnInit, OnDestroy {
     @ViewChild('addCategoryModelDialog')
     addCategoryModelDialogTemplateRef!: ElementRef;
 
+    @ViewChild('inputSearchBar') inputSearchBar!: AnimatedSearchInputComponent;
+
     private addTaskModelDialog!: Modal;
 
-    taskCategoriesInfo: PaginationWrapperDto = new PaginationWrapperDto();
+    currentActiveCategoriesInfo: PaginationWrapperDto = new PaginationWrapperDto();
 
     private taskCategorySubscription!: Subscription;
 
@@ -38,7 +41,7 @@ export class ToDoCategoryComponent implements OnInit, OnDestroy {
     activatedQueryParamRouteSubscription!: Subscription;
     currentPageNumber: any;
 
-    currentListFilterSortPaginationWrapper!: ListFilterSortPaginationWrapper;
+    currentListFilterSortPaginationWrapper: ListFilterSortPaginationWrapper = {};
 
     private searchWait = 500;
 
@@ -52,6 +55,9 @@ export class ToDoCategoryComponent implements OnInit, OnDestroy {
         private activatedRoute: ActivatedRoute
     ) {
         this.sortCriteriaInfoList = this.taskManagementService.sortCriteriaInfoList;
+        this.updatedCurrentCategoryListInfo(
+            this.taskManagementService.InitializeCategoryListFilterSortPaginationWrapperDto()
+        );
     }
 
     ngOnInit(): void {
@@ -95,17 +101,22 @@ export class ToDoCategoryComponent implements OnInit, OnDestroy {
 
     subscribeToActivatedQueryParams(): void {
         this.activatedQueryParamRouteSubscription = this.activatedRoute.queryParams.subscribe(async (updatedQueryParams: Params) => {
-
-            const pageNumber = updatedQueryParams.page;
-            console.log("The before updated page number is : ", pageNumber);
-            this.currentPageNumber = UtilService.getUpdatedPageNumber(pageNumber);
-            console.log('calling task service in queryParams subscribe--------------');
-            console.log("the current page is : " , this.currentPageNumber);
+            const queryParams = updatedQueryParams as ListFilterSortPaginationWrapperDto; // basically casting the object to our object and thus avoiding manual updated
+            console.log('--------------------------------------');
+            console.log(queryParams);
+            const queryData: ListFilterSortPaginationWrapperDto = this.taskManagementService.InitializeCategoryListFilterSortPaginationWrapperDto();
+            this.taskManagementService.copyAndUpdateToAllowedAndDefaultValues(queryData, queryParams);
+            console.log('updated queryData is : ', queryData);
             await this.showLoading( async () => {
-                 // await new Promise((resolve) => setTimeout(() => resolve(true), 300000));
-                 return this.getAllCategories(this.currentPageNumber);
+                try {
+                    this.currentActiveCategoriesInfo = await this.taskManagementService.fetchFilteredCategories(queryData);
+                } catch(ex) {
+                    console.log("error while fetching");
+                    console.log("error was ", ex.message);
+                } finally {
+                    this.updatedCurrentCategoryListInfo(queryData);
+                }
             });
-            this.taskManagementService.setLastCategoriesListPageNumber(this.currentPageNumber);
         });
     }
 
@@ -155,12 +166,6 @@ export class ToDoCategoryComponent implements OnInit, OnDestroy {
         }); */
     }
 
-
-    private async getAllCategories(pageNumber: number): Promise<void> {
-        // await new Promise(resolve => setTimeout(() => resolve(true), 3000));
-        console.log("sending the request to get all the task categories");
-        this.taskCategoriesInfo = await this.taskManagementService.getAllTasksCategories(pageNumber);
-    }
 
     onChoosingViewDetail(taskCategoryId: number): void{
 
@@ -226,56 +231,60 @@ export class ToDoCategoryComponent implements OnInit, OnDestroy {
         }
     }
 
-    manageThroughDebouncingSearch(emittedSearchValue: string): void {
+
+    manageNameSearchThroughDebouncing = (emittedSearchValue: string): void => {
         if (this.setTimeoutTracker) {
             clearTimeout(this.setTimeoutTracker);
         }
 
         this.setTimeoutTracker = setTimeout(() => {
-            const navigationExtraInfo: NavigationExtras = {};
-            if (emittedSearchValue.length > 0) {
-                navigationExtraInfo.queryParams = {
-                    search: emittedSearchValue
-                };
-            }
-            navigationExtraInfo.relativeTo = this.activatedRoute;
-            this.router.navigate([], navigationExtraInfo);
+            this.handleSearchNameCriteria(emittedSearchValue);
         }, this.searchWait);
     }
 
 
+    resetOpenedSearchBar(): void {
+        this.inputSearchBar?.resetOpenedSearchBar();
+    }
+
+
     handleSelectedSortCriteria(selectedCriteria: CriteriaInfo): void {
-        this.currentListFilterSortPaginationWrapper.sort = this.taskManagementService.validateSortCriteria(selectedCriteria.shortName);
+        // even though it is duplicated here in the sense that it will be again assigned later after activated query parameter, but still we can ignore one duplicate if compare to making lot of changes
+        this.currentListFilterSortPaginationWrapper.sort = selectedCriteria;
         console.log('requested query, ', selectedCriteria);
         console.log('updated the query, ', this.currentListFilterSortPaginationWrapper.sort);
         this.navigateToUpdatedQueryParams();
     }
 
+
+    handleSelectedPage(newPageNumber: number): void {
+        this.currentListFilterSortPaginationWrapper.page = newPageNumber;
+        this.navigateToUpdatedQueryParams();
+    }
+
+    private handleSearchNameCriteria(emittedSearchValue: string): void {
+        this.currentListFilterSortPaginationWrapper.name = emittedSearchValue;
+        this.navigateToUpdatedQueryParams();
+    }
+
+
     private navigateToUpdatedQueryParams(): void {
         console.log('updated the query, ', this.currentListFilterSortPaginationWrapper);
         const queryParams: Params = {};
+        // queryParams.type = this.currentListFilterSortPaginationWrapper.type?.shortName;
         if (this.currentListFilterSortPaginationWrapper.name?.trim().length) {
             queryParams.name = this.currentListFilterSortPaginationWrapper.name;
         }
-        queryParams.sort = this.currentListFilterSortPaginationWrapper.sort;
+        queryParams.sort = this.currentListFilterSortPaginationWrapper.sort?.shortName;
         queryParams.page = this.currentListFilterSortPaginationWrapper.page;
         this.router.navigate([], {
             queryParams,
-            relativeTo: this.activatedRoute
-        });
-    }
-
-
-    handleSelectedPage(currentPageNumber: number): void {
-        this.router.navigate([], {
-            queryParams: {page: currentPageNumber},
             relativeTo: this.activatedRoute,
-            queryParamsHandling: 'merge'
+            // queryParamsHandling: 'merge'
         });
     }
 
-
-    private updatedCurrentTaskListInfo(queryData: ListFilterSortPaginationWrapperDto): void {
+    private updatedCurrentCategoryListInfo(queryData: ListFilterSortPaginationWrapperDto): void {
         this.currentListFilterSortPaginationWrapper.type = this.taskManagementService.validateTypeCriteria(queryData.type);
         this.currentListFilterSortPaginationWrapper.sort = this.taskManagementService.validateSortCriteria(queryData.sort);
         this.currentListFilterSortPaginationWrapper.name = queryData.name;

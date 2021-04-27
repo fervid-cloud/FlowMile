@@ -46,7 +46,7 @@ export class TaskListComponent implements OnInit, OnDestroy {
         this.typeCriteriaInfoList = this.taskManagementService.typeCriteriaInfoList;
         this.sortCriteriaInfoList = this.taskManagementService.sortCriteriaInfoList;
         this.updatedCurrentTaskListInfo(
-            this.taskManagementService.InitializeListFilterSortPaginationWrapperDto()
+            this.taskManagementService.InitializeTaskListFilterSortPaginationWrapperDto()
         );
 
     }
@@ -89,7 +89,7 @@ export class TaskListComponent implements OnInit, OnDestroy {
         const queryParams = updatedQueryParams as ListFilterSortPaginationWrapperDto; // basically casting the object to our object and thus avoiding manual updated
         console.log('--------------------------------------');
         console.log(queryParams);
-        const queryData: ListFilterSortPaginationWrapperDto = this.taskManagementService.InitializeListFilterSortPaginationWrapperDto();
+        const queryData: ListFilterSortPaginationWrapperDto = this.taskManagementService.InitializeTaskListFilterSortPaginationWrapperDto();
         this.taskManagementService.copyAndUpdateToAllowedAndDefaultValues(queryData, queryParams);
         console.log('updated queryData is : ', queryData);
         await this.showLoading( async () => {

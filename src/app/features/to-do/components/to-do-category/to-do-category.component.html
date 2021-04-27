@@ -31,18 +31,18 @@
     
     
     <animated-search-input #inputSearchBar class="nav-item border-0 outline-0 ms-auto"
-                           (onTyping)="manageThroughDebouncingSearch($event)"></animated-search-input>
+                           (onTyping)="manageNameSearchThroughDebouncing($event)"></animated-search-input>
 </div>
 
 <div class="container-fluid px-0 mt-2 customContainer">
     
     <ng-container *ngIf="!showSpinner">
         
-        <ng-container *ngIf="taskCategoriesInfo.results.length > 0">
+        <ng-container *ngIf="currentActiveCategoriesInfo.results.length > 0">
             
             <div class="tab-pane fade show active">
                 <div class="row">
-                    <div *ngFor="let cur of taskCategoriesInfo.results" class="col-sm-6 col-md-4 col-lg-3 mb-2">
+                    <div *ngFor="let cur of currentActiveCategoriesInfo.results" class="col-sm-6 col-md-4 col-lg-3 mb-2">
                         <app-category-box [currentTaskCategory]="cur"
                                           (viewEventNotifier)="onChoosingViewDetail($event)">
                         </app-category-box>
@@ -50,14 +50,14 @@
                 </div>
             </div>
             
-            <div *ngIf="taskCategoriesInfo.totalPages > 1" class="paginationInfo d-flex mb-2">
-                <app-pagination (onPageSelected)="handleSelectedPage($event)" [itemsInfoPage]="taskCategoriesInfo" class="m-auto">
+            <div *ngIf="currentActiveCategoriesInfo.totalPages > 1" class="paginationInfo d-flex mb-2">
+                <app-pagination (onPageSelected)="handleSelectedPage($event)" [itemsInfoPage]="currentActiveCategoriesInfo" class="m-auto">
                 </app-pagination>
             </div>
         
         </ng-container>
         
-        <ng-container *ngIf="taskCategoriesInfo.results.length == 0">
+        <ng-container *ngIf="currentActiveCategoriesInfo.results.length == 0">
             <div class="emptyTaskList d-flex">
                 <!-- <img src="assets/images/to-do/empty-category/1.jpg" alt="no tasks of this type"> -->
                 <h2 class="m-auto text-center">Wow, such empty</h2>
