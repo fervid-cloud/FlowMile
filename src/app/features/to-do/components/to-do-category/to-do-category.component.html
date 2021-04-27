@@ -27,7 +27,7 @@
 <div class="d-flex p-2 customListUtilityContainer">
     
     <custom-filter-dropdown (onCriteriaSelected)="handleSelectedSortCriteria($event)" name="Sort"   [headerTitle]="'Select order'"
-                            [dropdownList]="sortCriteriaInfo" [currentSelected]="currentListFilterSortPaginationWrapper.sort"></custom-filter-dropdown>
+                            [dropdownList]="sortCriteriaInfoList" [currentSelected]="currentListFilterSortPaginationWrapper.sort"></custom-filter-dropdown>
     
     
     <animated-search-input #inputSearchBar class="nav-item border-0 outline-0 ms-auto"
@@ -51,7 +51,7 @@
             </div>
             
             <div *ngIf="taskCategoriesInfo.totalPages > 1" class="paginationInfo d-flex mb-2">
-                <app-pagination [itemsInfoPage]="taskCategoriesInfo" class="m-auto">
+                <app-pagination (onPageSelected)="handleSelectedPage($event)" [itemsInfoPage]="taskCategoriesInfo" class="m-auto">
                 </app-pagination>
             </div>
         

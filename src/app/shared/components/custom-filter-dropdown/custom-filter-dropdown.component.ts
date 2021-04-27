@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { CriteriaInfo } from '../../../features/to-do/model/list-filterWrapper';
 
 @Component({
@@ -6,8 +6,9 @@ import { CriteriaInfo } from '../../../features/to-do/model/list-filterWrapper';
     templateUrl: './custom-filter-dropdown.component.html',
     styleUrls: [ './custom-filter-dropdown.component.css' ]
 })
-export class CustomFilterDropdownComponent implements OnInit {
+export class CustomFilterDropdownComponent implements OnInit, OnChanges {
 
+    // tslint:disable-next-line:no-output-on-prefix
     @Output() onCriteriaSelected: EventEmitter<CriteriaInfo> = new EventEmitter<CriteriaInfo>();
 
     @Input() name: string = 'Options';
@@ -16,7 +17,7 @@ export class CustomFilterDropdownComponent implements OnInit {
 
     @Input() dropdownList: CriteriaInfo [] = [];
 
-    @Input() currentSelected: CriteriaInfo = {
+    @Input() currentSelected: CriteriaInfo | undefined = {
         name: 'defaultName',
         id: 0,
         shortName: 'defaultShortName'
@@ -26,6 +27,11 @@ export class CustomFilterDropdownComponent implements OnInit {
     }
 
     ngOnInit(): void {
+    }
+
+
+    ngOnChanges(): void {
+        console.log("on change detection, currently selected is : ", customElements);
     }
 
     handleSelection(dropdownItem: CriteriaInfo): void {

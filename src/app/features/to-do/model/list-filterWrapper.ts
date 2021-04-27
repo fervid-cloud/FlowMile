@@ -4,10 +4,10 @@ If you need a range between two dates, you can use start and end, or since and t
 
     GET /users?start=01-01-1970&end=09-09-2020*/
 export interface ListFilterSortPaginationWrapper {
-    type: CriteriaInfo;
-    sort: CriteriaInfo;
+    type?: CriteriaInfo;
     name?: string;
-    pageNumber?: number;
+    sort?: CriteriaInfo;
+    page?: number;
     pageSize?: number;
 
 }
@@ -19,7 +19,7 @@ export interface CriteriaInfo {
 
 }
 
-export const sortCriteriaInfo: CriteriaInfo [] = [
+export const sortCriteriaInfoList: CriteriaInfo [] = [
     {
         name: 'Last Created',
         id: 1,
@@ -44,21 +44,24 @@ export const sortCriteriaInfo: CriteriaInfo [] = [
 
 ];
 
-export const typeCriteriaInfo: CriteriaInfo[] = [
+export const typeCriteriaInfoList: CriteriaInfo[] = [
     {
         name: 'Pending',
         id: 1,
-        shortName: 'status=false',
+        shortName: 'pending',
+        // shortName: 'status:false',
     },
     {
         name: 'Done',
         id: 2,
-        shortName: 'status=true',
+        shortName: 'done',
+        // shortName: 'status:true',
     },
     {
         name: 'All',
         id: 3,
-        shortName: 'status=any',
+        shortName: 'all',
+        // shortName: 'status:',
     },
 ];
 

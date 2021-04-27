@@ -1,12 +1,16 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRoute, ActivatedRouteSnapshot, Params } from '@angular/router';
+import { ListFilterSortPaginationWrapperDto } from '../../../features/to-do/dto/list-filter-wrapper-dto';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UtilService {
 
-    constructor() { }
+    constructor(
+
+    ) { }
 
     static getAllRouteParams1(activatedRoute: ActivatedRoute) {
         let allParams: Params = {};
@@ -44,5 +48,8 @@ export class UtilService {
             return parseInt(pageNumber, 10);
         }
     }
+
+
+
 
 }

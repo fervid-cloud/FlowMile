@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { PaginationWrapperDto } from '../../model/pagination-wrapper-dto';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 
@@ -13,12 +13,14 @@ export class PaginationComponent implements OnInit {
 
     static MIDDLE_ELEMENT_POSITION_NUMBER = (PaginationComponent.MAX_WINDOW_SIZE + 1) / 2;
 
+    // tslint:disable-next-line:no-output-on-prefix
+    @Output() onPageSelected: EventEmitter<number> = new EventEmitter<number>();
+
+
     // by default same name
     @Input() itemsInfoPage: PaginationWrapperDto = new PaginationWrapperDto();
 
     currentPageIndicatorList: number[] = [];
-
-
 
 
     constructor(
@@ -32,12 +34,10 @@ export class PaginationComponent implements OnInit {
         this.updatePaginationInfo();
     }
 
+
+
     updateCurrentPage(newPageNumber: number): void {
-        this.router.navigate([], {
-            queryParams: {page: newPageNumber},
-            relativeTo: this.activatedRoute,
-             queryParamsHandling: 'merge'
-        });
+        this.onPageSelected.emit(newPageNumber);
     }
 
 

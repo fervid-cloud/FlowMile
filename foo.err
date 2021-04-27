@@ -1,0 +1,3 @@
+(electron) 'getName function' is deprecated and will be removed. Please use 'name property' instead.
+[21844:0427/053926.215452:ERROR:buffer_manager.cc(488)] [.DisplayCompositor]GL ERROR :GL_INVALID_OPERATION : glBufferData: <- error from previous GL command
+[21844:0427/053926.230638:ERROR:buffer_manager.cc(488)] [.DisplayCompositor]GL ERROR :GL_INVALID_OPERATION : glBufferData: <- error from previous GL command

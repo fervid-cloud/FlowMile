@@ -6,6 +6,11 @@ import { TaskType } from '../../enum/TaskType';
 import { PaginationWrapperDto } from '../../model/pagination-wrapper-dto';
 import { TaskCategory } from '../../model/task-category';
 import { Task } from '../../model/task';
+import { UtilService } from '../../../../shared/utility/util-service/util.service';
+import { ListFilterSortPaginationWrapperDto } from '../../dto/list-filter-wrapper-dto';
+import { CriteriaInfo, sortCriteriaInfoList, typeCriteriaInfoList } from '../../model/list-filterWrapper';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { RequestMethod } from '../../../../auth/enum/request-method-enum';
 
 @Injectable({
     providedIn: 'root'
@@ -14,28 +19,31 @@ export class TaskManagementService {
 
     private taskCategoriesInfo: PaginationWrapperDto = new PaginationWrapperDto();
     private allAnyStatusTasksInfo: PaginationWrapperDto = new PaginationWrapperDto();
-    private allPendingStatusTaskInfo: PaginationWrapperDto = new PaginationWrapperDto();
-    private allDoneStatusTaskInfo: PaginationWrapperDto = new PaginationWrapperDto();
+
+    taskCategoryId = 0;
+
 
 
     private _taskCategoriesInfo: BehaviorSubject<PaginationWrapperDto> = new BehaviorSubject<PaginationWrapperDto>(this.taskCategoriesInfo);
     private _allAnyStatusTasksInfo: BehaviorSubject<PaginationWrapperDto> = new BehaviorSubject<PaginationWrapperDto>(this.allAnyStatusTasksInfo);
-    private _allPendingStatusTaskInfo: BehaviorSubject<PaginationWrapperDto> = new BehaviorSubject<PaginationWrapperDto>(this.allPendingStatusTaskInfo);
-    private _allDoneStatusTaskInfo: BehaviorSubject<PaginationWrapperDto> = new BehaviorSubject<PaginationWrapperDto>(this.allDoneStatusTaskInfo);
-
 
     public taskCategoriesInfo$: Observable<PaginationWrapperDto>;
     public allAnyStatusTasksInfo$: Observable<PaginationWrapperDto>;
-    public allPendingStatusTaskInfo$: Observable<PaginationWrapperDto>;
-    public allDoneStatusTaskInfo$: Observable<PaginationWrapperDto>;
 
     private lastCategoriesListPageNumber: number = 1;
 
-    constructor(private backendRestApiService: BackendRestApiService) {
+    private lastVisitedCategoryListRoute: string = "";
+
+    typeCriteriaInfoList: CriteriaInfo [] = typeCriteriaInfoList;
+
+    sortCriteriaInfoList: CriteriaInfo[] = sortCriteriaInfoList;
+
+    constructor(
+        private httpClient: HttpClient,
+        private backendRestApiService: BackendRestApiService
+    ) {
         this.taskCategoriesInfo$ = this._taskCategoriesInfo.asObservable();
         this.allAnyStatusTasksInfo$ = this._allAnyStatusTasksInfo.asObservable();
-        this.allPendingStatusTaskInfo$ = this._allPendingStatusTaskInfo.asObservable();
-        this.allDoneStatusTaskInfo$ = this._allDoneStatusTaskInfo.asObservable();
         this.initializeTasks();
     }
 
@@ -63,27 +71,6 @@ export class TaskManagementService {
     }
 
 
-    async getAllAnyStatusTasks(categoryId: number, currentPageNumber: number): Promise<PaginationWrapperDto> {
-        this.allAnyStatusTasksInfo = ((await this.backendRestApiService.getAllAnyStatusTasks(categoryId, currentPageNumber)).data as PaginationWrapperDto);
-        this._allAnyStatusTasksInfo.next(this.allAnyStatusTasksInfo);
-        return this.allAnyStatusTasksInfo;
-    }
-
-
-    async getAllPendingStatusTasks(categoryId: number, currentPageNumber: number): Promise<PaginationWrapperDto> {
-        this.allPendingStatusTaskInfo = ((await this.backendRestApiService.getAllPendingStatusTasks(categoryId, currentPageNumber)).data as PaginationWrapperDto);
-        this._allPendingStatusTaskInfo.next(this.allPendingStatusTaskInfo);
-        return this.allPendingStatusTaskInfo;
-    }
-
-
-    async getAllDoneStatusTasks(categoryId: number, currentPageNumber: number): Promise<PaginationWrapperDto> {
-        this.allDoneStatusTaskInfo = ((await this.backendRestApiService.getAllDoneStatusTasks(categoryId)).data as PaginationWrapperDto);
-        this._allDoneStatusTaskInfo.next(this.allDoneStatusTaskInfo);
-        return this.allDoneStatusTaskInfo;
-    }
-
-
     async getCategoryDetail(categoryId: number): Promise<TaskCategory> {
         const categoryDetailResponse: ResponseModel = await this.backendRestApiService.getCategoryDetail(categoryId);
         return categoryDetailResponse.data;
@@ -108,5 +95,78 @@ export class TaskManagementService {
         });
     }
 
+    validateTypeCriteria(criteriaShortName: string | undefined | null): CriteriaInfo {
+        const chosenCriteria: CriteriaInfo [] = this.typeCriteriaInfoList.filter(criteria => criteria.shortName == criteriaShortName);
+        if (chosenCriteria.length == 0) {
+            return this.typeCriteriaInfoList[0];
+        }
+        return chosenCriteria[0];
+    }
 
+
+    validateSortCriteria(criteriaShortName: string | undefined | null): CriteriaInfo {
+        const chosenCriteria: CriteriaInfo [] = this.sortCriteriaInfoList.filter(criteria => criteria.shortName == criteriaShortName);
+        if (chosenCriteria.length == 0) {
+            return this.sortCriteriaInfoList[0];
+        }
+        return chosenCriteria[0];
+    }
+
+    public validatePageCriteria(selectedPageNumber: number | undefined | null): number {
+        return UtilService.getUpdatedPageNumber(selectedPageNumber);
+    }
+
+
+    private getDefaultQueryParamValues(queryParamKey: any, queryParamValue: any): any {
+        switch (queryParamKey) {
+            case 'type':
+                return this.validateTypeCriteria(queryParamValue).shortName;
+            case 'sort':
+                return this.validateSortCriteria(queryParamValue).shortName;
+            case 'page':
+                return this.validatePageCriteria(queryParamValue);
+
+        }
+        return queryParamValue;
+    }
+
+    copyAndUpdateToAllowedAndDefaultValues(queryData: ListFilterSortPaginationWrapperDto, validatedObject: any): void {
+
+        Object.keys(queryData).forEach(key => {
+            if (key in validatedObject) {
+                // @ts-ignore
+                queryData[key] = validatedObject[key];
+            }
+            // @ts-ignore
+            queryData[key] = this.getDefaultQueryParamValues(key, queryData[key]);
+        });
+    }
+
+    InitializeListFilterSortPaginationWrapperDto(): ListFilterSortPaginationWrapperDto {
+        return {
+            type: "",
+            name: "",
+            sort: "",
+            page: 1,
+            pageSize: 12
+        };
+    }
+
+    async fetchFilteredTasks(queryData: ListFilterSortPaginationWrapperDto): Promise<PaginationWrapperDto> {
+        let queryParams = new HttpParams();
+        Object.entries(queryData).forEach((entry) => {
+            // The HttpParams is immutable as you can see here
+           queryParams = queryParams.append(entry[0], entry[1]);
+        });
+        const currentBackendUrl = BackendRestApiService.BACKEND_URL + `/api/task_manage/task/all/${ this.taskCategoryId }`;
+        const response = (await this.httpClient.request(RequestMethod.GET, currentBackendUrl, {
+            params: queryParams,
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            reportProgress: true,
+            responseType: 'json' // by default
+        }).toPromise()) as ResponseModel;
+        return response.data;
+    }
 }

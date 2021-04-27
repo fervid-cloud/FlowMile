@@ -4,5 +4,5 @@ export class PaginationWrapperDto {
     results: any[] = [];
     totalPages: number = 0;
     totalCount: number = 0;
-    pageSize: number = 0;
+    pageSize: number = 12;
 }

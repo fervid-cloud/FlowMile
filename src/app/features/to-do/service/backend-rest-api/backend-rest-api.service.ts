@@ -9,42 +9,35 @@ import { Observable } from 'rxjs';
 import { RequestMethod } from '../../../../auth/enum/request-method-enum';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class BackendRestApiService {
 
-    constructor(private httpClient: HttpClient) { }
-
-    backendUrl = environment.backendSocket;
-
-/*    request(method: string, url: string, options?: {
-      dashboard-body?: any;
-      headers?: HttpHeaders | {
-        [header: string]: string | string[];
-      };
-      params?: HttpParams | {
-        [param: string]: string | string[];
-      };
-      observe?: HttpObserve;
-      reportProgress?: boolean;
-      responseType?: 'arraybuffer' | 'blob' | 'json' | 'text';
-      withCredentials?: boolean;
-    }): Observable<any>;*/
-
-    getAllAnyStatusTasks(categoryId: number, pageNumber: number = 1, pageSize: number = 12): Promise<ResponseModel> {
-        const currentBackendUrl = this.backendUrl + `/api/task_manage/task/all/${categoryId}?pageNumber=${ pageNumber }&pageSize=${ pageSize }`;
-        return this.httpClient.request(RequestMethod.GET, currentBackendUrl, {
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          reportProgress: true,
-          responseType: 'json' // by default
-        }).toPromise() as Promise<ResponseModel>;
+    constructor(private httpClient: HttpClient) {
     }
 
 
-    getAllPendingStatusTasks(categoryId: number, pageNumber: number = 1, pageSize: number = 12): Promise<ResponseModel>{
-        const currentBackendUrl = this.backendUrl + `/api/task_manage/task/all/${categoryId}?pageNumber=${pageNumber}&pageSize=${pageSize}`;
+    static BACKEND_URL = environment.backendSocket;
+    backendUrl = environment.backendSocket;
+
+    /*    request(method: string, url: string, options?: {
+          dashboard-body?: any;
+          headers?: HttpHeaders | {
+            [header: string]: string | string[];
+          };
+          params?: HttpParams | {
+            [param: string]: string | string[];
+          };
+          observe?: HttpObserve;
+          reportProgress?: boolean;
+          responseType?: 'arraybuffer' | 'blob' | 'json' | 'text';
+          withCredentials?: boolean;
+        }): Observable<any>;*/
+
+
+
+    getAllPendingStatusTasks(categoryId: number, pageNumber: number = 1, pageSize: number = 12): Promise<ResponseModel> {
+        const currentBackendUrl = this.backendUrl + `/api/task_manage/task/all/${ categoryId }?pageNumber=${ pageNumber }&pageSize=${ pageSize }`;
         return this.httpClient.request(RequestMethod.GET, currentBackendUrl, {
             headers: {
                 'Content-Type': 'application/json'
@@ -54,8 +47,8 @@ export class BackendRestApiService {
         }).toPromise() as Promise<ResponseModel>;
     }
 
-    getAllDoneStatusTasks(categoryId: number, pageNumber: number = 1, pageSize: number = 12): Promise<ResponseModel>{
-        const currentBackendUrl = this.backendUrl + `/api/task_manage/task/all/${categoryId}?pageNumber=${pageNumber}&pageSize=${pageSize}`;
+    getAllDoneStatusTasks(categoryId: number, pageNumber: number = 1, pageSize: number = 12): Promise<ResponseModel> {
+        const currentBackendUrl = this.backendUrl + `/api/task_manage/task/all/${ categoryId }?pageNumber=${ pageNumber }&pageSize=${ pageSize }`;
         return this.httpClient.request(RequestMethod.GET, currentBackendUrl, {
             headers: {
                 'Content-Type': 'application/json'
@@ -66,8 +59,8 @@ export class BackendRestApiService {
     }
 
     getAllCategory(pageNumber: number = 1, pageSize: number = 12): Promise<ResponseModel> {
-        console.log("sending the request now");
-        const currentBackendUrl = this.backendUrl + `/api/task_manage/category/all?pageNumber=${pageNumber}&pageSize=${pageSize}`;
+        console.log('sending the request now');
+        const currentBackendUrl = this.backendUrl + `/api/task_manage/category/all?pageNumber=${ pageNumber }&pageSize=${ pageSize }`;
         return this.httpClient.request(RequestMethod.GET, currentBackendUrl, {
             headers: {
                 'Content-Type': 'application/json'
@@ -79,7 +72,7 @@ export class BackendRestApiService {
 
 
     getCategoryDetail(categoryId: number): Promise<ResponseModel> {
-        const currentBackendUrl = this.backendUrl + `/api/task_manage/category/detail/${categoryId}`;
+        const currentBackendUrl = this.backendUrl + `/api/task_manage/category/detail/${ categoryId }`;
         return this.httpClient.request(RequestMethod.GET, currentBackendUrl, {
             headers: {
                 'Content-Type': 'application/json'
@@ -90,7 +83,7 @@ export class BackendRestApiService {
     }
 
     getTaskDetail(taskId: number): Promise<ResponseModel> {
-        const currentBackendUrl = this.backendUrl + `/api/task_manage/task/detail/${taskId}`;
+        const currentBackendUrl = this.backendUrl + `/api/task_manage/task/detail/${ taskId }`;
         return this.httpClient.request(RequestMethod.GET, currentBackendUrl, {
             headers: {
                 'Content-Type': 'application/json'
@@ -99,7 +92,6 @@ export class BackendRestApiService {
             responseType: 'json' // by default
         }).toPromise() as Promise<ResponseModel>;
     }
-
 
 
     createCategory(newCreateCategory: CreateCategoryDto): Promise<ResponseModel> {
@@ -128,9 +120,8 @@ export class BackendRestApiService {
     }
 
 
-
     deleteCategory(categoryId: number): Promise<any> {
-        const currentBackendUrl = this.backendUrl + `/api/task_manage/category/delete/${categoryId}`;
+        const currentBackendUrl = this.backendUrl + `/api/task_manage/category/delete/${ categoryId }`;
         return this.httpClient.request(RequestMethod.DELETE, currentBackendUrl, {
             headers: {
                 'Content-Type': 'application/json'
@@ -142,7 +133,7 @@ export class BackendRestApiService {
 
 
     deleteTask(taskId: number): Promise<any> {
-        const currentBackendUrl = this.backendUrl + `/api/task_manage/task/delete/${taskId}`;
+        const currentBackendUrl = this.backendUrl + `/api/task_manage/task/delete/${ taskId }`;
         return this.httpClient.request(RequestMethod.DELETE, currentBackendUrl, {
             headers: {
                 'Content-Type': 'application/json'

@@ -8,7 +8,8 @@ import { Subscription } from 'rxjs';
 import {FormControl, FormGroup, Validators } from '@angular/forms';
 import { PaginationWrapperDto } from '../../model/pagination-wrapper-dto';
 import { UtilService } from 'src/app/shared/utility/util-service/util.service';
-import { CriteriaInfo, ListFilterSortPaginationWrapper, sortCriteriaInfo, typeCriteriaInfo } from '../../model/list-filterWrapper';
+import { CriteriaInfo, ListFilterSortPaginationWrapper } from '../../model/list-filterWrapper';
+import { ListFilterSortPaginationWrapperDto } from '../../dto/list-filter-wrapper-dto';
 
 @Component({
     selector: 'app-to-do-category',
@@ -39,27 +40,18 @@ export class ToDoCategoryComponent implements OnInit, OnDestroy {
 
     currentListFilterSortPaginationWrapper!: ListFilterSortPaginationWrapper;
 
-    sortCriteriaInfo: CriteriaInfo[] = sortCriteriaInfo;
-
-    typeCriteriaInfo: CriteriaInfo [] = typeCriteriaInfo;
-
     private searchWait = 500;
 
     setTimeoutTracker: any = undefined;
+
+    sortCriteriaInfoList: CriteriaInfo[];
 
     constructor(
         private taskManagementService: TaskManagementService,
         private router: Router,
         private activatedRoute: ActivatedRoute
     ) {
-        this.currentListFilterSortPaginationWrapper = {
-            type: typeCriteriaInfo[0],
-            sort: sortCriteriaInfo[0],
-            name:  "",
-            pageNumber: 1,
-            pageSize: 24
-        };
-
+        this.sortCriteriaInfoList = this.taskManagementService.sortCriteriaInfoList;
     }
 
     ngOnInit(): void {
@@ -251,11 +243,45 @@ export class ToDoCategoryComponent implements OnInit, OnDestroy {
         }, this.searchWait);
     }
 
+
     handleSelectedSortCriteria(selectedCriteria: CriteriaInfo): void {
-        const chosenCriteria: CriteriaInfo [] = this.sortCriteriaInfo.filter(criteria => criteria.id == selectedCriteria.id);
-        if (chosenCriteria.length > 0) {
-            this.currentListFilterSortPaginationWrapper.sort = chosenCriteria[0];
-        }
+        this.currentListFilterSortPaginationWrapper.sort = this.taskManagementService.validateSortCriteria(selectedCriteria.shortName);
+        console.log('requested query, ', selectedCriteria);
+        console.log('updated the query, ', this.currentListFilterSortPaginationWrapper.sort);
+        this.navigateToUpdatedQueryParams();
     }
+
+    private navigateToUpdatedQueryParams(): void {
+        console.log('updated the query, ', this.currentListFilterSortPaginationWrapper);
+        const queryParams: Params = {};
+        if (this.currentListFilterSortPaginationWrapper.name?.trim().length) {
+            queryParams.name = this.currentListFilterSortPaginationWrapper.name;
+        }
+        queryParams.sort = this.currentListFilterSortPaginationWrapper.sort;
+        queryParams.page = this.currentListFilterSortPaginationWrapper.page;
+        this.router.navigate([], {
+            queryParams,
+            relativeTo: this.activatedRoute
+        });
+    }
+
+
+    handleSelectedPage(currentPageNumber: number): void {
+        this.router.navigate([], {
+            queryParams: {page: currentPageNumber},
+            relativeTo: this.activatedRoute,
+            queryParamsHandling: 'merge'
+        });
+    }
+
+
+    private updatedCurrentTaskListInfo(queryData: ListFilterSortPaginationWrapperDto): void {
+        this.currentListFilterSortPaginationWrapper.type = this.taskManagementService.validateTypeCriteria(queryData.type);
+        this.currentListFilterSortPaginationWrapper.sort = this.taskManagementService.validateSortCriteria(queryData.sort);
+        this.currentListFilterSortPaginationWrapper.name = queryData.name;
+        this.currentListFilterSortPaginationWrapper.page = queryData.page;
+        this.currentListFilterSortPaginationWrapper.pageSize = queryData.pageSize;
+    }
+
 
 }

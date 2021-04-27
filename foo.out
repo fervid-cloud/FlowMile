@@ -1,0 +1,11 @@
+Not disabling GPU
+Main~createDefaultWorkingDir - Default working dir creation already attempted
+1619482155799 main info "Booting Postman 7.36.5, linux-5.4.0-72-generic on x64"
+1619482155801 main info "EventBus~initialize - Success"
+1619482155844 main warn "CloudProxyManager~init: Error while reading proxy configuration from user data - ",{"errno":-2,"code":"ENOENT","syscall":"open","path":"/home/mss/.config/Postman/Postman_Config/proxy","name":"Error","message":"ENOENT: no such file or directory, open '/home/mss/.config/Postman/Postman_Config/proxy'","stack":"Error: ENOENT: no such file or directory, open '/home/mss/.config/Postman/Postman_Config/proxy'"}
+1619482155846 main info "CloudProxyManager~init - Success"
+1619482155856 main info "UpdateHandler~init - Success"
+1619482163283 main info "RuntimeIPCAgent~started: Success"
+1619482174198 main info "window-manager~newSharedWindow: Shell loaded"
+1619482199975 main info "LinuxAutoUpdater~Cleanup - Initial cleanup successful"
+1619482200203 main info "Bootstrap-models~bootstrap - Success"
