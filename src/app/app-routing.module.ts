@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 import { DashboardComponent } from './shared/components/dashboard/dashboard.component';
 import { InternalServerErrorComponent } from './shared/components/error-handling/internal-server-error/internal-server-error.component';
 import { NotFoundComponent } from './shared/components/error-handling/not-found/not-found.component';
@@ -10,13 +10,14 @@ import { ToDoDetailComponent } from './features/to-do/components/to-do-detail/to
 import { ToDoCategoryComponent } from './features/to-do/components/to-do-category/to-do-category.component';
 import { LoginComponent } from './auth/login/login.component';
 import { SignupComponent } from './auth/signup/signup.component';
-import { CategoryDetailComponent } from './features/to-do/components/category-detail/category-detail.component';
 import { SettingsComponent } from './shared/components/settings/settings.component';
 import { AuthGuardService } from './auth/auth-guard/auth-guard.service';
 import { UserAccountComponent } from './shared/components/user-account/user-account.component';
 import { ProfileDetailComponent } from './shared/components/profile-detail/profile-detail.component';
 import { ChangePasswordComponent } from './shared/components/change-password/change-password.component';
 import { WelcomeUserComponent } from './shared/components/welcome-user/welcome-user.component';
+import { ChildAuthGuardService } from './auth/child-auth-guard/child-auth-guard.service';
+import { ServiceUnavailableComponent } from './shared/components/error-handling/service-unavailable/service-unavailable.component';
 
 /* What about path: '**' ?
     path : '**' will match absolutely anything(af / frewf / 321532152 / fsa is a match) with or without a pathMatch: 'full'.
@@ -70,6 +71,7 @@ const routes: Routes = [
         path: 'user',
         component: UserAccountComponent,
         canActivate: [ AuthGuardService ],
+        canActivateChild: [ChildAuthGuardService],
         children: [
             {
                 path: 'dashboard',
@@ -124,6 +126,18 @@ const routes: Routes = [
     },
     {
         path: 'error', pathMatch: 'full', component: InternalServerErrorComponent
+    }
+    ,
+    {
+        path: 'unavailable', pathMatch: 'full', component: ServiceUnavailableComponent
+    }
+    ,
+    {
+        path: 'not-found', pathMatch: 'full', component: NotFoundComponent
+    }
+    ,
+    {
+        path: '', pathMatch: 'full', redirectTo: '/user/dashboard'
     }
     ,
     {

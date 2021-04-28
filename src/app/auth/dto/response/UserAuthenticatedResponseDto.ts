@@ -5,7 +5,7 @@ export interface UserAuthenticatedResponseDto {
 
     userDetailDto: LocalUser;
 
-    accessToken: string;
+    token: string;
 
     message: string;
 

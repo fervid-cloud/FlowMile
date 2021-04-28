@@ -17,9 +17,12 @@ export class AuthGuardService implements CanActivate {
 
     /*  Note: The canActivate guard still allows the component for a given route to be activated (but not navigated to).
       If we wanted to prevent activation altogether, we could use the canLoad guard.*/
-    canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-        if (!this.authService.isAuthenticated()) {
-            this.router.navigateByUrl('/login');
+    async canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean> {
+        console.log("checking if route can be activated");
+        const authenticatedStatus: boolean = await this.authService.isAuthenticated();
+        console.log("the status of user authentication is : ", authenticatedStatus);
+        if (!authenticatedStatus) {
+            await this.router.navigateByUrl('/login');
             return false;
         }
         return true;

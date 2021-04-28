@@ -40,6 +40,7 @@ import { AnimatedSearchInputComponent } from './shared/components/animated-searc
 import { CustomFilterDropdownComponent } from './shared/components/custom-filter-dropdown/custom-filter-dropdown.component';
 import { ToastrModule } from 'ngx-toastr';
 import { UtilService } from './shared/utility/util-service/util.service';
+import { ServiceUnavailableComponent } from './shared/components/error-handling/service-unavailable/service-unavailable.component';
 
 @NgModule({
     declarations: [
@@ -74,6 +75,7 @@ import { UtilService } from './shared/utility/util-service/util.service';
         TypeWriterWordSimulatorComponent,
         AnimatedSearchInputComponent,
         CustomFilterDropdownComponent,
+        ServiceUnavailableComponent,
 
     ],
     imports: [
@@ -90,8 +92,7 @@ import { UtilService } from './shared/utility/util-service/util.service';
     ],
     providers: [
         {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
-        AuthGuardService,
-        UtilService
+        AuthGuardService
     ],
     bootstrap: [ AppComponent ]
 })

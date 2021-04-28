@@ -25,13 +25,12 @@ export class LoginComponent implements OnInit {
 
 
     async ngOnInit(): Promise<void> {
-        await this.routeIfLoggedIn();
-
         this.signInForm = new FormGroup({
             // 'email': new FormControl(null, [Validators.required, Validators.email]),
             email: new FormControl(null, [Validators.required]),
             password: new FormControl(null, Validators.required)
         });
+        // this.routeIfLoggedIn();
     }
 
 
@@ -55,7 +54,8 @@ export class LoginComponent implements OnInit {
 
         if (loginAttemptResult) {
             console.log("login successful :)");
-            this.router.navigate(["/user/dashboard"]);
+            console.log("routing to dashboard");
+            await this.router.navigate([ "/user/dashboard" ]);
             return;
         }
         this.invalidCredentialStatus = true;
@@ -65,9 +65,10 @@ export class LoginComponent implements OnInit {
 
     }
 
-    private routeIfLoggedIn(): Promise<boolean> {
-        this.authService.isAuthenticated();
-        return this.router.navigate(["/user/dashboard"]);
+    private routeIfLoggedIn(): void {
+        if(this.authService.isAuthenticated()) {
+            this.router.navigate([ "/user/dashboard" ]);
+        }
     }
 
 }

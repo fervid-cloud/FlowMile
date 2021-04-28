@@ -1,18 +1,18 @@
 <div class="content container">
     <div class="completeWrapper">
-        <h1 class="display-1 me-3">500</h1>
+        <h1 class="display-1 me-3">503</h1>
         <div class="messageWrapper">
-            <h4 class="">Oops! We have a problem!</h4>
-            <p class="text-muted">The page you are looking for is temporarily unavailable.</p>
-
+            <h4 class="">Oops! Service is unavailable!</h4>
+            <p class="text-muted">Unable to Connect to the Server</p>
+            
             <!-- Angular docs say:
                         If the first segment begins with /, the router will look up the route from the root of the app.
                         If the first segment begins with ./, or doesn't begin with a slash, the router will instead look in the children of the
                         current activated route.
                         And if the first segment begins with ../, the router will go up one level. -->
-
-            <a href="#" [routerLink]="['/user/dashboard']" class="btn btn-success">Go to Home</a>
-
+            
+            <a href="#" [routerLink]="['/user/dashboard']" class="btn btn-success">Try Again</a>
+        
         </div>
     </div>
 </div>

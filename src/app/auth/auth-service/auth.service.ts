@@ -14,16 +14,6 @@ import { Router } from '@angular/router';
 })
 export class AuthService {
 
-    static ACCESS_TOKEN = "accessToken";
-
-    static USER_DETAIL = "userDetail";
-
-    backendSocket: string = environment.backendSocket;
-
-    accessToken!: string | null | undefined;
-
-    localUserDetail!: LocalUser | null | undefined;
-
     constructor(
         private router: Router,
         private httpClient: HttpClient
@@ -31,16 +21,28 @@ export class AuthService {
         this.getStoredData();
     }
 
-    getStoredData(): void {
-        try {
-            this.accessToken = window.localStorage.getItem(AuthService.ACCESS_TOKEN);
-            this.localUserDetail = JSON.parse(window.localStorage.getItem(AuthService.USER_DETAIL) as string);
+    static TOKEN = "token";
 
-            console.log('The access token is : ', this.accessToken);
-            console.log('The User Detail is :', this.localUserDetail);
+    backendSocket: string = environment.backendSocket;
+
+    token!: string | null | undefined;
+
+    localUserDetail!: LocalUser | null | undefined;
+
+    async getStoredData(): Promise<void> {
+        try {
+            console.log("getting token from the storage");
+            this.token = window.localStorage.getItem(AuthService.TOKEN);
+            if(!this.token) {
+               throw new Error("Token doesn't exists");
+            }
         } catch (ex) {
             console.log("some error occurred while retrieving the user detail");
             console.log(ex);
+            this.logOut();
+        } finally {
+            console.log('The token is : ', this.token);
+            console.log('The User Detail is :', this.localUserDetail);
         }
     }
 
@@ -58,7 +60,7 @@ export class AuthService {
 
         try {
             console.log("log in request initiating");
-            const loginResponse =  await this.httpClient.request(RequestMethod.POST, this.backendSocket + '/api/login/userLogin', {
+            const loginResponse =  await this.httpClient.request(RequestMethod.POST, this.backendSocket + '/api/account/login', {
                 headers: {
                     'Content-Type': 'application/json'
                     // 'Content-Type': 'application/x-www-form-urlencoded',
@@ -68,23 +70,37 @@ export class AuthService {
             }).toPromise() as ResponseModel;
 
             const authenticationResponse: UserAuthenticatedResponseDto  = (loginResponse.data as UserAuthenticatedResponseDto);
-            this.accessToken = authenticationResponse.accessToken;
-            this.localUserDetail = authenticationResponse.userDetailDto;
+            this.token = authenticationResponse.token;
             this.storeRequiredData();
+            await this.getStoredData();
 
             return true;
         } catch (ex) {
+
             console.log("exception was : ", ex);
             return false;
         }
 
     }
 
-    isAuthenticated(): boolean {
-        if (!this.accessToken || !this.localUserDetail) {
+    async isAuthenticated(): Promise<boolean> {
+        if (!this.token) {
             return false;
         }
-        return !AuthService.isTokenExpired(this.accessToken);
+        console.log("token taken from storage is : ", this.token);
+        if (!this.localUserDetail) {
+            console.log("no userdetail exist, so updating user");
+            try {
+                this.localUserDetail = await this.getUpdatedUserInfo(this.token);
+                console.log("updated localUserDetail: ", this.localUserDetail);
+            } catch(ex){
+                console.log("could not connect to the internet");
+                this.router.navigate(["/unavailable"]);
+            }
+        } else {
+            console.log("user detail already exists");
+        }
+        return !AuthService.isTokenExpired(this.token);
     }
 
 
@@ -101,30 +117,41 @@ export class AuthService {
      * Since the browser always send the cookies that are in the same domain, the hackers post request get authenticated.
      */
     storeRequiredData(): void {
-        if (typeof this.accessToken === 'string') {
-            window.localStorage.setItem(AuthService.ACCESS_TOKEN, this.accessToken);
+        if (typeof this.token === 'string') {
+            window.localStorage.setItem(AuthService.TOKEN, this.token);
         }
-        window.localStorage.setItem(AuthService.USER_DETAIL, JSON.stringify(this.localUserDetail));
-
         // future steps use https://www.npmjs.com/package/lzutf8
         // then use https://www.npmjs.com/package/cryptr
     }
 
     logOut(): void {
-        this.accessToken = null;
-        this.localUserDetail = null;
-        window.localStorage.removeItem(AuthService.ACCESS_TOKEN);
-        window.localStorage.clear();
+        this.clearUserData();
         this.router.navigateByUrl("/login");
+    }
+
+    clearUserData() {
+        this.token = null;
+        this.localUserDetail = null;
+        window.localStorage.removeItem(AuthService.TOKEN);
+        window.localStorage.clear();
     }
 
     getAuthorizationToken(): string {
         console.log('the token is :');
-        return this.accessToken as string;
+        return this.token as string;
     }
 
     getLocalUserInfo(): LocalUser {
         return this.localUserDetail as LocalUser;
+    }
+
+    private async getUpdatedUserInfo(token: string) {
+        const decodedPayLoad = jwt_decode<JwtPayload>(token);
+        const username =  decodedPayLoad.sub;
+        console.log("subject from jwt is : ", username);
+        const updatedUserInfo: LocalUser = ( await this.httpClient.request(RequestMethod.GET, this.backendSocket + `/api/account/userInfo/${username}`).toPromise() as ResponseModel).data;
+        console.log("updatedUserInfo is : ", updatedUserInfo);
+        return updatedUserInfo;
     }
 
      static isTokenExpired(currentToken: string): boolean {
@@ -132,10 +159,13 @@ export class AuthService {
             const decodedPayLoad = jwt_decode<JwtPayload>(currentToken);
             const expiryTime = decodedPayLoad.exp;
             // !! converts into variable value into a truth or falsy value
-            return !!expiryTime && (expiryTime > Date.now());
+            return !!expiryTime && (expiryTime >= Date.now());
         } catch (ex) {
             console.log(ex);
             return false;
         }
     }
+
+
+
 }

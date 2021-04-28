@@ -32,7 +32,7 @@
     "max-classes-per-file": false,
     "max-line-length": [
       true,
-      240
+      340
     ],
     "member-ordering": [
       true,
