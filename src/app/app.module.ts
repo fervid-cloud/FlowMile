@@ -15,7 +15,7 @@ import { InternalServerErrorComponent } from './shared/components/error-handling
 import { ToDoBoxComponent } from './features/to-do/components/to-do-box/to-do-box.component';
 import { CreateToDoComponent } from './features/to-do/components/create-to-do/create-to-do.component';
 import { ToDoDetailComponent } from './features/to-do/components/to-do-detail/to-do-detail.component';
-import { TaskListComponent } from './features/to-do/components/to-do-list/task-list.component';
+import { TaskListComponent } from './features/to-do/components/task-list/task-list.component';
 import { ToDoCategoryComponent } from './features/to-do/components/to-do-category/to-do-category.component';
 import { CategoryBoxComponent } from './features/to-do/components/category-box/category-box.component';
 import { LoginComponent } from './auth/login/login.component';

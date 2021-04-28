@@ -50,7 +50,7 @@
                 </div>
             </div>
             
-            <div *ngIf="currentActiveCategoriesInfo.totalPages > 1" class="paginationInfo d-flex mb-2">
+            <div *ngIf="currentActiveCategoriesInfo.totalPages > 1" class="paginationInfo d-flex mt-auto">
                 <app-pagination (onPageSelected)="handleSelectedPage($event)" [itemsInfoPage]="currentActiveCategoriesInfo" class="m-auto">
                 </app-pagination>
             </div>

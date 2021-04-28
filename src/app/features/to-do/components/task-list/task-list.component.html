@@ -21,7 +21,7 @@
             </div>
         </div>
         
-        <div *ngIf="currentActiveTasksInfo.totalPages > 1" class="paginationInfo d-flex mb-2">
+        <div *ngIf="currentActiveTasksInfo.totalPages > 1" class="paginationInfo d-flex mt-auto">
             <app-pagination (onPageSelected)="handleSelectedPage($event)" [itemsInfoPage]="currentActiveTasksInfo" class="m-auto">
             </app-pagination>
         </div>

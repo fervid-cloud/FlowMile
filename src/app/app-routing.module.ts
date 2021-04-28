@@ -4,7 +4,7 @@ import { DashboardComponent } from './shared/components/dashboard/dashboard.comp
 import { InternalServerErrorComponent } from './shared/components/error-handling/internal-server-error/internal-server-error.component';
 import { NotFoundComponent } from './shared/components/error-handling/not-found/not-found.component';
 import { SingleCategoryComponent } from './features/to-do/components/single-category/single-category.component';
-import { TaskListComponent } from './features/to-do/components/to-do-list/task-list.component';
+import { TaskListComponent } from './features/to-do/components/task-list/task-list.component';
 import { CreateToDoComponent } from './features/to-do/components/create-to-do/create-to-do.component';
 import { ToDoDetailComponent } from './features/to-do/components/to-do-detail/to-do-detail.component';
 import { ToDoCategoryComponent } from './features/to-do/components/to-do-category/to-do-category.component';
