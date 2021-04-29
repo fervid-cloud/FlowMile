@@ -9,7 +9,7 @@
 <div class="login-body">
     <div class="backGroundImage"><img src="/assets/images/signup/signUpCompressed.jpg"></div>
     <div class="loginPaddingWrapper d-flex p-4">
-
+        
         <div class="login-box">
             <div class="loadingIndicator to do"></div>
             <div class="login text-center h5">
@@ -17,116 +17,127 @@
             </div>
             <div class="text-center">
                 <div class="websiteNameWrapper">
-
+                    
                     <span data-bn-type="text" class="urlDecoration">https://</span>
                     mss.com
                 </div>
             </div>
             <div *ngIf="invalidCredentialStatus"
-                class="invalidCredentialNotification my-3 text-center btn btn-danger d-block">
-                <p>Wrong email or password.</p>
+                 class="invalidCredentialNotification my-3 text-center btn btn-danger d-block">
+                <p>Invalid data, please enter valid data.</p>
             </div>
             <!-- Note that there is no relation of [formGroup] with form type element, we can use it for even normal div also -->
-            <form [formGroup]="signInForm">
-
+            <form [formGroup]="registerForm">
+                
                 <div class="row">
                     <!--                     dividing the row into two parts of column through col-sm-6 staring from small device see css for more info about breakpoints
                     so for extra small device it will automatically be stacked applied by bootstrap for rol and col -->
                     <div class="col-sm-6 mb-3">
                         <div class="form-group">
                             <label for="exampleInputEmail1" class="form-label">First Name</label>
-                            <input autocomplete="on" type="text" class="form-control" placeholder="First Name"
-                                aria-label="Server">
+                            <input [formControlName]="'firstName'" autocomplete="on" type="text" class="form-control"
+                                   placeholder="First Name"
+                                   aria-label="Server">
                         </div>
+                        <span class="text-danger" *ngIf="invalidFormSubmission">
+                            <span *ngIf="registerForm.get('firstName')?.errors?.required" class=" help-block errorInfo">
+                                 <i class="errorIcon fas fa-info-circle me-1"></i>
+                                First name is required
+                            </span>
+                    </span>
                     </div>
-
+                    
                     <div class="col-sm-6 mb-3">
                         <div class="form-group">
                             <label for="exampleInputEmail1" class="form-label">Last Name</label>
-                            <input autocomplete="on" type="text" class="form-control" placeholder="Last Name"
-                                aria-label="Server">
+                            <input [formControlName]="'lastName'" autocomplete="on" type="text" class="form-control"
+                                   placeholder="Last Name"
+                                   aria-label="Server">
                         </div>
-                    </div>
-
-                    <span class="text-danger" *ngIf="invalidFormSubmission">
-                        <span *ngIf="signInForm.get('email')?.errors?.required" class=" help-block">
-                            Username is required
-                        </span>
-                        <span class="help-block" *ngIf="signInForm.get('email')?.errors?.email">
-                            Invalid username
-                        </span>
+                        <span class="text-danger" *ngIf="invalidFormSubmission">
+                            <span *ngIf="registerForm.get('lastName')?.errors?.required" class=" help-block errorInfo">
+                                 <i class="errorIcon fas fa-info-circle me-1"></i>
+                                Last name is required
+                            </span>
                     </span>
-
+                    </div>
+                
+                
                 </div>
-
-
+                
+                
                 <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label">Email address</label>
-
+                    
                     <input [formControlName]="'email'" type="email" placeholder="Email" class="form-control"
-                        id="exampleInputEmail1" aria-describedby="emailHelp" autocomplete="on" required>
-
+                           id="exampleInputEmail1" aria-describedby="emailHelp" autocomplete="on" required>
+                    
                     <!-- <div id="emailHelp" class="form-text">Your email is your username</div> -->
                     <span class="text-danger" *ngIf="invalidFormSubmission">
-                        <span *ngIf="signInForm.get('email')?.errors?.required" class=" help-block">
-                            Username is required
+                        <span *ngIf="registerForm.get('email')?.errors?.required" class=" help-block errorInfo">
+                             <i class="errorIcon fas fa-info-circle me-1"></i>
+                            Email is required
                         </span>
-                        <span class="help-block" *ngIf="signInForm.get('email')?.errors?.email">
-                            Invalid username
+                        <span class="help-block errorInfo" *ngIf="registerForm.get('email')?.errors?.email">
+                             <i class="errorIcon fas fa-info-circle me-1"></i>
+                            Invalid Email
                         </span>
                     </span>
-
+                
                 </div>
-
+                
                 <div class="row">
                     <!--                     dividing the row into two parts of column through col-sm-6 staring from small device see css for more info about breakpoints
                                     so for extra small device it will automatically be stacked applied by bootstrap for rol and col -->
                     <div class="col-sm-6 mb-3">
                         <div class="form-group">
-                            <label for="exampleInputPassword1" class="form-label">Password</label>
-
+                            <label class="form-label">Password</label>
+                            
                             <input [formControlName]="'password'" type="password" placeholder="Password"
-                                class="form-control" autocomplete="off" required>
-
-                            <span class="text-danger" *ngIf="invalidFormSubmission">
-                                <span class="help-block" *ngIf="signInForm.get('password')?.errors?.required">
+                                   class="form-control" autocomplete="off" required>
+                        
+                        
+                        </div>
+                        <span class="text-danger" *ngIf="invalidFormSubmission">
+                                <span class="help-block errorInfo"
+                                      *ngIf="registerForm.get('password')?.errors?.required">
+                                     <i class="errorIcon fas fa-info-circle me-1"></i>
                                     Password is required
                                 </span>
-                            </span>
-                        </div>
+                        </span>
                     </div>
-
+                    
                     <div class="col-sm-6 mb-3">
                         <div class="form-group">
-                            <label for="exampleInputPassword1" class="form-label">Confirm Password</label>
-
-                            <input [formControlName]="'password'" type="password" placeholder="Password" class="form-control" autocomplete="off"
-                                required>
-
-                            <span class="text-danger" *ngIf="invalidFormSubmission">
-                                <span class="help-block" *ngIf="signInForm.get('password')?.errors?.required">
-                                    Password is required
+                            <label class="form-label">Confirm Password</label>
+                            
+                            <input [formControlName]="'confirmPassword'" type="password" placeholder="Password"
+                                   class="form-control" autocomplete="off"
+                                   required>
+                        </div>
+                        <span class="text-danger" *ngIf="invalidFormSubmission">
+                                <span class="help-block errorInfo"
+                                      *ngIf="registerForm.get('confirmPassword')?.errors?.required">
+                                     <i class="errorIcon fas fa-info-circle me-1"></i>
+                                    password is required
                                 </span>
                             </span>
-                        </div>
+    
+                        <span class="text-danger" *ngIf="invalidFormSubmission">
+                            <span class="help-block errorInfo" *ngIf="registerForm?.errors?.passwordsMismatch">
+                                 <i class="errorIcon fas fa-info-circle me-1"></i>
+                                Passwords do not match
+                            </span>
+                        </span>
                     </div>
-
-                    <span class="text-danger" *ngIf="invalidFormSubmission">
-                        <span *ngIf="signInForm.get('email')?.errors?.required" class=" help-block">
-                            Username is required
-                        </span>
-                        <span class="help-block" *ngIf="signInForm.get('email')?.errors?.email">
-                            Invalid username
-                        </span>
-                    </span>
-
                 </div>
 
-                <div type="submit" class="btn customButton d-block" (click)="onLoginAttempt($event)">Sign Up
-                    ></div>
+                <div type="submit" class="btn customButton d-block" (click)="onRegisterAttempt($event)">Sign Up
+                    >
+                </div>
                 <div class="forgotPassword pt-3 text-center">
-                    <p>Already have an account? <span class="loginLink" routerLink="/login"> Sign In</span> </p>
-
+                    <p>Already have an account? <span class="loginLink" routerLink="/login"> Sign In</span></p>
+                
                 </div>
             </form>
         </div>

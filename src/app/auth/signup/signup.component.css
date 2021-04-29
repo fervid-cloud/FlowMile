@@ -274,3 +274,15 @@ input:disabled {
     border-top: 1px solid #22395e;
     /* color: #474D57; */
 }
+
+.errorInfo {
+    display: flex;
+    align-items: center;
+    font-size: 12px;
+    margin-top: .20rem!important;
+}
+
+.passwordNotMatch {
+    margin-top: -0.5rem !important;
+    display: block;
+}

@@ -63,7 +63,17 @@ const routes: Routes = [
         pathMatch: 'full'
     },
     {
+        path: 'signin',
+        component: LoginComponent,
+        pathMatch: 'full'
+    },
+    {
         path: 'signup',
+        component: SignupComponent,
+        pathMatch: 'full'
+    },
+    {
+        path: 'register',
         component: SignupComponent,
         pathMatch: 'full'
     },

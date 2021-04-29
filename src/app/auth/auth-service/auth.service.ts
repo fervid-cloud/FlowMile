@@ -8,6 +8,7 @@ import { HttpClient } from '@angular/common/http';
 import { RequestMethod } from '../enum/request-method-enum';
 import jwt_decode, { JwtPayload } from 'jwt-decode';
 import { Router } from '@angular/router';
+import { UserRegistrationDto } from '../dto/request/user-registration-dto';
 
 @Injectable({
     providedIn: 'root'
@@ -97,9 +98,8 @@ export class AuthService {
                 console.log("could not connect to the internet");
                 this.router.navigate(["/unavailable"]);
             }
-        } else {
-            console.log("user detail already exists");
         }
+
         return !AuthService.isTokenExpired(this.token);
     }
 
@@ -154,6 +154,12 @@ export class AuthService {
         return updatedUserInfo;
     }
 
+
+    async registerUser(userRegistrationDto: UserRegistrationDto): Promise<boolean> {
+
+        return true;
+    }
+
      static isTokenExpired(currentToken: string): boolean {
         try {
             const decodedPayLoad = jwt_decode<JwtPayload>(currentToken);
@@ -165,7 +171,4 @@ export class AuthService {
             return false;
         }
     }
-
-
-
 }
