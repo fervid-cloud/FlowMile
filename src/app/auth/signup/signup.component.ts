@@ -41,7 +41,7 @@ export class SignupComponent implements OnInit {
         const newPassword = control.get('password');
         const confirmPassword = control.get('confirmPassword');
         // if no values, valid
-        if (!newPassword || !confirmPassword) {
+        if (!newPassword?.value || !confirmPassword?.value) {
             return null;
         }
         // if values match return null, else 'mismatchedPasswords:true'

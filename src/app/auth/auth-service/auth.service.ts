@@ -9,6 +9,8 @@ import { RequestMethod } from '../enum/request-method-enum';
 import jwt_decode, { JwtPayload } from 'jwt-decode';
 import { Router } from '@angular/router';
 import { UserRegistrationDto } from '../dto/request/user-registration-dto';
+import { EditUserInfoDto } from '../dto/request/edit-user-info-dto';
+import { ChangePasswordDto } from '../dto/request/change-password-dto';
 
 @Injectable({
     providedIn: 'root'
@@ -156,7 +158,15 @@ export class AuthService {
 
 
     async registerUser(userRegistrationDto: UserRegistrationDto): Promise<boolean> {
+        return true;
+    }
 
+    async editUserInfo(editUserInfo: EditUserInfoDto): Promise<LocalUser> {
+        return new LocalUser();
+    }
+
+
+    async changePassword(changePasswordDto: ChangePasswordDto): Promise<boolean> {
         return true;
     }
 

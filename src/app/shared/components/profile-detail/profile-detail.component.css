@@ -163,7 +163,7 @@ input:disabled {
 
 .disabled {
     pointer-events: none;
-    opacity: 0.4;
+    /*opacity: 0.9;*/
 }
 
 .customInput {
@@ -214,4 +214,13 @@ input:disabled {
 .customEditButton:hover {
     background-color: #9b9696;
     color: white;
+}
+
+.editableInput {
+    border: 1px solid #49494a;
+}
+
+.buttonDisable {
+    pointer-events: none;
+    opacity: 0.4;
 }

@@ -19,7 +19,7 @@
                 <div class="col-md-6 mb-3">
                     <div class="form-group">
                         <label class="form-label">Username</label>
-                        <input autocomplete="on" type="text" class="form-control" placeholder="First Name"
+                        <input autocomplete="on" type="text" class="form-control disabled" [placeholder]="currentUserDetail.username"
                                aria-label="Server">
                     </div>
                 </div>
@@ -27,19 +27,10 @@
                 <div class="col-md-6 mb-3">
                     <div class="form-group">
                         <label class="form-label">Email</label>
-                        <input autocomplete="on" type="text" class="form-control" placeholder="Last Name"
+                        <input autocomplete="on" type="text" class="form-control disabled" [placeholder]="currentUserDetail.email"
                                aria-label="Server">
                     </div>
                 </div>
-        
-                <span class="text-danger" *ngIf="invalidFormSubmission">
-                        <span *ngIf="profileEditForm.get('email')?.errors?.required" class=" help-block">
-                            Username is required
-                        </span>
-                        <span class="help-block" *ngIf="profileEditForm.get('email')?.errors?.email">
-                            Invalid username
-                        </span>
-                </span>
     
             </div>
     
@@ -49,27 +40,34 @@
                 <div class="col-md-6 mb-3">
                     <div class="form-group">
                         <label  class="form-label">First Name</label>
-                        <input autocomplete="on" type="text" class="form-control" placeholder="First Name"
+                        <input *ngIf="profileEditMode" [formControlName]="'firstName'" autocomplete="on" type="text" class="form-control editableInput" placeholder="First Name"
+                               aria-label="Server">
+                        <input *ngIf="!profileEditMode"  autocomplete="on" type="text" class="form-control disabled" [placeholder]="currentUserDetail.firstName"
                                aria-label="Server">
                     </div>
+                    <span class="text-danger" *ngIf="invalidFormSubmission">
+                            <span *ngIf="profileEditForm.get('firstName')?.errors?.required" class=" help-block errorInfo">
+                                 <i class="errorIcon fas fa-info-circle me-1"></i>
+                                First name is required
+                            </span>
+                        </span>
                 </div>
                 
                 <div class="col-md-6 mb-3">
                     <div class="form-group">
                         <label  class="form-label">Last Name</label>
-                        <input autocomplete="on" type="text" class="form-control" placeholder="Last Name"
+                        <input *ngIf="profileEditMode" [formControlName]="'lastName'" autocomplete="on" type="text" class="form-control editableInput" placeholder="Last Name"
+                               aria-label="Server">
+                        <input *ngIf="!profileEditMode" autocomplete="on" type="text" class="form-control disabled " [placeholder]="currentUserDetail.lastName"
                                aria-label="Server">
                     </div>
+                    <span class="text-danger" *ngIf="invalidFormSubmission">
+                            <span *ngIf="profileEditForm.get('lastName')?.errors?.required" class=" help-block errorInfo">
+                                 <i class="errorIcon fas fa-info-circle me-1"></i>
+                                Last name is required
+                            </span>
+                    </span>
                 </div>
-                
-                <span class="text-danger" *ngIf="invalidFormSubmission">
-                        <span *ngIf="profileEditForm.get('email')?.errors?.required" class=" help-block">
-                            Username is required
-                        </span>
-                        <span class="help-block" *ngIf="profileEditForm.get('email')?.errors?.email">
-                            Invalid username
-                        </span>
-                </span>
             
             </div>
     
@@ -80,22 +78,16 @@
                 <div class="col-md-6 mb-3">
                     <div class="form-group">
                         <label class="form-label">Creation Time</label>
-                        <input autocomplete="on" type="email" class="form-control" placeholder="First Name"
+                        <input autocomplete="on" type="email" class="form-control disabled" [placeholder]="currentUserDetail.creationTime"
                                aria-label="Server">
                     </div>
                 </div>
-        
-                <span class="text-danger" *ngIf="invalidFormSubmission">
-                        <span *ngIf="profileEditForm.get('email')?.errors?.required" class=" help-block">
-                            Username is required
-                        </span>
-                        <span class="help-block" *ngIf="profileEditForm.get('email')?.errors?.email">
-                            Invalid username
-                        </span>
-                </span>
     
             </div>
-            <div type="submit" class="btn btn-primary customEditButton" (click)="onEditAttempt($event)">Edit
+            
+            <div *ngIf="!profileEditMode" type="submit" class="btn btn-primary customEditButton" (click)="onEditAttempt($event)">Edit
+            </div>
+            <div *ngIf="profileEditMode" type="submit" class="btn btn-primary customEditButton" (click)="onSaveAttempt($event)">Save
             </div>
         </form>
     </div>
