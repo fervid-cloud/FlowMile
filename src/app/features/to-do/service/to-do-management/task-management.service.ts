@@ -11,6 +11,7 @@ import { ListFilterSortPaginationWrapperDto } from '../../dto/list-filter-wrappe
 import { CriteriaInfo, sortCriteriaInfoList, typeCriteriaInfoList } from '../../model/list-filterWrapper';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { RequestMethod } from '../../../../auth/enum/request-method-enum';
+import { CreateCategoryDto } from '../../dto/create-category-dto';
 
 @Injectable({
     providedIn: 'root'
@@ -83,7 +84,7 @@ export class TaskManagementService {
     }
 
 
-    async createNewCategory(taskCategory: TaskCategory): Promise<void> {
+    async createNewCategory(createCategoryDto: CreateCategoryDto): Promise<void> {
         console.log('added');
     }
 
@@ -197,5 +198,13 @@ export class TaskManagementService {
             queryParams = queryParams.append(entry[0], entry[1]);
         });
         return queryParams;
+    }
+
+    async editCategoryInfo(createCategoryDto: CreateCategoryDto): Promise<TaskCategory> {
+       return new TaskCategory();
+    }
+
+    async deleteCategory(currentCategory: TaskCategory): Promise<boolean> {
+        return true;
     }
 }

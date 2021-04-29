@@ -22,6 +22,9 @@ export class CategoryDetailComponent implements OnInit {
     @ViewChild('saveConfirmationDialog')
     saveConfirmationDialogModelTemplateRef!: ElementRef;
 
+    @ViewChild('crudOperationsParentButton')
+    crudOperationsParentButtonTemplateRef!: ElementRef;
+
     private deleteConfirmationDialogModel!: Modal;
 
     private saveConfirmationDialogModel!: Modal;
@@ -33,10 +36,14 @@ export class CategoryDetailComponent implements OnInit {
     categoryEditForm!: FormGroup;
 
     showSpinner = false;
+
+    invalidFormSubmission: boolean = false;
+
+
     editFormSubscription!: Subscription;
 
     constructor(
-        private todoManagementService: TaskManagementService,
+        private taskManagementService: TaskManagementService,
         private utilService: UtilService,
         private router: Router,
         private activatedRoute: ActivatedRoute
@@ -75,7 +82,7 @@ export class CategoryDetailComponent implements OnInit {
         const aProps = Object.getOwnPropertyNames(a);
         const bProps = Object.getOwnPropertyNames(b);
 
-        for (let i = 0; i < aProps.length; i++) {
+        for(let i = 0; i < aProps.length; i++) {
             const propName = aProps[i];
 
             if (a[propName] !== b[propName]) {
@@ -88,7 +95,7 @@ export class CategoryDetailComponent implements OnInit {
 
 
     areSomeEquivalent(a: any, b: any) {
-        const parameters: string [] = ['categoryTitle', 'categoryDescription'];
+        const parameters: string [] = ['name', 'description'];
         const n = parameters.length;
 
         for (let i = 0; i < n; ++i) {
@@ -150,13 +157,16 @@ export class CategoryDetailComponent implements OnInit {
     }
 
 
-    onSaveAction() {
+    onSaveAction(event: Event) {
         if (!this.categoryEditForm.dirty) {
             this.categoryEditMode = false;
             return;
         }
 
         this.saveConfirmationDialogModel.show();
+
+
+
     }
 
 
@@ -165,15 +175,35 @@ export class CategoryDetailComponent implements OnInit {
     }
 
 
-    async OnSaveConfirm() {
+    async OnSaveConfirm(event: Event) {
         this.saveConfirmationDialogModel.hide();
-        this.toggleSpinnerStatus();
-        this.currentCategory.name = this.categoryEditForm.get('categoryTitle')?.value;
-        this.currentCategory.description = this.categoryEditForm.get('categoryDescription')?.value;
-        this.currentCategory.modificationTime = new Date();
-        // await this.todoManagementService.editProvidedCategory(this.currentCategory);
+        this.invalidFormSubmission = false;
+        if (!this.categoryEditForm.valid) {
+            this.invalidFormSubmission = true;
+            return;
+        }
+        const buttonParent = (event.target as HTMLElement)?.parentElement;
+        if(!buttonParent) {
+            console.log("button parent elememnt is null");
+            return;
+        }
+        const crudOperationsParentButton = this.crudOperationsParentButtonTemplateRef.nativeElement;
+        crudOperationsParentButton.classList.add("buttonDisable");
+        this.categoryEditForm.disable();
+
+        // tslint:disable-next-line:no-non-null-assertion
+        const name = this.categoryEditForm.get('name')!.value; // telling the compiler that value wil always exist
+        const description = this.categoryEditForm.get('description')?.value; // another trick using optional chaining
+        console.log("Category added");
+
+        await new Promise((resolve) => setTimeout(() => resolve(true), 3000));
+        this.currentCategory = await this.taskManagementService.editCategoryInfo({
+            name,
+            description
+        });
+        crudOperationsParentButton.classList.remove("buttonDisable");
+        this.categoryEditForm.enable();
         this.categoryEditMode = false;
-        this.toggleSpinnerStatus();
     }
 
 
@@ -187,7 +217,7 @@ export class CategoryDetailComponent implements OnInit {
     async OnDeleteConfirm() {
         this.deleteConfirmationDialogModel.hide();
         this.toggleSpinnerStatus();
-        // await this.todoManagementService.deleteCategoryById(this.currentCategory.getCategoryId());
+        await this.taskManagementService.deleteCategory(this.currentCategory);
         this.toggleSpinnerStatus();
         this.router.navigate(['../'], {
             relativeTo: this.activatedRoute

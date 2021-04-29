@@ -98,3 +98,11 @@ input:disabled {
     margin-top: 0.5rem;
     /*flex-wrap: wrap;*/
 }
+
+
+.errorInfo {
+    display: flex;
+    align-items: center;
+    font-size: 12px;
+    margin-top: .20rem!important;
+}

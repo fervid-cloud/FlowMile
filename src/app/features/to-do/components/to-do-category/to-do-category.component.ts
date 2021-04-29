@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, NavigationExtras, Params, Router } from '@angular/router';
 import { TaskCategory } from '../../model/task-category';
 import { TaskManagementService } from '../../service/to-do-management/task-management.service';
@@ -17,7 +17,7 @@ import { AnimatedSearchInputComponent } from '../../../../shared/components/anim
     templateUrl: './to-do-category.component.html',
     styleUrls: ['./to-do-category.component.css']
 })
-export class ToDoCategoryComponent implements OnInit, OnDestroy {
+export class ToDoCategoryComponent implements OnInit, AfterViewInit, OnDestroy {
 
     // adding a template reference of this element to avoid some global mis - happening related to model dialog
     @ViewChild('addCategoryModelDialog')
@@ -33,7 +33,7 @@ export class ToDoCategoryComponent implements OnInit, OnDestroy {
 
     newCategoryForm!: FormGroup;
 
-    invalidCategoryCreationAttempt = false;
+    invalidFormSubmission = false;
 
     creatingCategoryState = false;
 
@@ -183,36 +183,28 @@ export class ToDoCategoryComponent implements OnInit, OnDestroy {
         this.addTaskModelDialog.hide();
     }
 
-    async addTaskCategorySubmit(event: Event): Promise<void> {
-        this.invalidCategoryCreationAttempt = false;
-        if (!this.newCategoryForm.valid) {
-            this.invalidCategoryCreationAttempt = true;
 
+    async addTaskCategorySubmit(event: Event): Promise<void> {
+        this.invalidFormSubmission = false;
+        if (!this.newCategoryForm.valid) {
+            this.invalidFormSubmission = true;
             return;
         }
         this.creatingCategoryState = true;
         this.newCategoryForm.disable();
         this.addTaskModelDialog.hide();
-
-        const newTaskCategory: TaskCategory = new TaskCategory();
-
         // tslint:disable-next-line:no-non-null-assertion
         const name = this.newCategoryForm.get('name')!.value; // telling the compiler that value wil always exist
         const description = this.newCategoryForm.get('description')?.value; // another trick using optional chaining
-
-        await this.showLoading(async () => {
-            newTaskCategory.id = 0;
-            newTaskCategory.name = name;
-            newTaskCategory.description = description;
-            await this.taskManagementService.createNewCategory(newTaskCategory);
-            this.creatingCategoryState = false;
-            this.newCategoryForm.enable();
-            this.newCategoryForm.reset();
+        console.log("Category added");
+        await this.taskManagementService.createNewCategory({
+            name,
+            description
         });
-
-
+        this.creatingCategoryState = false;
+        this.newCategoryForm.enable();
+        this.newCategoryForm.reset();
     }
-
 
 
     ngOnDestroy(): void {

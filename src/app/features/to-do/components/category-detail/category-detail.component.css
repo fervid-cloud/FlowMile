@@ -64,3 +64,14 @@ img {
     display: flex;
     z-index: 2000;
 }
+
+.buttonDisable * {
+    pointer-events: none;
+    opacity: 0.4;
+}
+
+input:disabled {
+    color: black;
+    background-color: transparent;
+}
+

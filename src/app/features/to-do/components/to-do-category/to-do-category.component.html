@@ -102,30 +102,49 @@
             <div class="modal-body">
                 <!-- <p>Add Task Category</p> -->
                 <div [formGroup]="newCategoryForm">
-                    <div class="mb-3">
-                        <label for="formGroupExampleInput" class="form-label">Name</label>
-                        <input [formControlName]="'name'" type="text" class="form-control" id="formGroupExampleInput"
-                               placeholder="Category Name">
-                        <span class="text-danger" *ngIf="invalidCategoryCreationAttempt">
-                            <span *ngIf="newCategoryForm.get('name')?.errors?.required" class=" help-block">
-                                Name is required
-                            </span>
-                            <span *ngIf="newCategoryForm.get('name')?.errors?.invalidName" class=" help-block">
-                                Invalid Name! avoid number or symbol
-                            </span>
+    
+                    <div class="row">
+                        <!--dividing the row into two parts of column through col-sm-6 staring from small device see css for more info about breakpoints
+                        so for extra small device it will automatically be stacked applied by bootstrap for rol and col -->
+                        <div class="col mb-3">
+                            <div class="form-group">
+                                <label class="form-label">Name</label>
+                                <input [formControlName]="'name'" autocomplete="on" type="email"
+                                       class="form-control" placeholder="First Name"
+                                       aria-label="Server">
+                            </div>
+                            <span class="text-danger" *ngIf="invalidFormSubmission">
+                                <span class="help-block errorInfo"
+                                      *ngIf="newCategoryForm.get('name')?.errors?.required">
+                                     <i class="errorIcon fas fa-info-circle me-1"></i>
+                                    Name is required
+                                </span>
                         </span>
+                        </div>
+                    </div>
+    
+                    <div class="row">
+                        <!--                     dividing the row into two parts of column through col-sm-6 staring from small device see css for more info about breakpoints
+                        so for extra small device it will automatically be stacked applied by bootstrap for rol and col -->
+                        <div class="col mb-3">
+                            <div class="form-group">
+                                <label class="form-label">Description</label>
+                                <input [formControlName]="'description'" autocomplete="on" type="email"
+                                       class="form-control" placeholder="First Name"
+                                       aria-label="Server">
+                            </div>
+                            <span class="text-danger" *ngIf="invalidFormSubmission">
+                                <span class="help-block errorInfo"
+                                      *ngIf="newCategoryForm.get('description')?.errors?.required">
+                                     <i class="errorIcon fas fa-info-circle me-1"></i>
+                                    Description is required
+                                </span>
+                        </span>
+                        </div>
+                        
                     </div>
                     
-                    <div class="mb-3">
-                        <label for="formGroupExampleInput2" class="form-label">Description</label>
-                        <input [formControlName]="'description'" type="text" class="form-control"
-                               id="formGroupExampleInput2" placeholder="Category Description">
-                        <span class="text-danger" *ngIf="invalidCategoryCreationAttempt">
-                            <span class="help-block" *ngIf="newCategoryForm.get('description')?.errors?.required">
-                                Description is required
-                            </span>
-                        </span>
-                    </div>
+                   
                 </div>
             
             </div>

@@ -1,4 +1,4 @@
-<div class="row detailWrapper mb-2">
+<div class="row detailWrapper">
     <div class="col-sm-6 d-flex">
 
         <div class="categoryDetails p-3 m-auto">
@@ -66,13 +66,13 @@
                 <p>last visited</p>
             </div>
 
-            <div class="customizeCategory">
+            <div #crudOperationsParentButton class="customizeCategory">
 
-
+            
                 <div *ngIf="categoryEditMode" (click)="toggleEditMode()" class="interactiveIndicator">
                     <i class="far fa-window-close fa-2x"></i>
                 </div>
-                <div *ngIf="categoryEditMode" (click)="onSaveAction()" class="interactiveIndicator ms-auto">
+                <div *ngIf="categoryEditMode" (click)="onSaveAction($event)" class="interactiveIndicator ms-auto">
                     <i class="far fa-save  fa-2x"></i>
                 </div>
 
@@ -99,7 +99,7 @@
     <div #dialogCenterTracker class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Delete Confirmation</h5>
+                <h5 class="modal-title" id="">Delete Confirmation</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" (click)="cancelDelete()"
                     aria-label="Close"></button>
             </div>
@@ -133,7 +133,7 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary me-auto" data-bs-dismiss="modal"
                     (click)="cancelSave()">Cancel</button>
-                <button type="button" class="btn btn-primary" (click)="OnSaveConfirm()">
+                <button type="button" class="btn btn-primary" (click)="OnSaveConfirm($event)">
                     Update
                 </button>
             </div>

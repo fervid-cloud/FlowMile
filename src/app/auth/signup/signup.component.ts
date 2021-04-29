@@ -89,7 +89,7 @@ export class SignupComponent implements OnInit {
             return;
         }
 
-        this.registerForm.enable();
+        this.registerForm.reset();
         submitButton.classList.remove("disabled");
     }
 
