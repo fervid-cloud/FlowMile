@@ -1,0 +1,31 @@
+<div class="container-fluid wholeWrapper">
+    <p class="createTaskHeader text-center bg-primary text-white py-2">New Task</p>
+            <div *ngFor="let reason of invalidityReasons" [@customLeftToRightAngularAnimation] class="alert alert-danger mb-0 py-2 text-center" role="alert">
+                {{ reason }}
+            </div>
+    <form class="createWrapper px-3" [formGroup]="addTaskForm">
+
+        <div class="row customField">
+            <label for="taskTitle" class="col-sm-2 col-form-label">Name</label>
+            <div class="col-sm-12">
+                <input type="text" [formControlName]="'name'" class="form-control" id="taskTitle">
+            </div>
+        </div>
+
+        <div class="row customField">
+            <label for="taskDetail" class="col-sm-4 col-form-label d-block">Description</label>
+            <div class="col-sm-12">
+                <textarea type="textarea" [formControlName]="'description'" maxlength="500" class="form-control" id="taskDetail"> </textarea>
+            </div>
+        </div>
+        <div class="row customField">
+            <div class="col text-center" #crudOperationsParentButton>
+                <div class="btn btn-primary px-4" (click)="onSubmit()">Add</div>
+                <div class="btn btn-primary ms-3 px-3" (click)="onReset()">Reset/New</div>
+
+            </div>
+
+        </div>
+
+    </form>
+</div>

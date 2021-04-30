@@ -182,11 +182,7 @@ export class CategoryDetailComponent implements OnInit {
             this.invalidFormSubmission = true;
             return;
         }
-        const buttonParent = (event.target as HTMLElement)?.parentElement;
-        if(!buttonParent) {
-            console.log("button parent elememnt is null");
-            return;
-        }
+
         const crudOperationsParentButton = this.crudOperationsParentButtonTemplateRef.nativeElement;
         crudOperationsParentButton.classList.add("buttonDisable");
         this.categoryEditForm.disable();
@@ -198,6 +194,7 @@ export class CategoryDetailComponent implements OnInit {
 
         await new Promise((resolve) => setTimeout(() => resolve(true), 3000));
         this.currentCategory = await this.taskManagementService.editCategoryInfo({
+            id: this.currentCategory.id,
             name,
             description
         });

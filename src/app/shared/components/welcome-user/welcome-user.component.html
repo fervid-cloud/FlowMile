@@ -1,6 +1,6 @@
 <div class="welcomeWrapper">
    <div class="welcomeImageWrapper text-center">
-      <img src="/assets/images/avatars/welcome.webp"  (contextmenu)="onRightClick()" alt="welcome">
+      <img src="/assets/images/avatars/welcome.webp" oncontextmenu="return false" alt="welcome">
       <type-writer-word-simulator class="m-auto" [word]="'Welcome ' + this.getCurrentUserCompleteName()"></type-writer-word-simulator>
    </div>
    

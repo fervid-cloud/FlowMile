@@ -7,13 +7,14 @@ import { TaskManagementService } from '../../service/to-do-management/task-manag
 import { UtilService } from 'src/app/shared/utility/util-service/util.service';
 import { GenericDialogModelComponent } from 'src/app/shared/utility/components/generic-dialog-model/generic-dialog-model.component';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
     selector: 'app-to-do-detail',
-    templateUrl: './to-do-detail.component.html',
-    styleUrls: ['./to-do-detail.component.css']
+    templateUrl: './task-detail.component.html',
+    styleUrls: [ './task-detail.component.css' ]
 })
-export class ToDoDetailComponent implements OnInit, OnDestroy, AfterViewInit {
+export class TaskDetailComponent implements OnInit, OnDestroy, AfterViewInit {
 
     @ViewChild('deleteConfirmationDialog')
     deleteConfirmationGenericModelDialog!: GenericDialogModelComponent;
@@ -21,16 +22,15 @@ export class ToDoDetailComponent implements OnInit, OnDestroy, AfterViewInit {
     @ViewChild('saveConfirmationDialog')
     saveConfirmationGenericModelDialog!: GenericDialogModelComponent;
 
-    currentToDoTask: Task | null | undefined = undefined;
+    currentTask!: Task;
 
-    taskNotExistStatus: boolean = true;
+    taskNotExistStatus: number = -1;
 
     private history: string[] = [];
 
     private activatedRouteSubscription!: Subscription;
 
     private routerEventSubscription: Subscription;
-
 
     taskEditForm!: FormGroup;
 
@@ -65,6 +65,7 @@ export class ToDoDetailComponent implements OnInit, OnDestroy, AfterViewInit {
     constructor(private activatedRoute: ActivatedRoute,
                 private router: Router,
                 private location: Location,
+                private toastrService: ToastrService,
                 private taskManagementService: TaskManagementService
     ) {
 
@@ -98,11 +99,10 @@ export class ToDoDetailComponent implements OnInit, OnDestroy, AfterViewInit {
         this.routerEventSubscription?.unsubscribe();
 
         this.taskEditValueChangeSubscription?.unsubscribe();
-        console.log('+++++++++++++++++++++++++++++destroying to-do detail component');
     }
 
 
-     async subscribeToActivatedRoute(): Promise<void> {
+    async subscribeToActivatedRoute(): Promise<void> {
         this.activatedRouteSubscription = this.activatedRoute.params.subscribe(async (updatedParams: Params) => {
             const allParams: Params = UtilService.getAllRouteParams1(this.activatedRoute);
             console.log('all params are :', allParams);
@@ -110,53 +110,47 @@ export class ToDoDetailComponent implements OnInit, OnDestroy, AfterViewInit {
             const providedTaskId = allParams.taskId;
             const parsedTaskId = parseInt(providedTaskId, 10);
             if (!UtilService.isValidNumber(parsedTaskId)) {
-                console.log("going to do routing")
-                this.router.navigate(['/dashboard']);
+                this.router.navigate([ '/dashboard' ]);
                 return;
             }
-            console.log('Provided taskId is : ', providedTaskId);
-
 
             await this.showLoading(async () => {
                 // await new Promise((resolve, reject) => setTimeout(() => resolve(true), 3000));
-                this.currentToDoTask = await this.taskManagementService.getTaskDetail(providedTaskId);
+                this.currentTask = await this.taskManagementService.getTaskDetail(providedTaskId);
             });
 
-            if (!this.currentToDoTask) {
+            if (!this.currentTask) {
                 await this.router.navigate([ '../' ], {
                     relativeTo: this.activatedRoute
                 });
+                return;
             }
 
             this.initializeTaskEditForm();
+            ++this.taskNotExistStatus;
         });
 
     }
 
 
     initializeTaskEditForm(): void {
-        console.log("The current Task value is : ", this.currentToDoTask);
         this.taskEditForm = new FormGroup({
-            name: new FormControl(this.currentToDoTask?.name, [Validators.required]),
-            description: new FormControl(this.currentToDoTask?.description, Validators.required),
+            name: new FormControl(this.currentTask?.name, [ Validators.required ]),
+            description: new FormControl(this.currentTask?.description, Validators.required),
         });
 
         this.taskEditValueChangeSubscription = this.taskEditForm.valueChanges.subscribe(values => {
-            this.areSomeEquivalent(this.currentToDoTask, values);
+            this.areSomeEquivalent(this.currentTask, values);
         });
     }
 
 
     areSomeEquivalent(a: any, b: any): void {
-        const parameters: string[] = ['title', 'textContent'];
+        const parameters: string[] = [ 'name', 'description' ];
         const n = parameters.length;
-        console.log('first one is ', a);
-        console.log('second one is ', b);
         for (let i = 0; i < n; ++i) {
             const propName = parameters[i];
             if (a[propName] !== b[propName]) {
-                console.log('first ne is ' , a[propName]);
-                console.log(b[propName]);
                 this.taskEditForm.markAsDirty();
                 return;
             }
@@ -165,9 +159,7 @@ export class ToDoDetailComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
 
-
     ngAfterViewInit() {
-
 
 
         // was put here as not this life cycle hook runs when all the dom element are made(except external api call eg. http);
@@ -203,11 +195,13 @@ export class ToDoDetailComponent implements OnInit, OnDestroy, AfterViewInit {
 
 
     onTaskSaveAction(): void {
+        console.log('showing status before saving');
+        console.log(this.taskEditForm);
         if (!this.taskEditForm.dirty) {
+            console.log('is ok');
             this.editMode = false;
             return;
         }
-
         console.log(this.taskEditForm);
         this.saveConfirmationGenericModelDialog.show();
     }
@@ -221,32 +215,35 @@ export class ToDoDetailComponent implements OnInit, OnDestroy, AfterViewInit {
     async confirmDeleteTask(): Promise<void> {
         this.deleteConfirmationGenericModelDialog.hide();
 
-        if (this.currentToDoTask) {
-            this.toggleSpinnerStatus();
-            // await this.taskManagementService.deleteTaskById(this.currentToDoTask.getTaskCategoryId(), this.currentToDoTask.getTodoId());
-            this.currentToDoTask = undefined;
-            this.taskNotExistStatus = true;
-            this.toggleSpinnerStatus();
-        }
+        this.toggleSpinnerStatus();
+        await this.taskManagementService.deleteTask(this.currentTask);
+        this.toggleSpinnerStatus();
+        ++this.taskNotExistStatus;
+        this.toastrService.error('Task deleted', 'Deleted', {
+            progressBar: true,
+            positionClass: 'toast-bottom-right',
+        });
+
 
     }
 
 
-    async confirmSaveTask(): Promise<void> {
+    async confirmSaveTask(updatedTaskStatus = this.currentTask?.taskStatus): Promise<void> {
         this.saveConfirmationGenericModelDialog.hide();
-        if (this.taskEditForm.invalid) {
-            return;
-        }
-
-        if (!this.currentToDoTask) {
-            console.log('invalid current Task') ;
+        if (this.taskEditForm.invalid || !updatedTaskStatus) {
             return;
         }
 
         this.toggleSpinnerStatus();
-        this.currentToDoTask.name = this.taskEditForm.get('name')?.value;
-        this.currentToDoTask.description = this.taskEditForm.get('description')?.value;
-        // await this.taskManagementService.editProvidedTask(this.currentToDoTask);
+        const name = this.taskEditForm.get('name')?.value;
+        const description = this.taskEditForm.get('description')?.value;
+        this.currentTask = await this.taskManagementService.editTaskInfo({
+            id: this.currentTask.id,
+            name,
+            description,
+            taskStatus: updatedTaskStatus
+        });
+        await new Promise((resolve) => setTimeout(() => resolve(true), 3000));
         this.editMode = false;
         this.toggleSpinnerStatus();
 
@@ -263,7 +260,6 @@ export class ToDoDetailComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     private back(): void {
-        console.debug('The history is : ', this.history);
         if (this.history.length > 0) {
             // doesn't matter both are equivalent, it's just that this.location.back has history of same route that
             // we want to go back to through this.router.navigate(['../'], { relativeTo: this.activatedRoute });
@@ -271,7 +267,6 @@ export class ToDoDetailComponent implements OnInit, OnDestroy, AfterViewInit {
             this.location.back();
         } else {
             // in case we opened the browser directly with this link, or new tab with this link, then try to go back
-            console.debug('going back through backup as no history is there-----------------');
             this.router.navigateByUrl('/');
         }
     }
@@ -283,16 +278,24 @@ export class ToDoDetailComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
 
+    async showLoading(callback: () => void): Promise<void> {
+        try {
+            this.showSpinner = true;
+            await callback();
+        } finally {
+            this.showSpinner = false;
+        }
+    }
 
 
     /**
      * @deprecated
      */
-    taskEditNotInUser() {
+    taskEditNotInUseButForLearningOtherWays() {
         this.editMode = true;
         /* below way was too much manual work for this use case, so delegated the work to attribute directive in the template */
         // as by default this is from root so we have to mention full path here
-        // this.router.navigate(["dashboard", "todo", "edit", this.currentToDoTask?.getTodoId()]);
+        // this.router.navigate(["dashboard", "todo", "edit", this.currentTask?.getTodoId()]);
 
         /*  console.log(this.taskDetail);
          console.log(this.taskDetail.nativeElement.textContent);
@@ -308,13 +311,12 @@ export class ToDoDetailComponent implements OnInit, OnDestroy, AfterViewInit {
          this.taskTitle.nativeElement.style.borderRight = "1px solid blue"; */
     }
 
+    toggleTaskStatus() {
+        const updatedTaskStatus = 1 - this.currentTask.taskStatus;
+        this.confirmSaveTask(updatedTaskStatus);
 
-    async showLoading(callback: () => void): Promise<void> {
-        try {
-            this.showSpinner = true;
-            await callback();
-        } finally {
-            this.showSpinner = false;
-        }
     }
 }
+
+
+

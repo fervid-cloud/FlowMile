@@ -13,8 +13,8 @@ import { SidebarComponent } from './shared/components/sidebar/sidebar.component'
 import { NotFoundComponent } from './shared/components/error-handling/not-found/not-found.component';
 import { InternalServerErrorComponent } from './shared/components/error-handling/internal-server-error/internal-server-error.component';
 import { ToDoBoxComponent } from './features/to-do/components/to-do-box/to-do-box.component';
-import { CreateToDoComponent } from './features/to-do/components/create-to-do/create-to-do.component';
-import { ToDoDetailComponent } from './features/to-do/components/to-do-detail/to-do-detail.component';
+import { CreateTaskComponent } from './features/to-do/components/create-task/create-task.component';
+import { TaskDetailComponent } from './features/to-do/components/task-detail/task-detail.component';
 import { TaskListComponent } from './features/to-do/components/task-list/task-list.component';
 import { ToDoCategoryComponent } from './features/to-do/components/to-do-category/to-do-category.component';
 import { CategoryBoxComponent } from './features/to-do/components/category-box/category-box.component';
@@ -55,8 +55,8 @@ import { ServiceUnavailableComponent } from './shared/components/error-handling/
         InternalServerErrorComponent,
         SingleCategoryComponent,
         ToDoBoxComponent,
-        CreateToDoComponent,
-        ToDoDetailComponent,
+        CreateTaskComponent,
+        TaskDetailComponent,
         TaskListComponent,
         ToDoCategoryComponent,
         CategoryBoxComponent,

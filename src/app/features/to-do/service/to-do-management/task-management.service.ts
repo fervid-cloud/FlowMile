@@ -12,6 +12,9 @@ import { CriteriaInfo, sortCriteriaInfoList, typeCriteriaInfoList } from '../../
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { RequestMethod } from '../../../../auth/enum/request-method-enum';
 import { CreateCategoryDto } from '../../dto/create-category-dto';
+import { CreateTaskDto } from '../../dto/create-task';
+import { EditTaskDto } from '../../dto/edit-task-dto';
+import { EditCategoryDto } from '../../dto/edit-category-dto';
 
 @Injectable({
     providedIn: 'root'
@@ -200,11 +203,25 @@ export class TaskManagementService {
         return queryParams;
     }
 
-    async editCategoryInfo(createCategoryDto: CreateCategoryDto): Promise<TaskCategory> {
+    async editCategoryInfo(editCategoryDto: EditCategoryDto): Promise<TaskCategory> {
        return new TaskCategory();
     }
 
     async deleteCategory(currentCategory: TaskCategory): Promise<boolean> {
         return true;
+    }
+
+    async createTask(createTaskDto: CreateTaskDto) {
+        return true;
+    }
+
+    async editTaskInfo(editTaskDto: EditTaskDto) {
+        return new Task();
+
+    }
+
+    async deleteTask(currentTask: Task) {
+        return true;
+
     }
 }

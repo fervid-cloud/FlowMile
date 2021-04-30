@@ -4,7 +4,7 @@
     background-color: white;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
     border-radius: 0.2rem;
-    transition: all 0.5 ease;
+    transition: all 0.5s ease;
 }
 
 .customAnimation {
@@ -34,10 +34,18 @@ form {
     overflow: auto;
 }
 
-*:disabled {
+/**:disabled {
     background-color: #d9e6f7;
+}*/
+input:disabled, textarea:disabled {
+    color: black;
+    background-color: transparent;
 }
 
+.buttonDisable * {
+    pointer-events: none;
+    opacity: 0.4;
+}
 /* .customInvalidityAlertAnimation {
     -webkit-animation: fadeOut 500ms;
     -moz-animation: fadeOut 500ms;
