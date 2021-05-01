@@ -218,16 +218,17 @@ export class AuthService {
             }).toPromise() as ResponseModel;
             console.log(result);
             this.localUserDetail = result.data;
+
+            this.toastrService.success('Profile updated successfully', 'Success', {
+                timeOut: 2000,
+                positionClass: 'toast-bottom-right',
+            });
         } catch (ex) {
             this.toastrService.success('Some error occurred', 'Error', {
                 timeOut: 2000,
                 positionClass: 'toast-bottom-right',
             });
         }
-        this.toastrService.success('Profile updated successfully', 'Success', {
-            timeOut: 2000,
-            positionClass: 'toast-bottom-right',
-        });
 
     }
 
