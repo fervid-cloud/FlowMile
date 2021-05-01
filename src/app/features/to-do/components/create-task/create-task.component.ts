@@ -101,12 +101,8 @@ export class CreateTaskComponent implements OnInit, OnDestroy {
             description,
             categoryId: this.taskCategoryId
         });
-
-        if (result) {
-            this.toastrService.success('Task Created Successfully', 'Success', {
-                progressBar: true,
-                positionClass: 'toast-bottom-right',
-            });
+        if(result) {
+            this.addTaskForm.reset();
         }
         crudOperationsParentButton.classList.remove('buttonDisable');
         this.addTaskForm.enable();

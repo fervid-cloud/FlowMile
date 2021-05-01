@@ -10,7 +10,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-    selector: 'app-to-do-detail',
+    selector: 'task-detail',
     templateUrl: './task-detail.component.html',
     styleUrls: [ './task-detail.component.css' ]
 })
@@ -22,7 +22,7 @@ export class TaskDetailComponent implements OnInit, OnDestroy, AfterViewInit {
     @ViewChild('saveConfirmationDialog')
     saveConfirmationGenericModelDialog!: GenericDialogModelComponent;
 
-    currentTask!: Task;
+    currentTask: Task = new Task();
 
     taskNotExistStatus: number = -1;
 
@@ -90,9 +90,9 @@ export class TaskDetailComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     async ngOnInit(): Promise<void> {
+        this.initializeTaskEditForm();
         await this.subscribeToActivatedRoute();
     }
-
 
     ngOnDestroy(): void {
         this.activatedRouteSubscription?.unsubscribe();
@@ -115,7 +115,6 @@ export class TaskDetailComponent implements OnInit, OnDestroy, AfterViewInit {
             }
 
             await this.showLoading(async () => {
-                // await new Promise((resolve, reject) => setTimeout(() => resolve(true), 3000));
                 this.currentTask = await this.taskManagementService.getTaskDetail(providedTaskId);
             });
 
@@ -125,7 +124,6 @@ export class TaskDetailComponent implements OnInit, OnDestroy, AfterViewInit {
                 });
                 return;
             }
-
             this.initializeTaskEditForm();
             ++this.taskNotExistStatus;
         });
@@ -138,7 +136,7 @@ export class TaskDetailComponent implements OnInit, OnDestroy, AfterViewInit {
             name: new FormControl(this.currentTask?.name, [ Validators.required ]),
             description: new FormControl(this.currentTask?.description, Validators.required),
         });
-
+        this.taskEditValueChangeSubscription?.unsubscribe();
         this.taskEditValueChangeSubscription = this.taskEditForm.valueChanges.subscribe(values => {
             this.areSomeEquivalent(this.currentTask, values);
         });
@@ -216,34 +214,32 @@ export class TaskDetailComponent implements OnInit, OnDestroy, AfterViewInit {
         this.deleteConfirmationGenericModelDialog.hide();
 
         this.toggleSpinnerStatus();
-        await this.taskManagementService.deleteTask(this.currentTask);
+        const taskStatus = await this.taskManagementService.deleteTask(this.currentTask);
         this.toggleSpinnerStatus();
-        ++this.taskNotExistStatus;
-        this.toastrService.error('Task deleted', 'Deleted', {
-            progressBar: true,
-            positionClass: 'toast-bottom-right',
-        });
-
-
+        if(taskStatus) {
+            ++this.taskNotExistStatus;
+        }
     }
 
 
     async confirmSaveTask(updatedTaskStatus = this.currentTask?.taskStatus): Promise<void> {
         this.saveConfirmationGenericModelDialog.hide();
-        if (this.taskEditForm.invalid || !updatedTaskStatus) {
+        if (this.taskEditForm.invalid) {
             return;
         }
 
         this.toggleSpinnerStatus();
         const name = this.taskEditForm.get('name')?.value;
         const description = this.taskEditForm.get('description')?.value;
-        this.currentTask = await this.taskManagementService.editTaskInfo({
+        const editStatus =  await this.taskManagementService.editTaskInfo({
             id: this.currentTask.id,
             name,
             description,
             taskStatus: updatedTaskStatus
         });
-        await new Promise((resolve) => setTimeout(() => resolve(true), 3000));
+        if(editStatus) {
+            this.currentTask = await this.taskManagementService.getTaskDetail(this.currentTask.id);
+        }
         this.editMode = false;
         this.toggleSpinnerStatus();
 

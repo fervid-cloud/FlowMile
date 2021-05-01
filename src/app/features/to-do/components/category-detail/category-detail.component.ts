@@ -105,9 +105,7 @@ export class CategoryDetailComponent implements OnInit {
                 return;
             }
         }
-
         this.categoryEditForm.markAsPristine();
-
     }
 
 
@@ -162,11 +160,7 @@ export class CategoryDetailComponent implements OnInit {
             this.categoryEditMode = false;
             return;
         }
-
         this.saveConfirmationDialogModel.show();
-
-
-
     }
 
 
@@ -193,11 +187,14 @@ export class CategoryDetailComponent implements OnInit {
         console.log("Category added");
 
         await new Promise((resolve) => setTimeout(() => resolve(true), 3000));
-        this.currentCategory = await this.taskManagementService.editCategoryInfo({
+        const editStatus = await this.taskManagementService.editCategoryInfo({
             id: this.currentCategory.id,
             name,
             description
         });
+        if(editStatus) {
+            this.currentCategory = await this.taskManagementService.getCategoryDetail(this.currentCategory.id);
+        }
         crudOperationsParentButton.classList.remove("buttonDisable");
         this.categoryEditForm.enable();
         this.categoryEditMode = false;
@@ -214,11 +211,13 @@ export class CategoryDetailComponent implements OnInit {
     async OnDeleteConfirm() {
         this.deleteConfirmationDialogModel.hide();
         this.toggleSpinnerStatus();
-        await this.taskManagementService.deleteCategory(this.currentCategory);
+        const deletionStatus = await this.taskManagementService.deleteCategory(this.currentCategory);
         this.toggleSpinnerStatus();
-        this.router.navigate(['../'], {
-            relativeTo: this.activatedRoute
-        });
+        if(deletionStatus) {
+            this.router.navigate([ '../' ], {
+                relativeTo: this.activatedRoute
+            });
+        }
     }
 
 

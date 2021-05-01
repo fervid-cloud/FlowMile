@@ -1,16 +1,17 @@
 import { Injectable } from '@angular/core';
 import { LocalUser } from 'src/app/shared/model/LocalUser';
-import { ResponseModel } from 'src/app/shared/utility/response-model/response-model';
+import { ErrorResponseModel, ResponseModel } from 'src/app/shared/utility/response-model/response-model';
 import { environment } from 'src/environments/environment';
 import { UserLoginDto } from '../dto/request/user-login-dto';
 import { UserAuthenticatedResponseDto } from '../dto/response/UserAuthenticatedResponseDto';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { RequestMethod } from '../enum/request-method-enum';
 import jwt_decode, { JwtPayload } from 'jwt-decode';
 import { Router } from '@angular/router';
 import { UserRegistrationDto } from '../dto/request/user-registration-dto';
 import { EditUserInfoDto } from '../dto/request/edit-user-info-dto';
 import { ChangePasswordDto } from '../dto/request/change-password-dto';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable({
     providedIn: 'root'
@@ -19,12 +20,13 @@ export class AuthService {
 
     constructor(
         private router: Router,
-        private httpClient: HttpClient
+        private httpClient: HttpClient,
+        private toastrService: ToastrService
     ) {
         this.getStoredData();
     }
 
-    static TOKEN = "token";
+    static TOKEN = 'token';
 
     backendSocket: string = environment.backendSocket;
 
@@ -34,13 +36,13 @@ export class AuthService {
 
     async getStoredData(): Promise<void> {
         try {
-            console.log("getting token from the storage");
+            console.log('getting token from the storage');
             this.token = window.localStorage.getItem(AuthService.TOKEN);
-            if(!this.token) {
-               throw new Error("Token doesn't exists");
+            if (!this.token) {
+                throw new Error('Token doesn\'t exists');
             }
         } catch (ex) {
-            console.log("some error occurred while retrieving the user detail");
+            console.log('some error occurred while retrieving the user detail');
             console.log(ex);
             this.logOut();
         } finally {
@@ -62,8 +64,8 @@ export class AuthService {
     async logIn(userLoginDto: UserLoginDto): Promise<boolean> {
 
         try {
-            console.log("log in request initiating");
-            const loginResponse =  await this.httpClient.request(RequestMethod.POST, this.backendSocket + '/api/account/login', {
+            console.log('log in request initiating');
+            const loginResponse = await this.httpClient.request(RequestMethod.POST, this.backendSocket + '/api/account/login', {
                 headers: {
                     'Content-Type': 'application/json'
                     // 'Content-Type': 'application/x-www-form-urlencoded',
@@ -72,7 +74,7 @@ export class AuthService {
                 body: JSON.stringify(userLoginDto)
             }).toPromise() as ResponseModel;
 
-            const authenticationResponse: UserAuthenticatedResponseDto  = (loginResponse.data as UserAuthenticatedResponseDto);
+            const authenticationResponse: UserAuthenticatedResponseDto = (loginResponse.data as UserAuthenticatedResponseDto);
             this.token = authenticationResponse.token;
             this.storeRequiredData();
             await this.getStoredData();
@@ -80,7 +82,7 @@ export class AuthService {
             return true;
         } catch (ex) {
 
-            console.log("exception was : ", ex);
+            console.log('exception was : ', ex);
             return false;
         }
 
@@ -90,15 +92,15 @@ export class AuthService {
         if (!this.token) {
             return false;
         }
-        console.log("token taken from storage is : ", this.token);
+        console.log('token taken from storage is : ', this.token);
         if (!this.localUserDetail) {
-            console.log("no userdetail exist, so updating user");
+            console.log('no userdetail exist, so updating user');
             try {
                 this.localUserDetail = await this.getUpdatedUserInfo(this.token);
-                console.log("updated localUserDetail: ", this.localUserDetail);
-            } catch(ex){
-                console.log("could not connect to the internet");
-                this.router.navigate(["/unavailable"]);
+                console.log('updated localUserDetail: ', this.localUserDetail);
+            } catch (ex) {
+                console.log('could not connect to the internet');
+                this.router.navigate([ '/unavailable' ]);
             }
         }
 
@@ -128,7 +130,7 @@ export class AuthService {
 
     logOut(): void {
         this.clearUserData();
-        this.router.navigateByUrl("/login");
+        this.router.navigateByUrl('/login');
     }
 
     clearUserData() {
@@ -149,28 +151,105 @@ export class AuthService {
 
     private async getUpdatedUserInfo(token: string) {
         const decodedPayLoad = jwt_decode<JwtPayload>(token);
-        const username =  decodedPayLoad.sub;
-        console.log("subject from jwt is : ", username);
-        const updatedUserInfo: LocalUser = ( await this.httpClient.request(RequestMethod.GET, this.backendSocket + `/api/account/userInfo/${username}`).toPromise() as ResponseModel).data;
-        console.log("updatedUserInfo is : ", updatedUserInfo);
+        const username = decodedPayLoad.sub;
+        console.log('subject from jwt is : ', username);
+        const updatedUserInfo: LocalUser = (await this.httpClient.request(RequestMethod.GET, this.backendSocket + `/api/account/userInfo/${ username }`).toPromise() as ResponseModel).data;
+        console.log('updatedUserInfo is : ', updatedUserInfo);
         return updatedUserInfo;
     }
 
 
     async registerUser(userRegistrationDto: UserRegistrationDto): Promise<boolean> {
-        return true;
+        try {
+            userRegistrationDto.username = userRegistrationDto.email;
+            const result = await this.httpClient.request(RequestMethod.POST, this.backendSocket + '/api/account/register', {
+                headers: {
+                    'Content-Type': 'application/json'
+                    // 'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                responseType: 'json',
+                body: JSON.stringify(userRegistrationDto)
+            }).toPromise() as ResponseModel;
+
+            console.log(result);
+
+            const showTime = 2000;
+            this.toastrService.success('you have registered successfully', 'Registered', {
+                timeOut: showTime,
+                positionClass: 'toast-bottom-right',
+            });
+
+            setTimeout(() => {
+                this.toastrService.success('Redirecting to login', 'Registered', {
+                    timeOut: showTime + 500,
+                    progressBar: true,
+                    positionClass: 'toast-top-right',
+                });
+            }, showTime + 200);
+
+            setTimeout(() => {
+                this.router.navigate([ '/login' ]);
+            }, 3 * showTime);
+            return true;
+        } catch (ex) {
+            const httpErrorResponse: HttpErrorResponse = ex;
+            const errorResponse = httpErrorResponse.error as ErrorResponseModel;
+            this.toastrService.error(errorResponse.error, errorResponse.message, {
+                timeOut: 2000,
+                progressBar: true,
+                positionClass: 'toast-top-right',
+            });
+            return false;
+        }
+
+
     }
 
-    async editUserInfo(editUserInfo: EditUserInfoDto): Promise<LocalUser> {
-        return new LocalUser();
+    async editUserInfo(editUserInfo: EditUserInfoDto): Promise<void> {
+
+        try {
+            const result = await this.httpClient.request(RequestMethod.PUT, this.backendSocket + '/api/account/editInfo', {
+                headers: {
+                    'Content-Type': 'application/json'
+                    // 'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                responseType: 'json',
+                body: JSON.stringify(editUserInfo)
+            }).toPromise() as ResponseModel;
+            console.log(result);
+            this.localUserDetail = result.data;
+        } catch (ex) {
+            this.toastrService.success('Some error occurred', 'Error', {
+                timeOut: 2000,
+                positionClass: 'toast-bottom-right',
+            });
+        }
+        this.toastrService.success('Profile updated successfully', 'Success', {
+            timeOut: 2000,
+            positionClass: 'toast-bottom-right',
+        });
+
     }
 
 
     async changePassword(changePasswordDto: ChangePasswordDto): Promise<boolean> {
-        return true;
+        try {
+            const result = await this.httpClient.request(RequestMethod.PUT, this.backendSocket + '/api/account/changePassword', {
+                headers: {
+                    'Content-Type': 'application/json'
+                    // 'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                responseType: 'json',
+                body: JSON.stringify(changePasswordDto)
+            }).toPromise();
+            console.log(result);
+            return true;
+        } catch (ex) {
+            return false;
+        }
     }
 
-     static isTokenExpired(currentToken: string): boolean {
+    static isTokenExpired(currentToken: string): boolean {
         try {
             const decodedPayLoad = jwt_decode<JwtPayload>(currentToken);
             const expiryTime = decodedPayLoad.exp;

@@ -52,15 +52,14 @@ export class ProfileDetailComponent implements OnInit {
         const submitButton: HTMLElement = event.target as HTMLElement;
         submitButton.classList.add("buttonDisable");
 
-        this.currentUserDetail = await this.authService.editUserInfo({
+        await this.authService.editUserInfo({
             firstName: this.profileEditForm.get("firstName")?.value,
             lastName: this.profileEditForm.get("lastName")?.value
         });
+        this.currentUserDetail = this.authService.getLocalUserInfo();
 
-        this.toastrService.success("Profile updated successfully", "Success", {
-            timeOut: 2000,
-            positionClass: 'toast-bottom-right',
-        });
+
+
 
         setTimeout(() => {
             submitButton.classList.remove("buttonDisable");

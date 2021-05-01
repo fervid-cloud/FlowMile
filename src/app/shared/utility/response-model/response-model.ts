@@ -4,3 +4,10 @@ export interface ResponseModel {
     data: any;
     status: number;
 }
+
+export interface ErrorResponseModel {
+    message: string;
+    error: string;
+    httpStatus: string;
+    time: number;
+}

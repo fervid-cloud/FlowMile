@@ -3,7 +3,7 @@
         {{ unitTodo.taskStatus == 1 ? "Done" : "Pending" }}
     </div>
     <div class="card-body categoryBody">
-        <h6 class="card-title custom-text-truncate mb-2">asdf asdfffffffffffffffff fghfgh ghfh ffasdffffff sdfsdf dfgdfg dfgdfgf  sfsdf{{ unitTodo.name }} </h6>
+        <h6 class="card-title custom-text-truncate mb-2">{{ unitTodo.name }} </h6>
         <div class="imageWrapper">
             <img *ngIf="unitTodo.taskStatus" src="/assets/images/to-do/completed-task/1.png" alt="taskIndicator">
             <img *ngIf="!unitTodo.taskStatus" src="/assets/images/to-do/incomplete-task/3.png" alt="taskIndicator">

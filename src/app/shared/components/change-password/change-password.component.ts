@@ -59,16 +59,20 @@ export class ChangePasswordComponent implements OnInit {
             newPassword: this.changePasswordEditForm.get("newPassword")?.value,
             confirmPassword: this.changePasswordEditForm.get("confirmPassword")?.value,
         });
+        if(passwordUpdated) {
+            this.toastrService.success("Password Updated", "Success", {
+                timeOut: 2000,
+                positionClass: 'toast-bottom-right',
+            });
+        } else {
+            this.toastrService.error("Invalid password entered", "Error", {
+                timeOut: 2000,
+                positionClass: 'toast-bottom-right',
+            });
+        }
 
-        this.toastrService.success("redirecting to login Page", "Password Updated", {
-            timeOut: 2000,
-            positionClass: 'toast-bottom-right',
-        });
-
-        setTimeout(() => {
-            submitButton.classList.remove("buttonDisable");
-            this.changePasswordEditForm.enable();
-        }, 2000);
+        submitButton.classList.remove("buttonDisable");
+        this.changePasswordEditForm.enable();
     }
 
 }

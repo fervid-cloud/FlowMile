@@ -39,19 +39,20 @@
         <div class="detailWrapper rounded mx-4 px-3" [formGroup]="taskEditForm">
             <div class="individualField my-3">
                 <h6>Task Id</h6>
-                <p class="lead">todoId of task</p>
+                <p class="lead">{{ currentTask?.id }}</p>
             </div>
             <div [ngClass]="{'haveCustomContentEditableChild': this.editMode}" class="individualField my-3">
                 <h6>Task Name</h6>
                 <!-- // example of attribute directive, basically we enclose a native html attribute in square bracket and
                 // then it becomes a directive and now we can control the attribute based on our logics  -->
                 <!-- <p #taskTitle  [contentEditable]="this.editMode" class="lead"> Title of task</p> -->
-                <p  *ngIf="!editMode" class="lead"> {{currentTask.name}}</p>
+                <p  *ngIf="!editMode" class="lead"> {{currentTask?.name}} </p>
                 <input *ngIf="editMode"  class="editInput lead" type="text" [formControlName]="'name'">
             </div>
             <!-- g-0 equivalent to no-gutter, gutter is used for maintaining spacing between col of the rows -->
             <div [ngClass]="{'haveCustomContentEditableChild': this.editMode}" class="individualField my-3">
                 <h6><span>Task Description</span></h6>
+                
                 <p *ngIf="!editMode" class="lead">
                     {{ currentTask.description }}
                 </p>
@@ -70,7 +71,6 @@
                 <h6>Task Status</h6>
                 <p class="lead"> {{ currentTask.taskStatus == 0 ? "Pending": "Completed" }}</p>
             </div>
-
         </div>
 
         <div *ngIf="editMode" class="text-center pt-3">

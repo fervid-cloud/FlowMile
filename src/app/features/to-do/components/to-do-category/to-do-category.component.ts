@@ -11,6 +11,7 @@ import { UtilService } from 'src/app/shared/utility/util-service/util.service';
 import { CriteriaInfo, ListFilterSortPaginationWrapper } from '../../model/list-filterWrapper';
 import { ListFilterSortPaginationWrapperDto } from '../../dto/list-filter-wrapper-dto';
 import { AnimatedSearchInputComponent } from '../../../../shared/components/animated-search-input/animated-search-input.component';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
     selector: 'app-to-do-category',
@@ -52,7 +53,8 @@ export class ToDoCategoryComponent implements OnInit, AfterViewInit, OnDestroy {
     constructor(
         private taskManagementService: TaskManagementService,
         private router: Router,
-        private activatedRoute: ActivatedRoute
+        private activatedRoute: ActivatedRoute,
+        private toastrService: ToastrService
     ) {
         this.sortCriteriaInfoList = this.taskManagementService.sortCriteriaInfoList;
         this.updatedCurrentCategoryListInfo(
@@ -100,23 +102,25 @@ export class ToDoCategoryComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     subscribeToActivatedQueryParams(): void {
-        this.activatedQueryParamRouteSubscription = this.activatedRoute.queryParams.subscribe(async (updatedQueryParams: Params) => {
-            const queryParams = updatedQueryParams as ListFilterSortPaginationWrapperDto; // basically casting the object to our object and thus avoiding manual updated
-            console.log('--------------------------------------');
-            console.log(queryParams);
-            const queryData: ListFilterSortPaginationWrapperDto = this.taskManagementService.InitializeCategoryListFilterSortPaginationWrapperDto();
-            this.taskManagementService.copyAndUpdateToAllowedAndDefaultValues(queryData, queryParams);
-            console.log('updated queryData is : ', queryData);
-            await this.showLoading( async () => {
-                try {
-                    this.currentActiveCategoriesInfo = await this.taskManagementService.fetchFilteredCategories(queryData);
-                } catch(ex) {
-                    console.log("error while fetching");
-                    console.log("error was ", ex.message);
-                } finally {
-                    this.updatedCurrentCategoryListInfo(queryData);
-                }
-            });
+        this.activatedQueryParamRouteSubscription = this.activatedRoute.queryParams.subscribe(this.handleQueryParams.bind(this));
+    }
+
+    handleQueryParams = async (updatedQueryParams: Params) => {
+        const queryParams = updatedQueryParams as ListFilterSortPaginationWrapperDto; // basically casting the object to our object and thus avoiding manual updated
+        console.log('--------------------------------------');
+        console.log(queryParams);
+        const queryData: ListFilterSortPaginationWrapperDto = this.taskManagementService.InitializeCategoryListFilterSortPaginationWrapperDto();
+        this.taskManagementService.copyAndUpdateToAllowedAndDefaultValues(queryData, queryParams);
+        console.log('updated queryData is : ', queryData);
+        await this.showLoading( async () => {
+            try {
+                this.currentActiveCategoriesInfo = await this.taskManagementService.fetchFilteredCategories(queryData);
+            } catch(ex) {
+                console.log("error while fetching");
+                console.log("error was ", ex.message);
+            } finally {
+                this.updatedCurrentCategoryListInfo(queryData);
+            }
         });
     }
 
@@ -197,13 +201,18 @@ export class ToDoCategoryComponent implements OnInit, AfterViewInit, OnDestroy {
         const name = this.newCategoryForm.get('name')!.value; // telling the compiler that value wil always exist
         const description = this.newCategoryForm.get('description')?.value; // another trick using optional chaining
         console.log("Category added");
-        await this.taskManagementService.createNewCategory({
+        const createdStatus = await this.taskManagementService.createNewCategory({
             name,
             description
         });
+        if(createdStatus) {
+            this.navigateToUpdatedQueryParams();
+            await this.handleQueryParams(this.activatedRoute.snapshot.queryParams);
+        }
         this.creatingCategoryState = false;
         this.newCategoryForm.enable();
         this.newCategoryForm.reset();
+
     }
 
 

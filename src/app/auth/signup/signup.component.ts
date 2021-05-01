@@ -67,31 +67,8 @@ export class SignupComponent implements OnInit {
             email: this.registerForm.get('email')?.value,
             password: this.registerForm.get('password')?.value
         });
-
-        if (registrationAttemptResult) {
-            console.log('registration successful :)');
-            console.log('routing to login');
-            const showTime = 2000;
-            this.toastrService.success('you have registered successfully', 'Registered', {
-                timeOut: showTime,
-                positionClass: 'toast-bottom-right',
-            });
-
-            setTimeout(() => {
-                this.toastrService.success('Redirecting to login', 'Registered', {
-                    timeOut: showTime + 500,
-                    progressBar: true,
-                    positionClass: 'toast-top-right',
-                });
-            }, showTime + 200);
-
-            setTimeout(() => {
-                this.router.navigate([ '/login' ]);
-            }, 3 * showTime);
-            return;
-        }
-
         this.registerForm.reset();
+        this.registerForm.enable();
         submitButton.classList.remove('disabled');
     }
 

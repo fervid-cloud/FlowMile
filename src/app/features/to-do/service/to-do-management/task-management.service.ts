@@ -15,6 +15,8 @@ import { CreateCategoryDto } from '../../dto/create-category-dto';
 import { CreateTaskDto } from '../../dto/create-task';
 import { EditTaskDto } from '../../dto/edit-task-dto';
 import { EditCategoryDto } from '../../dto/edit-category-dto';
+import { environment } from '../../../../../environments/environment';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable({
     providedIn: 'root'
@@ -22,17 +24,9 @@ import { EditCategoryDto } from '../../dto/edit-category-dto';
 export class TaskManagementService {
 
     private taskCategoriesInfo: PaginationWrapperDto = new PaginationWrapperDto();
-    private allAnyStatusTasksInfo: PaginationWrapperDto = new PaginationWrapperDto();
+    private tasksInfo: PaginationWrapperDto = new PaginationWrapperDto();
 
     taskCategoryId = 0;
-
-
-
-    private _taskCategoriesInfo: BehaviorSubject<PaginationWrapperDto> = new BehaviorSubject<PaginationWrapperDto>(this.taskCategoriesInfo);
-    private _allAnyStatusTasksInfo: BehaviorSubject<PaginationWrapperDto> = new BehaviorSubject<PaginationWrapperDto>(this.allAnyStatusTasksInfo);
-
-    public taskCategoriesInfo$: Observable<PaginationWrapperDto>;
-    public allAnyStatusTasksInfo$: Observable<PaginationWrapperDto>;
 
     private lastCategoriesListPageNumber: number = 1;
 
@@ -44,10 +38,9 @@ export class TaskManagementService {
 
     constructor(
         private httpClient: HttpClient,
-        private backendRestApiService: BackendRestApiService
+        private backendRestApiService: BackendRestApiService,
+        private toastrService: ToastrService
     ) {
-        this.taskCategoriesInfo$ = this._taskCategoriesInfo.asObservable();
-        this.allAnyStatusTasksInfo$ = this._allAnyStatusTasksInfo.asObservable();
         this.initializeTasks();
     }
 
@@ -70,26 +63,31 @@ export class TaskManagementService {
         // divisors of it, so they will fit fully in the screen(there can be exception in the situation where the page is the last one)
         // thus making the illusion of all items in the page, and no unnecessary possible spaces where it could be have been filled
         this.taskCategoriesInfo = ((await this.backendRestApiService.getAllCategory(pageNumber, 12)).data as PaginationWrapperDto);
-        this._taskCategoriesInfo.next(this.taskCategoriesInfo);
         return this.taskCategoriesInfo;
     }
 
 
     async getCategoryDetail(categoryId: number): Promise<TaskCategory> {
+        const result = this.taskCategoriesInfo.results.filter(category => category.id = categoryId);
+        if(result.length > 0) {
+            return result[0];
+        }
         const categoryDetailResponse: ResponseModel = await this.backendRestApiService.getCategoryDetail(categoryId);
         return categoryDetailResponse.data;
     }
 
 
     async getTaskDetail(taskId: number): Promise<Task> {
+        const result = this.tasksInfo.results.filter(task => task.id = taskId);
+        if(result.length > 0) {
+            return result[0];
+        }
         const taskDetailResponse: ResponseModel = await this.backendRestApiService.getTaskDetail(taskId);
         return taskDetailResponse.data;
     }
 
 
-    async createNewCategory(createCategoryDto: CreateCategoryDto): Promise<void> {
-        console.log('added');
-    }
+
 
     requestMockUp(): Promise<boolean> {
         return new Promise((resolve, reject) => {
@@ -176,7 +174,8 @@ export class TaskManagementService {
             reportProgress: true,
             responseType: 'json' // by default
         }).toPromise()) as ResponseModel;
-        return response.data;
+        this.tasksInfo = response.data;
+        return this.tasksInfo;
     }
 
 
@@ -191,7 +190,8 @@ export class TaskManagementService {
             reportProgress: true,
             responseType: 'json' // by default
         }).toPromise()) as ResponseModel;
-        return response.data;
+        this.taskCategoriesInfo = response.data;
+        return this.taskCategoriesInfo;
     }
 
     private convertToQueryParams(queryData: ListFilterSortPaginationWrapperDto) {
@@ -203,25 +203,184 @@ export class TaskManagementService {
         return queryParams;
     }
 
-    async editCategoryInfo(editCategoryDto: EditCategoryDto): Promise<TaskCategory> {
-       return new TaskCategory();
+    async createNewCategory(createCategoryDto: CreateCategoryDto): Promise<boolean> {
+        try {
+            const result = await this.httpClient.request(RequestMethod.POST, environment.backendSocket + '/api/task_manage/category/create', {
+                headers: {
+                    'Content-Type': 'application/json'
+                    // 'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                responseType: 'json',
+                body: JSON.stringify(createCategoryDto)
+            }).toPromise();
+            console.log(result);
+            this.toastrService.success("Category created successfully", "Created", {
+                timeOut: 2000,
+                positionClass: 'toast-bottom-right',
+            });
+            return true;
+        } catch(ex) {
+            this.toastrService.error("Some error occurred", "Error", {
+                timeOut: 2000,
+                positionClass: 'toast-bottom-right',
+            });
+            return false;
+        }
+    }
+
+
+    async editCategoryInfo(editCategoryDto: EditCategoryDto): Promise<boolean> {
+        try {
+            const result = await this.httpClient.request(RequestMethod.PUT, environment.backendSocket + '/api/task_manage/category/edit', {
+                headers: {
+                    'Content-Type': 'application/json'
+                    // 'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                responseType: 'json',
+                body: JSON.stringify(editCategoryDto)
+            }).toPromise() as ResponseModel;
+            const updatedCategory = result.data;
+            if(this.taskCategoriesInfo.results.length == 0) {
+                this.taskCategoriesInfo.results.push(updatedCategory);
+            } else {
+                for(let i = 0; i < this.taskCategoriesInfo.results.length; ++i) {
+                    if(this.taskCategoriesInfo.results[i].id == updatedCategory.id) {
+                        this.taskCategoriesInfo.results[i] = updatedCategory;
+                        break;
+                    }
+                }
+            }
+            console.log(result);
+            this.toastrService.success("Category updated successfully", "Created", {
+                timeOut: 2000,
+                positionClass: 'toast-bottom-right',
+            });
+            return true;
+        } catch(ex) {
+            this.toastrService.error("Some error occurred", "Error", {
+                timeOut: 2000,
+                positionClass: 'toast-bottom-right',
+            });
+            return false;
+        }
     }
 
     async deleteCategory(currentCategory: TaskCategory): Promise<boolean> {
-        return true;
+        try {
+            const result = await this.httpClient.request(RequestMethod.DELETE, environment.backendSocket + `/api/task_manage/category/delete/${currentCategory.id}`, {
+                headers: {
+                    'Content-Type': 'application/json'
+                    // 'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                responseType: 'json',
+            }).toPromise() as ResponseModel;
+            const updatedCategory = result.data;
+            this.taskCategoriesInfo.results = this.taskCategoriesInfo.results.filter(category => category.id != currentCategory.id);
+            console.log(result);
+            this.toastrService.success("Category Deleted successfully", "Deleted", {
+                timeOut: 2000,
+                positionClass: 'toast-bottom-right',
+            });
+            return true;
+        } catch(ex) {
+            this.toastrService.error("Some error occurred", "Error", {
+                timeOut: 2000,
+                positionClass: 'toast-bottom-right',
+            });
+            return false;
+        }
     }
 
     async createTask(createTaskDto: CreateTaskDto) {
-        return true;
+        try {
+            const result = await this.httpClient.request(RequestMethod.POST, environment.backendSocket + '/api/task_manage/task/create', {
+                headers: {
+                    'Content-Type': 'application/json'
+                    // 'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                responseType: 'json',
+                body: JSON.stringify(createTaskDto)
+            }).toPromise();
+            console.log(result);
+            this.toastrService.success("Task created successfully", "Created", {
+                timeOut: 2000,
+                positionClass: 'toast-bottom-right',
+            });
+
+            return true;
+        } catch(ex) {
+            this.toastrService.error("Some error occurred", "Error", {
+                timeOut: 2000,
+                positionClass: 'toast-bottom-right',
+            });
+            return false;
+        }
     }
 
     async editTaskInfo(editTaskDto: EditTaskDto) {
-        return new Task();
-
+        try {
+            const result = await this.httpClient.request(RequestMethod.PUT, environment.backendSocket + '/api/task_manage/task/edit', {
+                headers: {
+                    'Content-Type': 'application/json'
+                    // 'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                responseType: 'json',
+                body: JSON.stringify(editTaskDto)
+            }).toPromise() as ResponseModel;
+            console.log(result);
+            const updatedTask = result.data;
+            if(this.tasksInfo.results.length == 0) {
+                console.log("pushing in the data");
+                this.taskCategoriesInfo.results.push(updatedTask);
+                console.log(this.taskCategoriesInfo);
+            } else {
+                console.log("the updated task is");
+                for(let i = 0; i < this.tasksInfo.results.length; ++i) {
+                    if(this.tasksInfo.results[i].id == updatedTask.id) {
+                        this.tasksInfo.results[i] = updatedTask;
+                        break;
+                    }
+                }
+            }
+            console.log("updated tasks :", this.tasksInfo);
+            this.toastrService.success("Task updated successfully", "Success", {
+                timeOut: 2000,
+                positionClass: 'toast-bottom-right',
+            });
+            return true;
+        } catch(ex) {
+            this.toastrService.error("Some error occurred", "Error", {
+                timeOut: 2000,
+                positionClass: 'toast-bottom-right',
+            });
+            return false;
+        }
     }
+
 
     async deleteTask(currentTask: Task) {
-        return true;
-
+        try {
+            const result = await this.httpClient.request(RequestMethod.DELETE, environment.backendSocket + `/api/task_manage/task/delete/${currentTask.id}`, {
+                headers: {
+                    'Content-Type': 'application/json'
+                    // 'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                responseType: 'json'
+            }).toPromise() as ResponseModel;
+            console.log(result);
+            this.tasksInfo.results = this.taskCategoriesInfo.results.filter(task => task.id != currentTask.id);
+            this.toastrService.success("Task deleted successfully", "Success", {
+                timeOut: 2000,
+                positionClass: 'toast-bottom-right',
+            });
+            return true;
+        } catch(ex) {
+            this.toastrService.error("Some error occurred", "Error", {
+                timeOut: 2000,
+                positionClass: 'toast-bottom-right',
+            });
+            return false;
+        }
     }
+
 }
