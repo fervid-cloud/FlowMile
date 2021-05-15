@@ -220,5 +220,9 @@ export class CategoryDetailComponent implements OnInit {
         }
     }
 
+    formatTime(date: Date) {
+        return UtilService.formatTime(date);
+    }
+
 
 }

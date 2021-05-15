@@ -14,4 +14,18 @@ app-dashboard-body {
     flex-grow: 1;
 }
 
+.customFooter {
+    box-sizing: border-box;
+    margin: 0;
+    min-width: 0;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 16px;
+    text-align: center;
+    padding: 12px;
+    color: white;
+    background-color: #232a34;
+    border-top: 1px solid #22395e;
+    /* color: #474D57; */
+}
 

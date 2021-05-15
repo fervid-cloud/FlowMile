@@ -49,6 +49,11 @@ export class UtilService {
         }
     }
 
+    public static formatTime(date: Date) {
+        date = new Date(date);
+        return date.toLocaleTimeString() + ", " + date.toLocaleDateString();
+    }
+
 
 
 

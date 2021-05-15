@@ -86,12 +86,14 @@ export class ToDoCategoryComponent implements OnInit, AfterViewInit, OnDestroy {
         console.log(currentFormControl);
 
         const n = categoryName.length;
-
-        for (let i = 0; i < n; ++i) {
+        if(categoryName.trim().length == 0) {
+            return {invalidName: true};
+        }
+/*        for (let i = 0; i < n; ++i) {
             if (!((categoryName[i] >= 'a' && categoryName[i] <= 'z') || (categoryName[i] >= 'A' && categoryName[i] <= 'Z'))) {
                 return { invalidName: true };
             }
-        }
+        }*/
 
         return null;
     }

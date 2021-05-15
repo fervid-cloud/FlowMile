@@ -31,7 +31,7 @@ export class AuthInterceptor implements HttpInterceptor {
         }*/
         // Get the auth token from the service.
         const authToken = this.authService.getAuthorizationToken();
-        if (!authToken) {
+        if (!authToken || req.url.includes('login') || req.url.includes('register')) {
             const withoutTokenResponse: Observable<HttpEvent<any>> = next.handle(req);
             return withoutTokenResponse.pipe(catchError((error) => {
                 return this.handleError(error, req);

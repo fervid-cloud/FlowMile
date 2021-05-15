@@ -312,6 +312,11 @@ export class TaskDetailComponent implements OnInit, OnDestroy, AfterViewInit {
         this.confirmSaveTask(updatedTaskStatus);
 
     }
+
+
+    formatTime(date: Date) {
+        return UtilService.formatTime(date);
+    }
 }
 
 
